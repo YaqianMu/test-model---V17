@@ -1,12 +1,9 @@
 *----------------------------------------------*
 *larbor market
-*12月11日，读取数据的部分加入基础工资、基础失业率，分类的劳动力投入由比例改为数值
-*12月16日，初始劳动力供给量包括就业量+失业量    注意劳动供给量和就业量之间的转化
-*12月28日，劳动力结构2016年开始变化
 *20161204, update: extend the types of labor to 28 by gender by region by education
 *----------------------------------------------*
 
-set lm labor type /L1*L28/
+set lmo original labor type /L1*L28/
     region /urban,rural/
     gender /male,female/
     education /     ul unlettered
@@ -16,9 +13,41 @@ set lm labor type /L1*L28/
                     jc "junior college"
                     rc "regular college"
                     pg "postgraduate"      /
-    Level /low,high/;
+    Level /low,high/
+    lm aggregared labor type /Low,high/;
 
 alias (lm,lmm)             ;
+set maplmolm(lmo,lm)   /
+L1        .        Low
+L2        .        Low
+L3        .        Low
+L4        .        Low
+L5        .        High
+L6        .        High
+L7        .        High
+L8        .        Low
+L9        .        Low
+L10        .        Low
+L11        .        Low
+L12        .        High
+L13        .        High
+L14        .        High
+L15        .        Low
+L16        .        Low
+L17        .        Low
+L18        .        Low
+L19        .        High
+L20        .        High
+L21        .        High
+L22        .        Low
+L23        .        Low
+L24        .        Low
+L25        .        Low
+L26        .        High
+L27        .        High
+L28        .        High
+
+/;
 
 * data handling in fold education$region, grasp from output.xlsx
 $CALL GDXXRW.EXE labor.xlsx par=labor_q0 rng=A1:AC19  par=labor_v0 rng=A21:AC39 par=labordata  rng=A41:AC43
@@ -35,7 +64,11 @@ $LOAD labor_q0
 $LOAD labordata
 
 *=== transfer unit to billion yuan
-labor_v0(i,lm)=labor_v0(i,lm)/100000;
+labor_v0(i,lmo)=labor_v0(i,lmo)/100000;
+
+labor_v0(i,lm) = sum(lmo$maplmolm(lmo,lm),labor_v0(i,lmo)) ;
+labor_q0(i,lm) = sum(lmo$maplmolm(lmo,lm),labor_q0(i,lmo))  ;
+
 
 labor_w0(i,lm)$labor_q0(i,lm) =labor_v0(i,lm)/labor_q0(i,lm);
 labor_w0(i,lm)$(labor_q0(i,lm) eq 0) = 0.001;
@@ -45,12 +78,16 @@ labor_w0(i,lm)$(labor_q0(i,lm) eq 0) = 0.001;
 
 
 *parameter tlprop(*,*)  the proportion of total labor supply by year;
-parameter bwage(lm)    the average wage of labor by type from micro data in yuan;
-parameter bur(lm)     the benchmark unemployment rate ;
+parameter bwage(*)    the average wage of labor by type from micro data in yuan;
+parameter bur(*)     the benchmark unemployment rate ;
 
 
-bwage(lm) =   labordata('wage',lm);
-bur(lm)  =   labordata('ul',lm);
+bwage(lmo) =   labordata('wage',lmo);
+bwage(lm)  =   sum(lmo$maplmolm(lmo,lm),labordata('wage',lmo)*sum(i,labor_q0(i,lmo)))/sum(i,labor_q0(i,lm));
+
+bur(lmo)  =   labordata('ul',lmo);
+bur(lm)  =   1-sum(i,labor_q0(i,lm))/sum(lmo$maplmolm(lmo,lm),sum(i,labor_q0(i,lmo))/(1-bur(lmo)));
+
 
 DISPLAY labor_v0,labor_q0,labor_w0,bur,bwage;
 
@@ -124,7 +161,7 @@ $offtext
 ;
 
 *== set for laboe aggregation
-set maple(lm,education) map from labor to education/
+set maple(lmo,education) map from labor to education/
 L1        .        ul
 L2        .        es
 L3        .        ms
@@ -154,7 +191,7 @@ L26        .        jc
 L27        .        rc
 L28        .        pg
 /;
-set maplr(lm,region) map from labor to region/
+set maplr(lmo,region) map from labor to region/
 L1        .        Urban
 L2        .        Urban
 L3        .        Urban
@@ -185,7 +222,7 @@ L27        .        Rural
 L28        .        Rural
 /;
 
-set maplg(lm,gender) map from labor to gender/
+set maplg(lmo,gender) map from labor to gender/
 L1        .        Male
 L2        .        Male
 L3        .        Male
@@ -216,7 +253,7 @@ L27        .        Female
 L28        .        Female
 /;
 
-set mapll(lm,level) map from labor to level/
+set mapll(lmo,level) map from labor to level/
 L1        .        Low
 L2        .        Low
 L3        .        Low
@@ -248,11 +285,11 @@ L28        .        High
 
 /;
 
-set ll(lm) low level labor type;
-set hl(lm) high level labor type;
+set ll(lm) low level labor type /low/;
+set hl(lm) high level labor type /high/;
 
-ll(lm)$mapll(lm,'low') = 1;
-hl(lm)$mapll(lm,'high') = 1;
+*ll(lm)$mapll(lm,'low') = 1;
+*hl(lm)$mapll(lm,'high') = 1;
 
 display ll,hl;
 

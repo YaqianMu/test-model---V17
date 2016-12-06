@@ -39,8 +39,12 @@ ra                     !income level for representative agent
 $auxiliary:
 sff(x)$ffact0(x)       !side constraint modelling supply of fixed factor
 sffelec(sub_elec)$ffelec0(sub_elec)         !side constraint modelling supply of fixed factors
+
 ur_t(lm)$ur_t0(lm)                 !unemployment rate
+
 t_re(sub_elec)$wsb(sub_elec)       !FIT for renewable energy
+
+rgdp                     !real gdp
 
 $prod:l_a(lm)       t:1
          o:pl(i,lm)      q:labor_v0(i,lm)
@@ -191,6 +195,10 @@ $constraint:ur_t(lm)$ur_t0(lm)
 *== indentification of FIT
 $constraint:t_re(sub_elec)$wsb(sub_elec)
         t_re(sub_elec) =e= taxelec0(sub_elec);
+
+$constraint:rgdp
+  pu*rgdp =e= pcons*(sum(i,cons0(i))+sum(f,consf0(f)))*consum+pinv*(sum(i,inv0(i)))*invest+sum(i,py(i)*((nx0(i)+xinv0(i)+xcons0(i))*xscale))   ;
+
 
 
 
