@@ -134,7 +134,7 @@ parameter ur0      the benchmark unemployment rate
           tqlabor_s0      total labor supply;
 
 ur0(lm)=bur(lm);
-ur0(lm)=0;
+*ur0(lm)=0;
 
 tlabor_s0(lm)=(tlabor_q0(lm)/(1-ur0(lm)));
 tqlabor_s0=sum(lm,tlabor_s0(lm));

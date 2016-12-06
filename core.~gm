@@ -34,8 +34,9 @@ pcons                  !price index for aggregate consumption
 pinv                   !price index for aggregate physical capital investment
 pu                     !price index for utility
 
-pco2$clim
-pco2_s(i)$clim_s(i)     !shadow value of carbon
+pco2$clim              !shadow value of carbon all sectors covered
+pco2_a$clim_a            !shadow value of carbon selected sectors covered
+pco2_s(i)$clim_s(i)    !shadow value of carbon sector by sector
 pco2_h$clim_h
 
 $consumers:
@@ -54,7 +55,8 @@ gprod                    !productivity index
 gprod2(lm)$ur0(lm)       !productivity index to identify unemployment rate
 
 
-tclim$clim                     ! carbon limit
+tclim$clim                     ! carbon limit all sectors
+tclim_a$clim_a                     ! carbon limit selected sectors
 
 $prod:l_a(lm)       t:1
          o:pl(i,lm)      q:labor_v0(i,lm)
@@ -90,6 +92,7 @@ $prod:yelec(sub_elec)$ffe(sub_elec) s:0   kle(s):0.4 kl(kle):0.6 l(kl):eslm("l")
         i:py(fe)$intelec0(fe,sub_elec)    q:(intelec0(fe,sub_elec)*aeei("elec")*emkup(sub_elec))                            fe.tl:
         i:pco2#(fe)$clim         q:(emission0("co2","e",fe,sub_elec)*aeei("elec")*emkup(sub_elec))      p:1e-5             fe.tl:
         i:pco2_s("elec")#(fe)$clim_s("elec")         q:(emission0("co2","e",fe,sub_elec)*aeei("elec")*emkup(sub_elec))      p:1e-5             fe.tl:
+        i:pco2_a#(fe)$(clim_a and cm("elec"))         q:(emission0("co2","e",fe,sub_elec)*aeei("elec")*emkup(sub_elec))      p:1e-5             fe.tl:
 
 *       Production of hybro and nuclear biomass electricity      va2 from wang ke
 $prod:yelec(sub_elec)$hnb(sub_elec)  s:esub(sub_elec,"ff") a:0 va(a):esub("elec","kl") l(va):eslm("l")
@@ -125,6 +128,7 @@ $prod:y(i)$(not fe(i) and not elec(i) ) s:0 a:esub(i,"ff") b(a):0  kle(b):0.4 kl
         i:py(fe)                 q:(int0(fe,i)*aeei(i))                            fe.tl:
         i:pco2#(fe)$clim         q:(emission0("co2","e",fe,i)*aeei(i))      p:1e-5             fe.tl:
         i:pco2_s(i)#(fe)$clim_s(i)         q:(emission0("co2","e",fe,i)*aeei(i))      p:1e-5             fe.tl:
+        i:pco2_a#(fe)$(clim_a and cm(i))         q:(emission0("co2","e",fe,i)*aeei(i))      p:1e-5             fe.tl:
 
 *       Production of fossil fuel production       va from wang ke
 $prod:y(i)$fe(i) s:0 a:esub(i,"ff") b(a):0 va(b):esub(i,"kl") l(va):eslm("l")  coal(b):0 roil(b):0 gas(b):0
@@ -137,6 +141,7 @@ $prod:y(i)$fe(i) s:0 a:esub(i,"ff") b(a):0 va(b):esub(i,"kl") l(va):eslm("l")  c
         i:py(fe)                 q:(int0(fe,i)*aeei(i))                            fe.tl:
         i:pco2#(fe)$clim         q:(emission0("co2","e",fe,i)*aeei(i))      p:1e-5             fe.tl:
         i:pco2_s(i)#(fe)$clim_s(i)         q:(emission0("co2","e",fe,i)*aeei(i))      p:1e-5             fe.tl:
+        i:pco2_a#(fe)$(clim_a and cm(i))         q:(emission0("co2","e",fe,i)*aeei(i))      p:1e-5             fe.tl:
 
 *        consumption of goods and factors    based on EPPA
 
@@ -146,8 +151,7 @@ $prod:consum   s:esub_c  a:0.3 e:sigma("ene_fd") roil(e):0 coal(e):0 gas(e):0
          i:py(i)$(elec(i))        q:(cons0(i)*aeei("fd"))                e:
          i:py(fe)                 q:(cons0(fe)*aeei("fd"))                 fe.tl:
          i:pco2#(fe)$clim         q:(emission0("co2","e",fe,"household")*aeei("fd"))      p:1e-5             fe.tl:
-         i:pco2_h#(fe)$clim_h     q:(emission0("co2","e",fe,"household")*aeei("fd"))      p:1e-5           fe.tl:
-         I:PSO2#(fe)$slim         Q:(emission0("so2","e",fe,"household")*aeei("fd"))      P:1e-5         fe.tl:
+         i:pco2_h#(fe)$clim_h     q:(emission0("co2","e",fe,"household")*aeei("fd"))      p:1e-5             fe.tl:
 
 
 *        aggregate capital investment
@@ -189,6 +193,7 @@ e:py(i)              q:(-(nx0(i)+xinv0(i)+xcons0(i))*xscale)
 e:pco2$clim         q:1                        r:tclim
 e:pco2_s(i)$clim_s(i)    q:clim_s(i)
 e:pco2_h$clim_h      q:clim_h
+e:pco2_a$clim_a     q:1                        r:tclim_a
 
 *supplement benchmark fixed-factor endowments according to assumed price elasticities of resource supply
 
@@ -229,6 +234,9 @@ $constraint:tclim$clim
 *== intensity target
 *  tclim =e= clim0*temission2("co2")/rgdp0*rgdp;
 
+$constraint:tclim_a$clim_a
+*== quantity target
+ tclim_a =e= clim0*sum(cm,temission0("co2",cm));
 
 
 $report:
@@ -277,18 +285,27 @@ pu.fx=1;
 *== switch for umemployment
 *ur0(lm)=0;
 
-*== policy shock for static model
+*== policy shock for static model ==============================================
 ur.l(lm)=ur0(lm);
 
+*== switch for emission cap
 clim=0;
-clim0 = 0.9;
+clim_a=0;
+clim_s(i)=0;
+clim_h=0;
+
+*== national emission cap
+*clim0 = 0.9;
+
+*== sectoral emission cap
 *clim_s("construction")=0.5*Temission0('co2',"construction");
 *clim_s("transport")=1*Temission0('co2',"transport");
 *clim_s("EII")=0.5*Temission0('co2',"EII");
-*clim_s("elec")=0.7*Temission0('co2',"elec");
+clim_s("elec")=0.7*Temission0('co2',"elec");
 *clim=0.5*Temission1('co2');
 
-*benchmark calibration
+*== multisectoral emission cap
+*clim0 = 0.5;
 
 China3E.iterlim =100000;
 

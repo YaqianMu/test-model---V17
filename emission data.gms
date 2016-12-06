@@ -137,6 +137,7 @@ clim_t        trend of carbon emission allowance
 clim0         benchmark of carbon emission allowance
 clim_s(i)     sectoral carbon emission allowance
 clim_h        household carbon emission allowance
+clim_a        selected sectors carbon emission allowance
 ;
 
 table climit(t,*)     input of emission cap
@@ -152,7 +153,7 @@ slim                     =0;
 clim                     =0;
 clim_s(i)                =0;
 clim_h                   =0;
-
+clim_a                   =0;
 clim_t(t) = climit(t,"b");
 clim0=1;
 

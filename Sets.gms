@@ -50,6 +50,8 @@ elec(i) electrici power sector
 /elec/
 ist(i) ist sector
 /ist/
+cm(i) sectors selected in carbon market
+/roil,elec,Paper, Chem,CM,IST,NFM,Air/
 *Mi(i) energy intensive materials/chem,/
 *Mn(i) Non energy intensive materials//
 agrmine(i) agriculture and non-energy mine
