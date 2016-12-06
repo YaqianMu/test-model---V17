@@ -100,39 +100,40 @@ $prod:yelec(sub_elec)$wse(sub_elec) s:esub(sub_elec,"ff") b:0 va(b):esub("elec",
 
 
 
-$prod:y(i)$(not fe(i) and not elec(i) ) s:0 a:0.6 b(a):0  kle(b):0.4 ke(kle):0.5 e(kle):sigma("ele_p") ne(e):sigma("ene_p")  coal(ne):0 roil(ne):0 gas(ne):0
+$prod:y(i)$(not fe(i) and not elec(i) ) s:0 a:esub(i,"ff") b(a):0  kle(b):0.4 kl(kle):0.6  l(kl):eslm("l") e(kle):sigma("ele_p") ne(e):sigma("ene_p")  coal(ne):0 roil(ne):0 gas(ne):0
         o:py(i)                  q:(output0(i))                    p:(1-tx0(i))     a:ra    t:tx0(i)
-        I:PSO2$slim              Q:emission0("so2","e","process",i)        P:1e-5
-        i:py(j)$(not e(j))       q:int0(j,i)                                         b:
-        i:pk                     q:fact0("capital",i)                    ke:
-        i:pl(i,lm)                  q:labor_v0(i,lm)                    ke:
         i:pffact(i)$ffact0(i)    q:ffact0(i)                                           a:
-        i:py(elec)               q:int0(elec,i)                          e:
-        i:py(fe)                 q:int0(fe,i)                            fe.tl:
-        i:pco2#(fe)$clim         q:emission0("co2","e",fe,i)      p:1e-5             fe.tl:
-        i:pco2_s(i)#(fe)$clim_s(i)         q:emission0("co2","e",fe,i)      p:1e-5             fe.tl:
-        I:PSO2#(fe)$slim         Q:emission0("so2","e",fe,i)      P:1e-5              fe.tl:
+        i:py(j)$(not e(j))       q:int0(j,i)                                         b:
+        i:pk                     q:fact0("capital",i)                              kl:
+        i:pl(i,lm)$ll(lm)        q:labor_v0(i,lm)                           l:
+        i:pl(i,lm)$hl(lm)        q:labor_v0(i,lm)                           l:
+        i:py(elec)               q:(int0(elec,i)*aeei(i))                          e:
+        i:py(fe)                 q:(int0(fe,i)*aeei(i))                            fe.tl:
+        i:pco2#(fe)$clim         q:(emission0("co2","e",fe,i)*aeei(i))      p:1e-5             fe.tl:
+        i:pco2_s(i)#(fe)$clim_s(i)         q:(emission0("co2","e",fe,i)*aeei(i))      p:1e-5             fe.tl:
 
-
-*       Production of fossil fuel production
-$prod:y(i)$fe(i) s:0 a:0.6 b(a):0 va2(b):esub(i,"kl")
+*       Production of fossil fuel production       va from wang ke
+$prod:y(i)$fe(i) s:0 a:esub(i,"ff") b(a):0 va(b):esub(i,"kl") l(va):eslm("l")  coal(b):0 roil(b):0 gas(b):0
         o:py(i)                  q:(output0(i))                    p:(1-tx0(i))     a:ra    t:tx0(i)
-        I:PSO2$slim              Q:emission0("so2","e","process",i)        P:1e-5
-        i:py(j)                  q:int0(j,i)                                     b:
-        i:pl(i,lm)                  q:labor_v0(i,lm)                    va2:
-        i:pk                     q:fact0("capital",i)            va2:
+        i:py(j)$(not fe(j))      q:int0(j,i)                                     b:
+        i:pk                     q:fact0("capital",i)            va:
+        i:pl(i,lm)$ll(lm)          q:labor_v0(i,lm)                l:
+        i:pl(i,lm)$hl(lm)          q:labor_v0(i,lm)                l:
         i:pffact(i)$ffact0(i)    q:ffact0(i)                                      a:
+        i:py(fe)                 q:(int0(fe,i)*aeei(i))                            fe.tl:
+        i:pco2#(fe)$clim         q:(emission0("co2","e",fe,i)*aeei(i))      p:1e-5             fe.tl:
+        i:pco2_s(i)#(fe)$clim_s(i)         q:(emission0("co2","e",fe,i)*aeei(i))      p:1e-5             fe.tl:
 
-
-*        consumption of goods and factors    结构参照EPPA
+*        consumption of goods and factors    based on EPPA
 
 $prod:consum   s:esub_c  a:0.3 e:sigma("ene_fd") roil(e):0 coal(e):0 gas(e):0
          o:pcons                  q:(sum(i,cons0(i))+sum(f,consf0(f)))
-         i:py(i)$(not fe(i))      q:cons0(i)                 a:$(not elec(i))    e:$elec(i)
-         i:py(fe)                 q:cons0(fe)                 fe.tl:
-         i:pco2#(fe)$clim         q:emission0("co2","e",fe,"household")      p:1e-5             fe.tl:
-         i:pco2_h#(fe)$clim_h     q:emission0("co2","e",fe,"household")      p:1e-5           fe.tl:
-         I:PSO2#(fe)$slim         Q:emission0("so2","e",fe,"household")      P:1e-5         fe.tl:
+         i:py(i)$(not e(i))       q:cons0(i)                a:
+         i:py(i)$(elec(i))        q:(cons0(i)*aeei("fd"))                e:
+         i:py(fe)                 q:(cons0(fe)*aeei("fd"))                 fe.tl:
+         i:pco2#(fe)$clim         q:(emission0("co2","e",fe,"household")*aeei("fd"))      p:1e-5             fe.tl:
+         i:pco2_h#(fe)$clim_h     q:(emission0("co2","e",fe,"household")*aeei("fd"))      p:1e-5           fe.tl:
+         I:PSO2#(fe)$slim         Q:(emission0("so2","e",fe,"household")*aeei("fd"))      P:1e-5         fe.tl:
 
 
 *        aggregate capital investment
@@ -143,7 +144,7 @@ $prod:invest   s:esub_inv
 
 
 
-*        welfare          王克 EPPA S：取值都为1
+*        welfare          Ke Wang, EPPA S: 1
 
 $prod:welf    s:1.0
          o:pu                 q:(sum(i,cons0(i)+inv0(i))+sum(f,consf0(f)+invf0(f)))
@@ -174,13 +175,12 @@ e:py(i)              q:(-(nx0(i)+xinv0(i)+xcons0(i))*xscale)
 e:pco2$clim          q:clim
 e:pco2_s(i)$clim_s(i)    q:clim_s(i)
 e:pco2_h$clim_h      q:clim_h
-e:pso2$slim          q:slim
 
 *supplement benchmark fixed-factor endowments according to assumed price elasticities of resource supply
 
 $constraint:sff(x)$ffact0(x)
-*     sff(x)    =e= (py(x)/pu)**eta(x);
-sff(x)    =e= 1;
+     sff(x)    =e= (py(x)/pu)**eta(x);
+*sff(x)    =e= 1;
 
 $constraint:sffelec(sub_elec)$ffelec0(sub_elec)
 *    sffelec(sub_elec) =e=  (py("elec")/pu)**eta(sub_elec);

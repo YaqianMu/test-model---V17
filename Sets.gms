@@ -70,6 +70,7 @@ Serv(i)   services
          /serv/
 
 pollutant /CO2,SO2,NOX/
+air_p(pollutant) /SO2,NOX/
 Pitem /e,g,a/
 Psource /coal,roil,gas,process/
 

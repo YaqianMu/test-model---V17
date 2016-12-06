@@ -182,8 +182,6 @@ xscale
 
 ;
 
-theta(x)=0;
-
 int0(i,j)   = sam(i,j);
 fact0(f,j)  = sam(f,j);
 ffact0(x)   = theta(x)*sam("capital",x);
