@@ -1,10 +1,10 @@
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:17:17 Page 1
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:43:57 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\sets.gms
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:17:17 Page 2
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:43:57 Page 2
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
 C o m p i l a t i o n
 
@@ -652,7 +652,7 @@ GDXIN   C:\Users\hero\Desktop\Github\test model - V17\labor.gdx
  833            tqlabor_s0      total labor supply;
  834   
  835  ur0(lm)=bur(lm);
- 836  ur0(lm)=0;
+ 836  *ur0(lm)=0;
  837   
  838  tlabor_s0(lm)=(tlabor_q0(lm)/(1-ur0(lm)));
  839  tqlabor_s0=sum(lm,tlabor_s0(lm));
@@ -937,8 +937,13 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\core.gms
 1059  *1206, to build the basic model for employment analysis
 1060  *----------------------------------------------*
 1061  parameter      A                      /1/         ;
-1062  parameter ur_t0(lm)      the benchmark unemployment rate  ;
-1063  ur_t0(lm)    =  0;
+1062   
+1063  parameter simu_s;
+1064  *simu_s=1,GDP endogenous,simu_s=0,GDP exdogenous
+1065  simu_s=1;
+1066   
+1067   
+1068   
       $Model:China3E
        
       $Sectors:
@@ -980,11 +985,16 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\core.gms
       sffelec(sub_elec)$ffelec0(sub_elec)         !side constraint modelling sup
       ply of fixed factors
        
-      ur_t(lm)$ur_t0(lm)                 !unemployment rate
+      ur(lm)$ur0(lm)                 !unemployment rate
        
       t_re(sub_elec)$wsb(sub_elec)       !FIT for renewable energy
        
       rgdp                     !real gdp
+      gprod                    !productivity index
+      gprod2(lm)$ur0(lm)       !productivity index to identify unemployment rate
+       
+       
+      tclim$clim                     ! carbon limit
        
       $prod:l_a(lm)       t:1
                o:pl(i,lm)      q:labor_v0(i,lm)
@@ -1162,10 +1172,12 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\core.gms
        
       *endowment of factor supplies
        
-      e:pk                 q:fact("capital")
-      e:pls(lm)                q:(tlabor_v0(lm)/(1-ur_t0(lm)))
-      e:pls(lm)$ur_t0(lm)             q:(-tlabor_v0(lm)/(1-ur_t0(lm)))          
-              r:ur_t(lm)$ur_t0(lm)
+      e:pk                 q:fact("capital")                                    
+        r:gprod
+      e:pls(lm)                q:(tlabor_v0(lm)/(1-ur0(lm)))                    
+                                   r:gprod
+      e:pls(lm)$ur0(lm)             q:(-tlabor_v0(lm)/(1-ur0(lm)))              
+          r:gprod2(lm)
       e:pffact(x)          q:ffact0(x)                 r:sff(x)$ffact0(x)
       e:pffelec(sub_elec)  q:ffelec0(sub_elec)         r:sffelec(sub_elec)$ffele
       c0(sub_elec)
@@ -1176,7 +1188,7 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\core.gms
        
       *endowment of carbon emission allowances
        
-      e:pco2$clim          q:clim
+      e:pco2$clim         q:1                        r:tclim
       e:pco2_s(i)$clim_s(i)    q:clim_s(i)
       e:pco2_h$clim_h      q:clim_h
        
@@ -1190,8 +1202,8 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\core.gms
       *    sffelec(sub_elec) =e=  (py("elec")/pu)**eta(sub_elec);
            sffelec(sub_elec) =e= 1;
        
-      $constraint:ur_t(lm)$ur_t0(lm)
-            (pls(lm)/pu)=E=(ur_t(lm)/ur_t0(lm))**(-0.1);
+      $constraint:ur(lm)$ur0(lm)
+            (pls(lm)/pu)=E=(ur(lm)/ur0(lm))**(-0.1);
        
       *== indentification of FIT
       $constraint:t_re(sub_elec)$wsb(sub_elec)
@@ -1201,6 +1213,25 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\core.gms
         pu*rgdp =e= pcons*(sum(i,cons0(i))+sum(f,consf0(f)))*consum+pinv*(sum(i,
       inv0(i)))*invest+sum(i,py(i)*((nx0(i)+xinv0(i)+xcons0(i))*xscale))   ;
        
+       
+      $constraint:gprod$(simu_s eq 0)
+        rgdp =e= rgdp0;
+       
+      $constraint:gprod$(simu_s ne 0)
+        gprod =e= gprod0;
+       
+      $constraint:gprod2(lm)$(ur0(lm) and simu_s eq 0)
+       gprod2(lm) =e= gprod*ur(lm);
+       
+      $constraint:gprod2(lm)$(ur0(lm) and simu_s ne 0)
+        gprod2(lm) =e= gprod0*ur(lm);
+       
+       
+      $constraint:tclim$clim
+      *== quantity target
+       tclim =e= clim0*temission2("co2");
+      *== intensity target
+      *  tclim =e= clim0*temission2("co2")/rgdp0*rgdp;
        
        
        
@@ -1244,8 +1275,7 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\core.gms
       v:ECO2_se(sub_elec)              i:pco2_s("elec")        prod:yelec(sub_el
       ec)
       v:eco2_h                i:pco2_h        prod:consum
-      v:EsO2(i)              i:pso2        prod:y(i)
-      v:EHsO2                i:pso2        prod:consum
+       
 SYSINCLUDE C:\GAMS\win64\24.4\mpsgeset
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\225a\gamsgeh.dat
        
@@ -1291,289 +1321,315 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\225a\gamsgeh.dat
          33  sffelec(sub_elec)$ffelec0(sub_elec)         !side constraint modell
       ing supply of fixed factors
          34
-         35  ur_t(lm)$ur_t0(lm)                 !unemployment rate
+         35  ur(lm)$ur0(lm)                 !unemployment rate
          36
          37  t_re(sub_elec)$wsb(sub_elec)       !FIT for renewable energy
          38
          39  rgdp                     !real gdp
-         40
-         41  $prod:l_a(lm)       t:1
-         42           o:pl(i,lm)      q:labor_v0(i,lm)
-         43           i:pls(lm)       q:tlabor_v0(lm)
-         44
+         40  gprod                    !productivity index
+         41  gprod2(lm)$ur0(lm)       !productivity index to identify unemployme
+      nt rate
+         42
+         43
+         44  tclim$clim                     ! carbon limit
          45
-         46
-         47  $prod:y(i)$elec(i)   s:0   a:10
-         48          o:py(i)                                  q:output0(i)
-         49          i:pelec(sub_elec)$TD(sub_elec)        q:outputelec0(sub_ele
+         46  $prod:l_a(lm)       t:1
+         47           o:pl(i,lm)      q:labor_v0(i,lm)
+         48           i:pls(lm)       q:tlabor_v0(lm)
+         49
+         50
+         51
+         52  $prod:y(i)$elec(i)   s:0   a:10
+         53          o:py(i)                                  q:output0(i)
+         54          i:pelec(sub_elec)$TD(sub_elec)        q:outputelec0(sub_ele
       c)
-         50          i:pelec(sub_elec)$wse(sub_elec)       q:outputelec0(sub_ele
+         55          i:pelec(sub_elec)$wse(sub_elec)       q:outputelec0(sub_ele
       c)       a:
-         51          i:pe_base                             q:(sum(bse,outputelec
+         56          i:pe_base                             q:(sum(bse,outputelec
       0(bse)))       a:
-         52
-         53  *       Production of T&D electricity
-         54  $prod:yelec(sub_elec)$TD(sub_elec) s:0       l(s):eslm("l")
-         55          o:pelec(sub_elec)        q:(outputelec0(sub_elec))         
+         57
+         58  *       Production of T&D electricity
+         59  $prod:yelec(sub_elec)$TD(sub_elec) s:0       l(s):eslm("l")
+         60          o:pelec(sub_elec)        q:(outputelec0(sub_elec))         
            p:(1-taxelec0(sub_elec))  a:ra  t:taxelec0(sub_elec)
-         56          i:py(i)$(not e(i))       q:intelec0(i,sub_elec)
-         57          i:py(elec)               q:(intelec0(elec,sub_elec)*aeei("e
+         61          i:py(i)$(not e(i))       q:intelec0(i,sub_elec)
+         62          i:py(elec)               q:(intelec0(elec,sub_elec)*aeei("e
       lec"))
-         58          i:py(fe)                 q:(intelec0(fe,sub_elec)*aeei("ele
+         63          i:py(fe)                 q:(intelec0(fe,sub_elec)*aeei("ele
       c"))
-         59          i:pl("elec",lm)$ll(lm)   q:laborelec0(sub_elec,lm)         
+         64          i:pl("elec",lm)$ll(lm)   q:laborelec0(sub_elec,lm)         
                 l:
-         60          i:pl("elec",lm)$hl(lm)   q:laborelec0(sub_elec,lm)         
+         65          i:pl("elec",lm)$hl(lm)   q:laborelec0(sub_elec,lm)         
                 l:
-         61          i:pk                     q:kelec0(sub_elec)
-         62
-         63
-         64  *       Production of fossile fuel electricity
-         65  $prod:yelec(sub_elec)$ffe(sub_elec) s:0   kle(s):0.4 kl(kle):0.6 l(
+         66          i:pk                     q:kelec0(sub_elec)
+         67
+         68
+         69  *       Production of fossile fuel electricity
+         70  $prod:yelec(sub_elec)$ffe(sub_elec) s:0   kle(s):0.4 kl(kle):0.6 l(
       kl):eslm("l")   ene(kle):enesta roil(ene):0 coal(ene):0 gas(ene):0
-         66          o:pe_base                q:(outputelec0(sub_elec))         
+         71          o:pe_base                q:(outputelec0(sub_elec))         
               p:(1-taxelec0(sub_elec))  a:ra  t:taxelec0(sub_elec)
-         67          i:py(i)$(not e(i))       q:(intelec0(i,sub_elec)*emkup(sub_
+         72          i:py(i)$(not e(i))       q:(intelec0(i,sub_elec)*emkup(sub_
       elec))
-         68          i:py(elec)               q:(intelec0(elec,sub_elec)*aeei("e
+         73          i:py(elec)               q:(intelec0(elec,sub_elec)*aeei("e
       lec")*emkup(sub_elec))
-         69          i:pl("elec",lm)$ll(lm)   q:(laborelec0(sub_elec,lm)*emkup(s
+         74          i:pl("elec",lm)$ll(lm)   q:(laborelec0(sub_elec,lm)*emkup(s
       ub_elec))                   l:
-         70          i:pl("elec",lm)$hl(lm)   q:(laborelec0(sub_elec,lm)*emkup(s
+         75          i:pl("elec",lm)$hl(lm)   q:(laborelec0(sub_elec,lm)*emkup(s
       ub_elec))                   l:
-         71          i:pk                     q:(kelec0(sub_elec)*emkup(sub_elec
+         76          i:pk                     q:(kelec0(sub_elec)*emkup(sub_elec
       ))                         kl:
-         72          i:py(fe)$intelec0(fe,sub_elec)    q:(intelec0(fe,sub_elec)*
+         77          i:py(fe)$intelec0(fe,sub_elec)    q:(intelec0(fe,sub_elec)*
       aeei("elec")*emkup(sub_elec))                            fe.tl:
-         73          i:pco2#(fe)$clim         q:(emission0("co2","e",fe,sub_elec
+         78          i:pco2#(fe)$clim         q:(emission0("co2","e",fe,sub_elec
       )*aeei("elec")*emkup(sub_elec))      p:1e-5             fe.tl:
-         74          i:pco2_s("elec")#(fe)$clim_s("elec")         q:(emission0("
+         79          i:pco2_s("elec")#(fe)$clim_s("elec")         q:(emission0("
       co2","e",fe,sub_elec)*aeei("elec")*emkup(sub_elec))      p:1e-5           
         fe.tl:
-         75
-         76  *       Production of hybro and nuclear biomass electricity      va
+         80
+         81  *       Production of hybro and nuclear biomass electricity      va
       2 from wang ke
-         77  $prod:yelec(sub_elec)$hnb(sub_elec)  s:esub(sub_elec,"ff") a:0 va(a
+         82  $prod:yelec(sub_elec)$hnb(sub_elec)  s:esub(sub_elec,"ff") a:0 va(a
       ):esub("elec","kl") l(va):eslm("l")
-         78          o:pe_base$hne(sub_elec)  q:outputelec0(sub_elec)           
+         83          o:pe_base$hne(sub_elec)  q:outputelec0(sub_elec)           
          p:(1-taxelec0(sub_elec))  a:ra  t:taxelec0(sub_elec)
-         79          o:pe_base$wsb(sub_elec)  q:outputelec0(sub_elec)           
+         84          o:pe_base$wsb(sub_elec)  q:outputelec0(sub_elec)           
          p:(1-taxelec0(sub_elec))  a:ra  N:t_re(sub_elec)
-         80          i:py(i)                  q:(intelec0(i,sub_elec)*emkup(sub_
+         85          i:py(i)                  q:(intelec0(i,sub_elec)*emkup(sub_
       elec))                                              a:
-         81          i:pl("elec",lm)$ll(lm)          q:(laborelec0(sub_elec,lm)*
+         86          i:pl("elec",lm)$ll(lm)          q:(laborelec0(sub_elec,lm)*
       emkup(sub_elec))                          l:
-         82          i:pl("elec",lm)$hl(lm)          q:(laborelec0(sub_elec,lm)*
+         87          i:pl("elec",lm)$hl(lm)          q:(laborelec0(sub_elec,lm)*
       emkup(sub_elec))                          l:
-         83          i:pk                     q:(kelec0(sub_elec)*emkup(sub_elec
+         88          i:pk                     q:(kelec0(sub_elec)*emkup(sub_elec
       ))                                                  va:
-         84          i:pffelec(sub_elec)$ffelec0(sub_elec)                q:(ffe
+         89          i:pffelec(sub_elec)$ffelec0(sub_elec)                q:(ffe
       lec0(sub_elec)*emkup(sub_elec))      P:1
-         85
-         86
-         87  *       Production of wind, solar  electricity      va2 from wang k
+         90
+         91
+         92  *       Production of wind, solar  electricity      va2 from wang k
       e
-         88  $prod:yelec(sub_elec)$wse(sub_elec) s:esub(sub_elec,"ff") b:0 va(b)
+         93  $prod:yelec(sub_elec)$wse(sub_elec) s:esub(sub_elec,"ff") b:0 va(b)
       :esub("elec","kl") l(va):eslm("l")
-         89         o:pelec(sub_elec)        q:(outputelec0(sub_elec))          
+         94         o:pelec(sub_elec)        q:(outputelec0(sub_elec))          
            p:(1-taxelec0(sub_elec))  a:ra  N:t_re(sub_elec)
-         90  *        o:pelec(sub_elec)        q:(outputelec0(sub_elec))        
+         95  *        o:pelec(sub_elec)        q:(outputelec0(sub_elec))        
            p:(1-taxelec0(sub_elec))  a:ra  t:taxelec0(sub_elec)
-         91          i:py(i)                  q:(intelec0(i,sub_elec)*emkup(sub_
+         96          i:py(i)                  q:(intelec0(i,sub_elec)*emkup(sub_
       elec))                                              b:
-         92          i:pl("elec",lm)$ll(lm)          q:(laborelec0(sub_elec,lm)*
+         97          i:pl("elec",lm)$ll(lm)          q:(laborelec0(sub_elec,lm)*
       emkup(sub_elec))                           l:
-         93          i:pl("elec",lm)$hl(lm)          q:(laborelec0(sub_elec,lm)*
+         98          i:pl("elec",lm)$hl(lm)          q:(laborelec0(sub_elec,lm)*
       emkup(sub_elec))                           l:
-         94          i:pk                     q:(kelec0(sub_elec)*emkup(sub_elec
+         99          i:pk                     q:(kelec0(sub_elec)*emkup(sub_elec
       ))                                                  va:
-         95          i:pffelec(sub_elec)$ffelec0(sub_elec)                q:(ffe
+        100          i:pffelec(sub_elec)$ffelec0(sub_elec)                q:(ffe
       lec0(sub_elec)*emkup(sub_elec))      P:1
-         96
-         97
-         98
-         99  $prod:y(i)$(not fe(i) and not elec(i) ) s:0 a:esub(i,"ff") b(a):0  
+        101
+        102
+        103
+        104  $prod:y(i)$(not fe(i) and not elec(i) ) s:0 a:esub(i,"ff") b(a):0  
       kle(b):0.4 kl(kle):0.6  l(kl):eslm("l") e(kle):sigma("ele_p") ne(e):sigma(
       "ene_p")  coal(ne):0 roil(ne):0 gas(ne):0
-        100          o:py(i)                  q:(output0(i))                    
+        105          o:py(i)                  q:(output0(i))                    
       p:(1-tx0(i))     a:ra    t:tx0(i)
-        101          i:pffact(i)$ffact0(i)    q:ffact0(i)                       
+        106          i:pffact(i)$ffact0(i)    q:ffact0(i)                       
                           a:
-        102          i:py(j)$(not e(j))       q:int0(j,i)                       
+        107          i:py(j)$(not e(j))       q:int0(j,i)                       
                         b:
-        103          i:pk                     q:fact0("capital",i)              
+        108          i:pk                     q:fact0("capital",i)              
                       kl:
-        104          i:pl(i,lm)$ll(lm)        q:labor_v0(i,lm)                  
+        109          i:pl(i,lm)$ll(lm)        q:labor_v0(i,lm)                  
                l:
-        105          i:pl(i,lm)$hl(lm)        q:labor_v0(i,lm)                  
+        110          i:pl(i,lm)$hl(lm)        q:labor_v0(i,lm)                  
                l:
-        106          i:py(elec)               q:(int0(elec,i)*aeei(i))          
+        111          i:py(elec)               q:(int0(elec,i)*aeei(i))          
                       e:
-        107          i:py(fe)                 q:(int0(fe,i)*aeei(i))            
+        112          i:py(fe)                 q:(int0(fe,i)*aeei(i))            
                       fe.tl:
-        108          i:pco2#(fe)$clim         q:(emission0("co2","e",fe,i)*aeei(
+        113          i:pco2#(fe)$clim         q:(emission0("co2","e",fe,i)*aeei(
       i))      p:1e-5             fe.tl:
-        109          i:pco2_s(i)#(fe)$clim_s(i)         q:(emission0("co2","e",f
+        114          i:pco2_s(i)#(fe)$clim_s(i)         q:(emission0("co2","e",f
       e,i)*aeei(i))      p:1e-5             fe.tl:
-        110
-        111  *       Production of fossil fuel production       va from wang ke
-        112  $prod:y(i)$fe(i) s:0 a:esub(i,"ff") b(a):0 va(b):esub(i,"kl") l(va)
+        115
+        116  *       Production of fossil fuel production       va from wang ke
+        117  $prod:y(i)$fe(i) s:0 a:esub(i,"ff") b(a):0 va(b):esub(i,"kl") l(va)
       :eslm("l")  coal(b):0 roil(b):0 gas(b):0
-        113          o:py(i)                  q:(output0(i))                    
+        118          o:py(i)                  q:(output0(i))                    
       p:(1-tx0(i))     a:ra    t:tx0(i)
-        114          i:py(j)$(not fe(j))      q:int0(j,i)                       
+        119          i:py(j)$(not fe(j))      q:int0(j,i)                       
                     b:
-        115          i:pk                     q:fact0("capital",i)            va
+        120          i:pk                     q:fact0("capital",i)            va
       :
-        116          i:pl(i,lm)$ll(lm)          q:labor_v0(i,lm)                
+        121          i:pl(i,lm)$ll(lm)          q:labor_v0(i,lm)                
       l:
-        117          i:pl(i,lm)$hl(lm)          q:labor_v0(i,lm)                
+        122          i:pl(i,lm)$hl(lm)          q:labor_v0(i,lm)                
       l:
-        118          i:pffact(i)$ffact0(i)    q:ffact0(i)                       
+        123          i:pffact(i)$ffact0(i)    q:ffact0(i)                       
                      a:
-        119          i:py(fe)                 q:(int0(fe,i)*aeei(i))            
+        124          i:py(fe)                 q:(int0(fe,i)*aeei(i))            
                       fe.tl:
-        120          i:pco2#(fe)$clim         q:(emission0("co2","e",fe,i)*aeei(
+        125          i:pco2#(fe)$clim         q:(emission0("co2","e",fe,i)*aeei(
       i))      p:1e-5             fe.tl:
-        121          i:pco2_s(i)#(fe)$clim_s(i)         q:(emission0("co2","e",f
+        126          i:pco2_s(i)#(fe)$clim_s(i)         q:(emission0("co2","e",f
       e,i)*aeei(i))      p:1e-5             fe.tl:
-        122
-        123  *        consumption of goods and factors    based on EPPA
-        124
-        125  $prod:consum   s:esub_c  a:0.3 e:sigma("ene_fd") roil(e):0 coal(e):
+        127
+        128  *        consumption of goods and factors    based on EPPA
+        129
+        130  $prod:consum   s:esub_c  a:0.3 e:sigma("ene_fd") roil(e):0 coal(e):
       0 gas(e):0
-        126           o:pcons                  q:(sum(i,cons0(i))+sum(f,consf0(f
+        131           o:pcons                  q:(sum(i,cons0(i))+sum(f,consf0(f
       )))
-        127           i:py(i)$(not e(i))       q:cons0(i)                a:
-        128           i:py(i)$(elec(i))        q:(cons0(i)*aeei("fd"))          
+        132           i:py(i)$(not e(i))       q:cons0(i)                a:
+        133           i:py(i)$(elec(i))        q:(cons0(i)*aeei("fd"))          
             e:
-        129           i:py(fe)                 q:(cons0(fe)*aeei("fd"))         
+        134           i:py(fe)                 q:(cons0(fe)*aeei("fd"))         
               fe.tl:
-        130           i:pco2#(fe)$clim         q:(emission0("co2","e",fe,"househ
+        135           i:pco2#(fe)$clim         q:(emission0("co2","e",fe,"househ
       old")*aeei("fd"))      p:1e-5             fe.tl:
-        131           i:pco2_h#(fe)$clim_h     q:(emission0("co2","e",fe,"househ
+        136           i:pco2_h#(fe)$clim_h     q:(emission0("co2","e",fe,"househ
       old")*aeei("fd"))      p:1e-5           fe.tl:
-        132           I:PSO2#(fe)$slim         Q:(emission0("so2","e",fe,"househ
+        137           I:PSO2#(fe)$slim         Q:(emission0("so2","e",fe,"househ
       old")*aeei("fd"))      P:1e-5         fe.tl:
-        133
-        134
-        135  *        aggregate capital investment
-        136
-        137  $prod:invest   s:esub_inv
-        138           o:pinv             q:(sum(i,inv0(i)))
-        139           i:py(i)            q:inv0(i)
-        140
+        138
+        139
+        140  *        aggregate capital investment
         141
-        142
-        143  *        welfare          Ke Wang, EPPA S: 1
-        144
-        145  $prod:welf    s:1.0
-        146           o:pu                 q:(sum(i,cons0(i)+inv0(i))+sum(f,cons
-      f0(f)+invf0(f)))
-        147           i:pcons              q:(sum(i,cons0(i))+sum(f,consf0(f)))
-        148           i:pinv               q:(sum(i,inv0(i))+sum(f,invf0(f)))
+        142  $prod:invest   s:esub_inv
+        143           o:pinv             q:(sum(i,inv0(i)))
+        144           i:py(i)            q:inv0(i)
+        145
+        146
+        147
+        148  *        welfare          Ke Wang, EPPA S: 1
         149
-        150
-        151  $demand:ra
-        152
-        153  *demand for consumption,invest and rd
+        150  $prod:welf    s:1.0
+        151           o:pu                 q:(sum(i,cons0(i)+inv0(i))+sum(f,cons
+      f0(f)+invf0(f)))
+        152           i:pcons              q:(sum(i,cons0(i))+sum(f,consf0(f)))
+        153           i:pinv               q:(sum(i,inv0(i))+sum(f,invf0(f)))
         154
-        155  d:pu                 q:(sum(i,cons0(i)+inv0(i))+sum(f,consf0(f)+inv
+        155
+        156  $demand:ra
+        157
+        158  *demand for consumption,invest and rd
+        159
+        160  d:pu                 q:(sum(i,cons0(i)+inv0(i))+sum(f,consf0(f)+inv
       f0(f)))
-        156
-        157  *endowment of factor supplies
-        158
-        159  e:pk                 q:fact("capital")
-        160  e:pls(lm)                q:(tlabor_v0(lm)/(1-ur_t0(lm)))
-        161  e:pls(lm)$ur_t0(lm)             q:(-tlabor_v0(lm)/(1-ur_t0(lm)))   
-                     r:ur_t(lm)$ur_t0(lm)
-        162  e:pffact(x)          q:ffact0(x)                 r:sff(x)$ffact0(x)
-        163  e:pffelec(sub_elec)  q:ffelec0(sub_elec)         r:sffelec(sub_elec
+        161
+        162  *endowment of factor supplies
+        163
+        164  e:pk                 q:fact("capital")                             
+               r:gprod
+        165  e:pls(lm)                q:(tlabor_v0(lm)/(1-ur0(lm)))             
+                                          r:gprod
+        166  e:pls(lm)$ur0(lm)             q:(-tlabor_v0(lm)/(1-ur0(lm)))       
+                 r:gprod2(lm)
+        167  e:pffact(x)          q:ffact0(x)                 r:sff(x)$ffact0(x)
+        168  e:pffelec(sub_elec)  q:ffelec0(sub_elec)         r:sffelec(sub_elec
       )$ffelec0(sub_elec)
-        164
-        165  *exogenous endowment of net exports(include variances)
-        166
-        167  e:py(i)              q:(-(nx0(i)+xinv0(i)+xcons0(i))*xscale)
-        168
-        169  *endowment of carbon emission allowances
-        170
-        171  e:pco2$clim          q:clim
-        172  e:pco2_s(i)$clim_s(i)    q:clim_s(i)
-        173  e:pco2_h$clim_h      q:clim_h
-        174
-        175  *supplement benchmark fixed-factor endowments according to assumed 
-      price elasticities of resource supply
-        176
-        177  $constraint:sff(x)$ffact0(x)
-        178       sff(x)    =e= (py(x)/pu)**eta(x);
+        169
+        170  *exogenous endowment of net exports(include variances)
+        171
+        172  e:py(i)              q:(-(nx0(i)+xinv0(i)+xcons0(i))*xscale)
+        173
+        174  *endowment of carbon emission allowances
+        175
+        176  e:pco2$clim         q:1                        r:tclim
+        177  e:pco2_s(i)$clim_s(i)    q:clim_s(i)
+        178  e:pco2_h$clim_h      q:clim_h
         179
-        180  $constraint:sffelec(sub_elec)$ffelec0(sub_elec)
-        181  *    sffelec(sub_elec) =e=  (py("elec")/pu)**eta(sub_elec);
-        182       sffelec(sub_elec) =e= 1;
-        183
-        184  $constraint:ur_t(lm)$ur_t0(lm)
-        185        (pls(lm)/pu)=E=(ur_t(lm)/ur_t0(lm))**(-0.1);
-        186
-        187  *== indentification of FIT
-        188  $constraint:t_re(sub_elec)$wsb(sub_elec)
-        189          t_re(sub_elec) =e= taxelec0(sub_elec);
-        190
-        191  $constraint:rgdp
-        192    pu*rgdp =e= pcons*(sum(i,cons0(i))+sum(f,consf0(f)))*consum+pinv*
+        180  *supplement benchmark fixed-factor endowments according to assumed 
+      price elasticities of resource supply
+        181
+        182  $constraint:sff(x)$ffact0(x)
+        183       sff(x)    =e= (py(x)/pu)**eta(x);
+        184
+        185  $constraint:sffelec(sub_elec)$ffelec0(sub_elec)
+        186  *    sffelec(sub_elec) =e=  (py("elec")/pu)**eta(sub_elec);
+        187       sffelec(sub_elec) =e= 1;
+        188
+        189  $constraint:ur(lm)$ur0(lm)
+        190        (pls(lm)/pu)=E=(ur(lm)/ur0(lm))**(-0.1);
+        191
+        192  *== indentification of FIT
+        193  $constraint:t_re(sub_elec)$wsb(sub_elec)
+        194          t_re(sub_elec) =e= taxelec0(sub_elec);
+        195
+        196  $constraint:rgdp
+        197    pu*rgdp =e= pcons*(sum(i,cons0(i))+sum(f,consf0(f)))*consum+pinv*
       (sum(i,inv0(i)))*invest+sum(i,py(i)*((nx0(i)+xinv0(i)+xcons0(i))*xscale)) 
         ;
-        193
-        194
-        195
-        196
-        197  $report:
         198
-        199  v:qdout(j)             o:py(j)       prod:y(j)     !output by secto
-      r(domestic market)
-        200
-        201  v:qc(i)                i:py(i)       prod:consum   !consumpiton of 
-      final commodities
-        202  v:grosscons            o:pcons       prod:consum   !aggregate consu
-      mpiton
-        203
-        204  v:qinvk(i)             i:py(i)       prod:invest   !physical capita
-      l investment by non-energy sectors
-        205  v:grossinvk            o:pinv        prod:invest   !aggregate physi
-      cal capital investment
-        206
-        207
-        208  v:util                 o:pu          prod:welf       !welf
-        209
-        210  v:qin(i,j)             i:py(i)       prod:y(j)      !inputs of inte
-      rmediate goods
-        211  v:qin_ele(i,sub_elec)  i:py(i)       prod:yelec(sub_elec)      !inp
-      uts of intermediate goods to fossil fuel fired generation
+        199
+        200  $constraint:gprod$(simu_s eq 0)
+        201    rgdp =e= rgdp0;
+        202
+        203  $constraint:gprod$(simu_s ne 0)
+        204    gprod =e= gprod0;
+        205
+        206  $constraint:gprod2(lm)$(ur0(lm) and simu_s eq 0)
+        207   gprod2(lm) =e= gprod*ur(lm);
+        208
+        209  $constraint:gprod2(lm)$(ur0(lm) and simu_s ne 0)
+        210    gprod2(lm) =e= gprod0*ur(lm);
+        211
         212
-        213  v:qkin(j)              i:pk          prod:y(j)        !capital inpu
-      ts
-        214  v:qlin(j,lm)           i:pl(j,lm)      prod:y(j)        !labor inpu
-      ts
-        215  v:qlin_ele(sub_elec,lm)      i:pl("elec",lm)      prod:yelec(sub_el
-      ec)        !labor inputs
-        216  v:qkin_ele(sub_elec)   i:pk          prod:yelec(sub_elec)        !c
-      apital inputs
-        217  v:qffin(j)$x(j)        i:pffact(j)   prod:y(j)        !fixed factor
-       inputs
+        213  $constraint:tclim$clim
+        214  *== quantity target
+        215   tclim =e= clim0*temission2("co2");
+        216  *== intensity target
+        217  *  tclim =e= clim0*temission2("co2")/rgdp0*rgdp;
         218
-        219  v:qffelec(sub_elec)$cfe(sub_elec)    i:pffelec(sub_elec)     prod:y
-      elec(sub_elec)      !fixed factor inputs
+        219
         220
-        221  V:qelec(sub_elec)        o:pelec(sub_elec)       prod:yelec(sub_ele
-      c)
+        221  $report:
         222
-        223  v:ECO2(i)              i:pco2         prod:y(i)
-        224  v:ECO2_s(i)              i:pco2_s(i)        prod:y(i)
-        225  v:ECO2_se(sub_elec)              i:pco2_s("elec")        prod:yelec
+        223  v:qdout(j)             o:py(j)       prod:y(j)     !output by secto
+      r(domestic market)
+        224
+        225  v:qc(i)                i:py(i)       prod:consum   !consumpiton of 
+      final commodities
+        226  v:grosscons            o:pcons       prod:consum   !aggregate consu
+      mpiton
+        227
+        228  v:qinvk(i)             i:py(i)       prod:invest   !physical capita
+      l investment by non-energy sectors
+        229  v:grossinvk            o:pinv        prod:invest   !aggregate physi
+      cal capital investment
+        230
+        231
+        232  v:util                 o:pu          prod:welf       !welf
+        233
+        234  v:qin(i,j)             i:py(i)       prod:y(j)      !inputs of inte
+      rmediate goods
+        235  v:qin_ele(i,sub_elec)  i:py(i)       prod:yelec(sub_elec)      !inp
+      uts of intermediate goods to fossil fuel fired generation
+        236
+        237  v:qkin(j)              i:pk          prod:y(j)        !capital inpu
+      ts
+        238  v:qlin(j,lm)           i:pl(j,lm)      prod:y(j)        !labor inpu
+      ts
+        239  v:qlin_ele(sub_elec,lm)      i:pl("elec",lm)      prod:yelec(sub_el
+      ec)        !labor inputs
+        240  v:qkin_ele(sub_elec)   i:pk          prod:yelec(sub_elec)        !c
+      apital inputs
+        241  v:qffin(j)$x(j)        i:pffact(j)   prod:y(j)        !fixed factor
+       inputs
+        242
+        243  v:qffelec(sub_elec)$cfe(sub_elec)    i:pffelec(sub_elec)     prod:y
+      elec(sub_elec)      !fixed factor inputs
+        244
+        245  V:qelec(sub_elec)        o:pelec(sub_elec)       prod:yelec(sub_ele
+      c)
+        246
+        247  v:ECO2(i)              i:pco2         prod:y(i)
+        248  v:ECO2_s(i)              i:pco2_s(i)        prod:y(i)
+        249  v:ECO2_se(sub_elec)              i:pco2_s("elec")        prod:yelec
       (sub_elec)
-        226  v:eco2_h                i:pco2_h        prod:consum
-        227  v:EsO2(i)              i:pso2        prod:y(i)
-        228  v:EHsO2                i:pso2        prod:consum
-        229  $offtext
+        250  v:eco2_h                i:pco2_h        prod:consum
+        251
+        252  $offtext
        
        
       Symbol Listing
@@ -1583,153 +1639,155 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\225a\gamsgeh.dat
        
       Symbol      Type       References
       ==========  =====      ==================================================
-      "CAPITAL"   SET           103  115  159
-      "ELEC"      SET            59   60   69   70   74   77   81   82   88   92
-                                 93  215  225
-      "ELE_P"     SET            99
-      "ENE_FD"    SET           125
-      "ENE_P"     SET            99
-      "FF"        SET            77   88   99  112
-      "KL"        SET            77   88  112
-      "L"         SET            54   65   77   88   99  112
-      CLIM        PARAM         171
-      CLIM_H      PARAM         173
-      CLIM_S      PARAM         172
-      CONS0       PARAM         127
-      CONSUM      ACTIV           4  125  201  202  226  228
-      ECO2        REPRT         223
-      ECO2_H      REPRT         226
-      ECO2_S      REPRT         224
-      ECO2_SE     REPRT         225
-      EHSO2       REPRT         228
-      ELEC        SET            57   68  106
-      ENESTA      PARAM          65
-      ESLM        PARAM          54   65   77   88   99  112
-      ESO2        REPRT         227
-      ESUB        PARAM          77   77   88   88   99  112  112
-      ESUB_C      PARAM         125
-      ESUB_INV    PARAM         137
-      FACT        PARAM         159
-      FACT0       PARAM         103  115
-      FE          SET            58   72  107  119  129
-      FFACT0      PARAM         101  118  162
-      FFELEC0     PARAM         163
-      GROSSCONS   REPRT         202
-      GROSSINVK   REPRT         205
-      I           SET             3   42   42   47   48   48   56   56   67   80
-                                 91   99   99  100  100  101  101  102  103  104
-                                104  105  105  109  112  112  112  113  113  114
-                                115  116  116  117  117  118  118  121  127  127
-                                128  139  139  167  172  172  201  201  204  204
-                                210  210  211  211  223  223  224  224  224  227
-                                227
-      INT0        PARAM         102  114
-      INTELEC0    PARAM          56
-      INV0        PARAM         139
-      INVEST      ACTIV           5  137  204  205
-      J           SET           102  102  114  114  199  199  199  210  210  213
-                                213  214  214  214  217  217  217
-      KELEC0      PARAM          61
-      LABORELEC0  PARAM          59   60
-      LABOR_V0    PARAM          42  104  105  116  117
-      LM          SET             9   41   42   42   43   43   59   59   60   60
-                                 69   70   81   82   92   93  104  104  105  105
-                                116  116  117  117  160  161  161  214  214  215
-                                215
-      L_A         ACTIV           9   41
-      OUTPUT0     PARAM          48
-      OUTPUTELEC  PARAM          49   50   78   79
-      PCO2        PRICE          24   73  108  120  130  171  223
-      PCO2_H      PRICE          26  131  173  226
-      PCO2_S      PRICE          25   74  109  121  172  224  225
-      PCONS       PRICE          20  126  147  202
-      PELEC       PRICE          13   49   50   55   89  221
-      PE_BASE     PRICE          14   51   66   78   79
-      PFFACT      PRICE          18  101  118  162  217
-      PFFELEC     PRICE          19   84   95  163  219
-      PINV        PRICE          21  138  148  205
-      PK          PRICE          17   61   71   83   94  103  115  159  213  216
-      PL          PRICE          16   42   59   60   69   70   81   82   92   93
-                                104  105  116  117  214  215
-      PLS         PRICE          15   43  160  161
-      PSO2        PRICE         132  227  228
-      PU          PRICE          22  146  155  208
-      PY          PRICE          12   48   56   57   58   67   68   72   80   91
-                                100  102  106  107  113  114  119  127  128  129
-                                139  167  199  201  204  210  211
-      QC          REPRT         201
-      QDOUT       REPRT         199
-      QELEC       REPRT         221
-      QFFELEC     REPRT         219
-      QFFIN       REPRT         217
-      QIN         REPRT         210
-      QINVK       REPRT         204
-      QIN_ELE     REPRT         211
-      QKIN        REPRT         213
-      QKIN_ELE    REPRT         216
-      QLIN        REPRT         214
-      QLIN_ELE    REPRT         215
-      RA          CONSU          29   55   66   78   79   89  100  113  151
+      "CAPITAL"   SET           108  120  164
+      "ELEC"      SET            64   65   74   75   79   82   86   87   93   97
+                                 98  239  249
+      "ELE_P"     SET           104
+      "ENE_FD"    SET           130
+      "ENE_P"     SET           104
+      "FF"        SET            82   93  104  117
+      "KL"        SET            82   93  117
+      "L"         SET            59   70   82   93  104  117
+      CLIM_H      PARAM         178
+      CLIM_S      PARAM         177
+      CONS0       PARAM         132
+      CONSUM      ACTIV           4  130  225  226  250
+      ECO2        REPRT         247
+      ECO2_H      REPRT         250
+      ECO2_S      REPRT         248
+      ECO2_SE     REPRT         249
+      ELEC        SET            62   73  111
+      ENESTA      PARAM          70
+      ESLM        PARAM          59   70   82   93  104  117
+      ESUB        PARAM          82   82   93   93  104  117  117
+      ESUB_C      PARAM         130
+      ESUB_INV    PARAM         142
+      FACT        PARAM         164
+      FACT0       PARAM         108  120
+      FE          SET            63   77  112  124  134
+      FFACT0      PARAM         106  123  167
+      FFELEC0     PARAM         168
+      GPROD       AUXIL          40  164  165
+      GPROD2      AUXIL          41  166
+      GROSSCONS   REPRT         226
+      GROSSINVK   REPRT         229
+      I           SET             3   47   47   52   53   53   61   61   72   85
+                                 96  104  104  105  105  106  106  107  108  109
+                                109  110  110  114  117  117  117  118  118  119
+                                120  121  121  122  122  123  123  126  132  132
+                                133  144  144  172  177  177  225  225  228  228
+                                234  234  235  235  247  247  248  248  248
+      INT0        PARAM         107  119
+      INTELEC0    PARAM          61
+      INV0        PARAM         144
+      INVEST      ACTIV           5  142  228  229
+      J           SET           107  107  119  119  223  223  223  234  234  237
+                                237  238  238  238  241  241  241
+      KELEC0      PARAM          66
+      LABORELEC0  PARAM          64   65
+      LABOR_V0    PARAM          47  109  110  121  122
+      LM          SET             9   46   47   47   48   48   64   64   65   65
+                                 74   75   86   87   97   98  109  109  110  110
+                                121  121  122  122  165  166  166  238  238  239
+                                239
+      L_A         ACTIV           9   46
+      OUTPUT0     PARAM          53
+      OUTPUTELEC  PARAM          54   55   83   84
+      PCO2        PRICE          24   78  113  125  135  176  247
+      PCO2_H      PRICE          26  136  178  250
+      PCO2_S      PRICE          25   79  114  126  177  248  249
+      PCONS       PRICE          20  131  152  226
+      PELEC       PRICE          13   54   55   60   94  245
+      PE_BASE     PRICE          14   56   71   83   84
+      PFFACT      PRICE          18  106  123  167  241
+      PFFELEC     PRICE          19   89  100  168  243
+      PINV        PRICE          21  143  153  229
+      PK          PRICE          17   66   76   88   99  108  120  164  237  240
+      PL          PRICE          16   47   64   65   74   75   86   87   97   98
+                                109  110  121  122  238  239
+      PLS         PRICE          15   48  165  166
+      PSO2        PRICE         137
+      PU          PRICE          22  151  160  232
+      PY          PRICE          12   53   61   62   63   72   73   77   85   96
+                                105  107  111  112  118  119  124  132  133  134
+                                144  172  223  225  228  234  235
+      QC          REPRT         225
+      QDOUT       REPRT         223
+      QELEC       REPRT         245
+      QFFELEC     REPRT         243
+      QFFIN       REPRT         241
+      QIN         REPRT         234
+      QINVK       REPRT         228
+      QIN_ELE     REPRT         235
+      QKIN        REPRT         237
+      QKIN_ELE    REPRT         240
+      QLIN        REPRT         238
+      QLIN_ELE    REPRT         239
+      RA          CONSU          29   60   71   83   84   94  105  118  156
       RGDP        AUXIL          39
-      SFF         AUXIL          32  162
-      SFFELEC     AUXIL          33  163
-      SIGMA       PARAM          99   99  125
-      SUB_ELEC    SET             7   49   49   50   50   54   55   55   56   59
-                                 60   61   65   66   77   77   78   78   79   79
-                                 84   88   88   89   89   95  163  163  163  211
-                                211  215  215  216  216  219  219  219  221  221
-                                221  225  225
-      TAXELEC0    PARAM          55   66   78
-      TLABOR_V0   PARAM          43
-      TX0         PARAM         100  113
-      T_RE        AUXIL          37   79   89
-      UR_T        AUXIL          35  161
-      UTIL        REPRT         208
-      WELF        ACTIV           6  145  208
-      X           SET            32  162  162  162
-      Y           ACTIV           3   47   99  112  199  210  213  214  217  223
-                                224  227
-      YELEC       ACTIV           7   54   65   77   88  211  215  216  219  221
-                                225
+      SFF         AUXIL          32  167
+      SFFELEC     AUXIL          33  168
+      SIGMA       PARAM         104  104  130
+      SUB_ELEC    SET             7   54   54   55   55   59   60   60   61   64
+                                 65   66   70   71   82   82   83   83   84   84
+                                 89   93   93   94   94  100  168  168  168  235
+                                235  239  239  240  240  243  243  243  245  245
+                                245  249  249
+      TAXELEC0    PARAM          60   71   83
+      TCLIM       AUXIL          44  176
+      TLABOR_V0   PARAM          48
+      TX0         PARAM         105  118
+      T_RE        AUXIL          37   84   94
+      UR          AUXIL          35
+      UTIL        REPRT         232
+      WELF        ACTIV           6  150  232
+      X           SET            32  167  167  167
+      Y           ACTIV           3   52  104  117  223  234  237  238  241  247
+                                248
+      YELEC       ACTIV           7   59   70   82   93  235  239  240  243  245
+                                249
        
-1847   
-1850  CHINA3E.INTEGER1=1;
+1932   
+1935  CHINA3E.INTEGER1=1;
 EXIT C:\GAMS\win64\24.4\mpsgeset
-1853   
-1854  *carbon has zero price in the benchmark
-1855   
-1856  *initialize constraints
-1857   
-1858  sff.l(x)$ffact0(x)  =1;
-1859  t_re.l(sub_elec) = taxelec0(sub_elec);
-1860  t_re.lo(sub_elec)$ret0(sub_elec)=-inf;
-1861  pu.fx=1;
-1862   
-1863  *== policy shock for static model
-1864  ur_t.l(lm)=ur_t0(lm);
-1865  *clim_s("construction")=0.5*Temission0('co2',"construction");
-1866  *clim_s("transport")=1*Temission0('co2',"transport");
-1867  *clim_s("EII")=0.5*Temission0('co2',"EII");
-1868  *clim_s("elec")=0.7*Temission0('co2',"elec");
-1869  *clim=0.5*Temission1('co2');
-1870   
-1871  *benchmark calibration
-1872   
-1873  China3E.iterlim =100000;
-1874   
+1938   
+1939  *carbon has zero price in the benchmark
+1940   
+1941  *initialize constraints
+1942   
+1943  sff.l(x)$ffact0(x)  =1;
+1944  t_re.l(sub_elec) = taxelec0(sub_elec);
+1945  t_re.lo(sub_elec)$ret0(sub_elec)=-inf;
+1946  pu.fx=1;
+1947   
+1948  *== policy shock for static model
+1949  ur.l(lm)=ur0(lm);
+1950   
+1951  clim=0;
+1952  clim0 = 0.9;
+1953  *clim_s("construction")=0.5*Temission0('co2',"construction");
+1954  *clim_s("transport")=1*Temission0('co2',"transport");
+1955  *clim_s("EII")=0.5*Temission0('co2',"EII");
+1956  *clim_s("elec")=0.7*Temission0('co2',"elec");
+1957  *clim=0.5*Temission1('co2');
+1958   
+1959  *benchmark calibration
+1960   
+1961  China3E.iterlim =100000;
+1962   
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\China3E.gen
-2720   
-2721  solve China3E using mcp;
-2722   
-2723  display China3E.modelstat, China3E.solvestat,ur_t.l,clim;
-2724   
-2725   
-2726   
-2727  *$include core_1205
-2728   
-2729  *$include core_CETlabor
+2809   
+2810  solve China3E using mcp;
+2811   
+2812  display China3E.modelstat, China3E.solvestat,ur.l,clim;
+2813   
+2814   
+2815   
+2816  *$include core_1205
+2817   
+2818  *$include core_CETlabor
 STOP C:\Users\hero\Desktop\Github\test model - V17\run.gms
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:17:17 Page 3
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:43:57 Page 3
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
 Include File Summary
 
@@ -1779,23 +1837,23 @@ Include File Summary
                                            el - V17\backstop.gms
     20     1057 INCLUDE        1      13  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\core.gms
-    21     1295 SYSINCLUDE    20     238  ..C:\GAMS\win64\24.4\mpsgeset
-    22     1314 CALL          21      19  ..gmsge_nx "C:\Users\hero\Desktop\Gith
+    21     1323 SYSINCLUDE    20     266  ..C:\GAMS\win64\24.4\mpsgeset
+    22     1342 CALL          21      19  ..gmsge_nx "C:\Users\hero\Desktop\Gith
                                             ub\test model - V17\225a\gamscge.dat
                                             "
-    23     1315 INCLUDE       21      20  ...C:\Users\hero\Desktop\Github\test m
+    23     1343 INCLUDE       21      20  ...C:\Users\hero\Desktop\Github\test m
                                              odel - V17\225a\gamsgeh.dat
-    24     1852 EXIT          21      22  ..C:\GAMS\win64\24.4\mpsgeset
-    25     1875 INCLUDE       20     261  ..C:\Users\hero\Desktop\Github\test mo
+    24     1937 EXIT          21      22  ..C:\GAMS\win64\24.4\mpsgeset
+    25     1963 INCLUDE       20     292  ..C:\Users\hero\Desktop\Github\test mo
                                             del - V17\China3E.gen
-    26     2719 EXIT          25     844  ..C:\Users\hero\Desktop\Github\test mo
+    26     2808 EXIT          25     845  ..C:\Users\hero\Desktop\Github\test mo
                                             del - V17\China3E.gen
-    27     2730 STOP           1      18  C:\Users\hero\Desktop\Github\test mode
+    27     2819 STOP           1      18  C:\Users\hero\Desktop\Github\test mode
                                           l - V17\run.gms
 
 
-COMPILATION TIME     =        6.735 SECONDS      3 MB  24.4.6 r52609 WEX-WEI
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:17:17 Page 4
+COMPILATION TIME     =        7.188 SECONDS      3 MB  24.4.6 r52609 WEX-WEI
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:43:57 Page 4
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
 E x e c u t i o n
 
@@ -3337,15 +3395,15 @@ EF  1.971294E-4 6.743209E-5
 
 ----    844 PARAMETER ur0  the benchmark unemployment rate
 
-                      ( ALL       0.000 )
+low  0.027,    high 0.049
 
 
 ----    844 PARAMETER tlabor_s0  total labor supply by sub_labor
 
-low  6.444062E+8,    high 7.622343E+7
+low  6.625550E+8,    high 8.018469E+7
 
 
-----    844 PARAMETER tqlabor_s0           =  7.206297E+8  total labor supply
+----    844 PARAMETER tqlabor_s0           =  7.427397E+8  total labor supply
 
 ----    993 SET ll  low level labor type
 
@@ -3356,51 +3414,51 @@ low
 
 high
 
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:17:17 Page 5
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:43:57 Page 5
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
-Model Statistics    SOLVE CHINA3E Using MCP From line 2721
+Model Statistics    SOLVE CHINA3E Using MCP From line 2810
 
 
 MODEL STATISTICS
 
-BLOCKS OF EQUATIONS           6     SINGLE EQUATIONS           10
-BLOCKS OF VARIABLES          41     SINGLE VARIABLES          819
-NON ZERO ELEMENTS           861     NON LINEAR N-Z             16
-DERIVATIVE POOL              20     CONSTANT POOL              18
-CODE LENGTH                  53
+BLOCKS OF EQUATIONS          11     SINGLE EQUATIONS           15
+BLOCKS OF VARIABLES          42     SINGLE VARIABLES          805
+NON ZERO ELEMENTS           858     NON LINEAR N-Z             22
+DERIVATIVE POOL              20     CONSTANT POOL              21
+CODE LENGTH                  72
 
 
 GENERATION TIME      =        0.016 SECONDS      4 MB  24.4.6 r52609 WEX-WEI
 
 
 EXECUTION TIME       =        0.031 SECONDS      4 MB  24.4.6 r52609 WEX-WEI
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:17:17 Page 6
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:43:57 Page 6
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
-Solution Report     SOLVE CHINA3E Using MCP From line 2721
+Solution Report     SOLVE CHINA3E Using MCP From line 2810
 
 
                S O L V E      S U M M A R Y
 
      MODEL   CHINA3E             
      TYPE    MCP                 
-     SOLVER  PATH                FROM LINE  2721
+     SOLVER  PATH                FROM LINE  2810
 
 **** SOLVER STATUS     1 Normal Completion         
 **** MODEL STATUS      1 Optimal                   
 
- RESOURCE USAGE, LIMIT          0.078      1000.000
+ RESOURCE USAGE, LIMIT          0.031      1000.000
  ITERATION COUNT, LIMIT         1        100000
  EVALUATION ERRORS              0             0
 
 
 --- Executing MCP subsolver PATH
-110 row/cols, 3149 non-zeros, 26.02% dense.
+115 row/cols, 3166 non-zeros, 23.94% dense.
 
 Path 4.7.02 (Fri Jun 26 15:39:32 2015)
 Written by Todd Munson, Steven Dirkse, and Michael Ferris
 
 INITIAL POINT STATISTICS
-Maximum of X. . . . . . . . . .  5.2184e+004 var: (RA)
+Maximum of X. . . . . . . . . .  5.3104e+004 var: (RA)
 Maximum of F. . . . . . . . . .  5.3680e+004 eqn: (RGDP)
 Maximum of Grad F . . . . . . .  3.4100e+004 eqn: (PY.OM)
                                             var: (Y.OM)
@@ -3412,16 +3470,16 @@ Maximum Column Norm . . . . . .  1.0802e+005 var: (PCONS)
 Minimum Column Norm . . . . . .  1.0000e+000 var: (RGDP)
 
 FINAL STATISTICS
-Inf-Norm of Complementarity . .  1.4406e-009 eqn: (PK)
-Inf-Norm of Normal Map. . . . .  1.4406e-009 eqn: (PK)
-Inf-Norm of Minimum Map . . . .  1.4406e-009 eqn: (PK)
-Inf-Norm of Fischer Function. .  1.4406e-009 eqn: (PK)
-Inf-Norm of Grad Fischer Fcn. .  2.5002e-005 eqn: (Y.Serv)
-Two-Norm of Grad Fischer Fcn. .  3.4423e-005
+Inf-Norm of Complementarity . .  3.7969e-007 eqn: (RA)
+Inf-Norm of Normal Map. . . . .  1.9863e-009 eqn: (PK)
+Inf-Norm of Minimum Map . . . .  1.9863e-009 eqn: (PK)
+Inf-Norm of Fischer Function. .  1.9863e-009 eqn: (PK)
+Inf-Norm of Grad Fischer Fcn. .  1.8276e-005 eqn: (CONSUM)
+Two-Norm of Grad Fischer Fcn. .  3.7783e-005
 
 FINAL POINT STATISTICS
 Maximum of X. . . . . . . . . .  5.3680e+004 var: (RGDP)
-Maximum of F. . . . . . . . . .  1.4406e-009 eqn: (PK)
+Maximum of F. . . . . . . . . .  1.9863e-009 eqn: (PK)
 Maximum of Grad F . . . . . . .  3.4100e+004 eqn: (PY.OM)
                                             var: (Y.OM)
 
@@ -3447,10 +3505,12 @@ mine        .         .         .        1.000
                 NONE
 
 
----- EQU EQ_003  Complementary equation(s) for UR_T
+---- EQU EQ_003  Complementary equation(s) for UR
 
-                NONE
+        LOWER     LEVEL     UPPER    MARGINAL
 
+low       .         .         .        0.027      
+high      .         .         .        0.049      
 
 ---- EQU EQ_004  Complementary equation(s) for T_RE
 
@@ -3462,9 +3522,31 @@ Biomass    -0.117    -0.117    -0.117    -0.117
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- EQU EQ_005          .         .         .    53680.007      
+---- EQU EQ_005          .         .         .    53680.000      
+---- EQU EQ_006                  (EMPTY)
+---- EQU EQ_007         1.000     1.000     1.000     1.000      
 
   EQ_005  Complementary equation(s) for RGDP
+  EQ_006  Complementary equation(s) for GPROD
+  EQ_007  Complementary equation(s) for GPROD
+
+---- EQU EQ_008  Complementary equation(s) for GPROD2
+
+                NONE
+
+
+---- EQU EQ_009  Complementary equation(s) for GPROD2
+
+        LOWER     LEVEL     UPPER    MARGINAL
+
+low       .         .         .        0.027      
+high      .         .         .        0.049      
+
+                NONE
+
+---- EQU EQ_010                  (EMPTY)
+
+  EQ_010  Complementary equation(s) for TCLIM
 
 ---- VAR Y  activity level for domestic production
 
@@ -3507,7 +3589,7 @@ Coal         .        1.000     +INF       .
 Gas          .        1.000     +INF       .         
 T_D          .        1.000     +INF       .         
 Oil          .        1.000     +INF       .         
-Nuclear      .        1.000     +INF       .         
+Nuclear      .        0.999     +INF       .         
 Hydro        .        1.000     +INF       .         
 Wind         .        1.000     +INF       .         
 Solar        .        1.000     +INF       .         
@@ -3625,8 +3707,8 @@ mine        .        1.000     +INF       .
 
 ---- VAR PCONS           .        1.000     +INF       .         
 ---- VAR PINV            .        1.000     +INF       .         
----- VAR PU             1.000     1.000     1.000 1.3315E-9      
----- VAR RA              .    52184.126     +INF       .         
+---- VAR PU             1.000     1.000     1.000 4.3074E-9      
+---- VAR RA              .    52184.120     +INF       .         
 
   PCONS  price index for aggregate consumption
   PINV  price index for aggregate physical capital investment
@@ -3643,6 +3725,13 @@ Gas         .        1.000     +INF       .
 Agri        .        1.000     +INF       .         
 mine        .        1.000     +INF       .         
 
+---- VAR UR  unemployment rate
+
+        LOWER     LEVEL     UPPER    MARGINAL
+
+low       .        0.027     +INF       .         
+high      .        0.049     +INF       .         
+
 ---- VAR T_RE  FIT for renewable energy
 
            LOWER     LEVEL     UPPER    MARGINAL
@@ -3653,32 +3742,41 @@ Biomass     -INF     -0.117     +INF       .
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR RGDP            .    53680.007     +INF       .         
+---- VAR RGDP            .    53680.000     +INF       .         
+---- VAR GPROD           .        1.000     +INF       .         
 
   RGDP  real gdp
+  GPROD  productivity index
+
+---- VAR GPROD2  productivity index to identify unemployment rate
+
+        LOWER     LEVEL     UPPER    MARGINAL
+
+low       .        0.027     +INF       .         
+high      .        0.049     +INF       .         
 
 ---- VAR QDOUT  
 
           LOWER     LEVEL     UPPER    MARGINAL
 
-Elec        .     4850.163     +INF       .         
+Elec        .     4850.160     +INF       .         
 Coal        .     2748.766     +INF       .         
 Oilgas      .     1224.620     +INF       .         
 Roil        .     3489.170     +INF       .         
 Gas         .      311.871     +INF       .         
-Agri        .     8952.766     +INF       .         
+Agri        .     8952.765     +INF       .         
 mine        .     1880.434     +INF       .         
-Food        .     8853.383     +INF       .         
+Food        .     8853.382     +INF       .         
 Paper       .     1239.293     +INF       .         
-Chem        .     2802.081     +INF       .         
+Chem        .     2802.080     +INF       .         
 CM          .     1681.405     +INF       .         
 IST         .     1601.223     +INF       .         
 NFM         .     2338.406     +INF       .         
-EII         .    22445.980     +INF       .         
-OM          .    50728.612     +INF       .         
+EII         .    22445.978     +INF       .         
+OM          .    50728.606     +INF       .         
 Air         .      509.799     +INF       .         
-Tran        .     5040.606     +INF       .         
-Serv        .    39413.889     +INF       .         
+Tran        .     5040.605     +INF       .         
+Serv        .    39413.885     +INF       .         
 
 ---- VAR QC  
 
@@ -3691,21 +3789,21 @@ Roil        .      231.648     +INF       .
 Gas         .      138.200     +INF       .         
 Agri        .     2141.336     +INF       .         
 mine        .         .        +INF       EPS       
-Food        .     3827.996     +INF       .         
+Food        .     3827.995     +INF       .         
 Paper       .       15.883     +INF       .         
 Chem        .         .        +INF       EPS       
 CM          .       22.829     +INF       .         
 IST         .         .        +INF       EPS       
 NFM         .         .        +INF       EPS       
 EII         .      670.846     +INF       .         
-OM          .     2994.386     +INF       .         
+OM          .     2994.385     +INF       .         
 Air         .       52.393     +INF       .         
 Tran        .      757.565     +INF       .         
-Serv        .    16177.282     +INF       .         
+Serv        .    16177.281     +INF       .         
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR GROSSCONS       .    27330.197     +INF       .         
+---- VAR GROSSCONS       .    27330.194     +INF       .         
 
 ---- VAR QINVK  
 
@@ -3725,15 +3823,15 @@ CM          .        2.292     +INF       .
 IST         .        3.115     +INF       .         
 NFM         .        5.322     +INF       .         
 EII         .      317.230     +INF       .         
-OM          .    20927.423     +INF       .         
+OM          .    20927.421     +INF       .         
 Air         .        2.953     +INF       .         
 Tran        .      219.547     +INF       .         
-Serv        .     2401.753     +INF       .         
+Serv        .     2401.752     +INF       .         
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR GROSSINVK       .    24853.929     +INF       .         
----- VAR UTIL            .    52184.126     +INF       .         
+---- VAR GROSSINVK       .    24853.926     +INF       .         
+---- VAR UTIL            .    52184.120     +INF       .         
 
 ---- VAR QIN  
 
@@ -3758,7 +3856,7 @@ Elec  .Air         .        1.669     +INF       .
 Elec  .Tran        .       54.194     +INF       .         
 Elec  .Serv        .      309.862     +INF       .         
 Coal  .Elec        .         .        +INF       EPS       
-Coal  .Coal        .      579.694     +INF       .         
+Coal  .Coal        .      579.695     +INF       .         
 Coal  .Oilgas      .        3.138     +INF       .         
 Coal  .Roil        .       13.711     +INF       .         
 Coal  .Gas         .       21.587     +INF       .         
@@ -3810,7 +3908,7 @@ Roil  .EII         .      606.009     +INF       .
 Roil  .OM          .      285.130     +INF       .         
 Roil  .Air         .      130.116     +INF       .         
 Roil  .Tran        .      761.467     +INF       .         
-Roil  .Serv        .      462.325     +INF       .         
+Roil  .Serv        .      462.324     +INF       .         
 Gas   .Elec        .         .        +INF       EPS       
 Gas   .Coal        .        0.340     +INF       .         
 Gas   .Oilgas      .        0.141     +INF       .         
@@ -3836,7 +3934,7 @@ Agri  .Roil        .        0.133     +INF       .
 Agri  .Gas         .        0.006     +INF       .         
 Agri  .Agri        .     1239.692     +INF       .         
 Agri  .mine        .        0.906     +INF       .         
-Agri  .Food        .     3210.980     +INF       .         
+Agri  .Food        .     3210.979     +INF       .         
 Agri  .Paper       .       99.562     +INF       .         
 Agri  .Chem        .       29.731     +INF       .         
 Agri  .CM          .        0.321     +INF       .         
@@ -3987,7 +4085,7 @@ EII   .CM          .      215.552     +INF       .
 EII   .IST         .      131.756     +INF       .         
 EII   .NFM         .      136.337     +INF       .         
 EII   .EII         .     6532.197     +INF       .         
-EII   .OM          .    10986.230     +INF       .         
+EII   .OM          .    10986.229     +INF       .         
 EII   .Air         .        1.199     +INF       .         
 EII   .Tran        .       92.344     +INF       .         
 EII   .Serv        .     1571.288     +INF       .         
@@ -4005,10 +4103,10 @@ OM    .CM          .      117.885     +INF       .
 OM    .IST         .      214.385     +INF       .         
 OM    .NFM         .      226.365     +INF       .         
 OM    .EII         .     1056.808     +INF       .         
-OM    .OM          .    16628.247     +INF       .         
+OM    .OM          .    16628.245     +INF       .         
 OM    .Air         .       76.572     +INF       .         
 OM    .Tran        .      502.354     +INF       .         
-OM    .Serv        .     3358.924     +INF       .         
+OM    .Serv        .     3358.923     +INF       .         
 Air   .Elec        .         .        +INF       EPS       
 Air   .Coal        .        1.553     +INF       .         
 Air   .Oilgas      .        0.461     +INF       .         
@@ -4041,9 +4139,9 @@ Tran  .CM          .       54.794     +INF       .
 Tran  .IST         .       39.462     +INF       .         
 Tran  .NFM         .       33.166     +INF       .         
 Tran  .EII         .      568.272     +INF       .         
-Tran  .OM          .     1177.636     +INF       .         
+Tran  .OM          .     1177.635     +INF       .         
 Tran  .Air         .       14.874     +INF       .         
-Tran  .Tran        .      491.255     +INF       .         
+Tran  .Tran        .      491.254     +INF       .         
 Tran  .Serv        .      663.194     +INF       .         
 Serv  .Elec        .         .        +INF       EPS       
 Serv  .Coal        .      267.106     +INF       .         
@@ -4059,10 +4157,10 @@ Serv  .CM          .      149.347     +INF       .
 Serv  .IST         .       91.485     +INF       .         
 Serv  .NFM         .      150.026     +INF       .         
 Serv  .EII         .     1732.841     +INF       .         
-Serv  .OM          .     5105.544     +INF       .         
+Serv  .OM          .     5105.543     +INF       .         
 Serv  .Air         .       74.264     +INF       .         
 Serv  .Tran        .     1019.671     +INF       .         
-Serv  .Serv        .     8888.003     +INF       .         
+Serv  .Serv        .     8888.002     +INF       .         
 
 ---- VAR QIN_ELE  
 
@@ -4072,12 +4170,12 @@ Elec  .Coal         .      929.431     +INF       .
 Elec  .Gas          .       19.519     +INF       .         
 Elec  .T_D          .      266.933     +INF       .         
 Elec  .Oil          .        7.459     +INF       .         
-Elec  .Nuclear      .       39.233     +INF       .         
+Elec  .Nuclear      .       39.224     +INF       .         
 Elec  .Hydro        .      266.816     +INF       .         
 Elec  .Wind         .       34.652     +INF       .         
 Elec  .Solar        .        0.968     +INF       .         
-Elec  .Biomass      .       15.712     +INF       .         
-Coal  .Coal         .      876.135     +INF       .         
+Elec  .Biomass      .       15.718     +INF       .         
+Coal  .Coal         .      876.136     +INF       .         
 Coal  .Gas          .         .        +INF       EPS       
 Coal  .T_D          .         .        +INF       EPS       
 Coal  .Oil          .         .        +INF       EPS       
@@ -4135,7 +4233,7 @@ Food  .Coal         .        2.751     +INF       .
 Food  .Gas          .        0.098     +INF       .         
 Food  .T_D          .        7.003     +INF       .         
 Food  .Oil          .        0.256     +INF       .         
-Food  .Nuclear      .        1.265     +INF       .         
+Food  .Nuclear      .        1.264     +INF       .         
 Food  .Hydro        .        2.314     +INF       .         
 Food  .Wind         .        1.431     +INF       .         
 Food  .Solar        .        0.036     +INF       .         
@@ -4198,11 +4296,11 @@ OM    .Coal         .       68.034     +INF       .
 OM    .Gas          .        2.418     +INF       .         
 OM    .T_D          .      173.174     +INF       .         
 OM    .Oil          .        6.342     +INF       .         
-OM    .Nuclear      .       31.276     +INF       .         
+OM    .Nuclear      .       31.269     +INF       .         
 OM    .Hydro        .       57.218     +INF       .         
 OM    .Wind         .       35.378     +INF       .         
 OM    .Solar        .        0.880     +INF       .         
-OM    .Biomass      .       19.011     +INF       .         
+OM    .Biomass      .       19.018     +INF       .         
 Air   .Coal         .        0.449     +INF       .         
 Air   .Gas          .         .        +INF       EPS       
 Air   .T_D          .        1.093     +INF       .         
@@ -4216,7 +4314,7 @@ Tran  .Coal         .       17.483     +INF       .
 Tran  .Gas          .        0.968     +INF       .         
 Tran  .T_D          .       21.508     +INF       .         
 Tran  .Oil          .        2.539     +INF       .         
-Tran  .Nuclear      .        3.961     +INF       .         
+Tran  .Nuclear      .        3.960     +INF       .         
 Tran  .Hydro        .        7.246     +INF       .         
 Tran  .Wind         .        4.480     +INF       .         
 Tran  .Solar        .        0.111     +INF       .         
@@ -4225,11 +4323,11 @@ Serv  .Coal         .       54.226     +INF       .
 Serv  .Gas          .        1.928     +INF       .         
 Serv  .T_D          .      224.817     +INF       .         
 Serv  .Oil          .        5.055     +INF       .         
-Serv  .Nuclear      .       24.928     +INF       .         
+Serv  .Nuclear      .       24.922     +INF       .         
 Serv  .Hydro        .       45.605     +INF       .         
 Serv  .Wind         .       28.198     +INF       .         
 Serv  .Solar        .        0.702     +INF       .         
-Serv  .Biomass      .       15.152     +INF       .         
+Serv  .Biomass      .       15.158     +INF       .         
 
 ---- VAR QKIN  
 
@@ -4245,14 +4343,14 @@ mine        .      257.755     +INF       .
 Food        .      804.455     +INF       .         
 Paper       .      113.417     +INF       .         
 Chem        .      300.296     +INF       .         
-CM          .      177.058     +INF       .         
+CM          .      177.057     +INF       .         
 IST         .      161.316     +INF       .         
 NFM         .      222.433     +INF       .         
-EII         .     2031.482     +INF       .         
-OM          .     3924.384     +INF       .         
+EII         .     2031.481     +INF       .         
+OM          .     3924.383     +INF       .         
 Air         .       60.887     +INF       .         
 Tran        .      981.619     +INF       .         
-Serv        .     9019.548     +INF       .         
+Serv        .     9019.546     +INF       .         
 
 ---- VAR QLIN  
 
@@ -4268,7 +4366,7 @@ Roil  .low       .       43.891     +INF       .
 Roil  .high      .       39.694     +INF       .         
 Gas   .low       .       12.020     +INF       .         
 Gas   .high      .        7.263     +INF       .         
-Agri  .low       .     5188.647     +INF       .         
+Agri  .low       .     5188.646     +INF       .         
 Agri  .high      .      110.985     +INF       .         
 mine  .low       .      282.361     +INF       .         
 mine  .high      .       46.080     +INF       .         
@@ -4292,7 +4390,7 @@ Air   .low       .       16.779     +INF       .
 Air   .high      .       36.969     +INF       .         
 Tran  .low       .      796.541     +INF       .         
 Tran  .high      .      144.614     +INF       .         
-Serv  .low       .     4689.199     +INF       .         
+Serv  .low       .     4689.198     +INF       .         
 Serv  .high      .     5235.536     +INF       .         
 
 ---- VAR QLIN_ELE  
@@ -4307,16 +4405,16 @@ T_D    .low       .       87.049     +INF       .
 T_D    .high      .       71.416     +INF       .         
 Oil    .low       .        3.188     +INF       .         
 Oil    .high      .        2.615     +INF       .         
-Nuclear.low       .       15.721     +INF       .         
-Nuclear.high      .       12.898     +INF       .         
+Nuclear.low       .       15.718     +INF       .         
+Nuclear.high      .       12.895     +INF       .         
 Hydro  .low       .       28.761     +INF       .         
 Hydro  .high      .       23.596     +INF       .         
 Wind   .low       .       17.783     +INF       .         
 Wind   .high      .       14.590     +INF       .         
 Solar  .low       .        0.443     +INF       .         
 Solar  .high      .        0.363     +INF       .         
-Biomass.low       .        9.556     +INF       .         
-Biomass.high      .        7.840     +INF       .         
+Biomass.low       .        9.560     +INF       .         
+Biomass.high      .        7.843     +INF       .         
 
 ---- VAR QKIN_ELE  
 
@@ -4326,11 +4424,11 @@ Coal         .      218.351     +INF       .
 Gas          .        4.421     +INF       .         
 T_D          .      157.658     +INF       .         
 Oil          .        5.830     +INF       .         
-Nuclear      .       25.961     +INF       .         
+Nuclear      .       25.955     +INF       .         
 Hydro        .      173.000     +INF       .         
 Wind         .       76.945     +INF       .         
 Solar        .        5.750     +INF       .         
-Biomass      .       22.237     +INF       .         
+Biomass      .       22.246     +INF       .         
 
 ---- VAR QFFIN  
 
@@ -4358,7 +4456,7 @@ Biomass      .         .        +INF       EPS
 
 Coal         .         .        +INF       EPS       
 Gas          .         .        +INF       EPS       
-T_D          .     1067.565     +INF       .         
+T_D          .     1067.564     +INF       .         
 Oil          .         .        +INF       EPS       
 Nuclear      .         .        +INF       EPS       
 Hydro        .         .        +INF       EPS       
@@ -4430,53 +4528,26 @@ Biomass      .         .        +INF       EPS
 
 ---- VAR ECO2_H          .         .        +INF       EPS       
 
----- VAR ESO2  
-
-          LOWER     LEVEL     UPPER    MARGINAL
-
-Elec        .         .        +INF       EPS       
-Coal        .         .        +INF       EPS       
-Oilgas      .         .        +INF       EPS       
-Roil        .         .        +INF       EPS       
-Gas         .         .        +INF       EPS       
-Agri        .         .        +INF       EPS       
-mine        .         .        +INF       EPS       
-Food        .         .        +INF       EPS       
-Paper       .         .        +INF       EPS       
-Chem        .         .        +INF       EPS       
-CM          .         .        +INF       EPS       
-IST         .         .        +INF       EPS       
-NFM         .         .        +INF       EPS       
-EII         .         .        +INF       EPS       
-OM          .         .        +INF       EPS       
-Air         .         .        +INF       EPS       
-Tran        .         .        +INF       EPS       
-Serv        .         .        +INF       EPS       
-
-                       LOWER     LEVEL     UPPER    MARGINAL
-
----- VAR EHSO2           .         .        +INF       EPS       
-
 
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
                              0  REDEFINED
                              0     ERRORS
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:17:17 Page 7
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 12:43:57 Page 7
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
 E x e c u t i o n
 
 
-----   2723 MODEL CHINA3E.ModelStat        =        1.000  
+----   2812 MODEL CHINA3E.ModelStat        =        1.000  
             MODEL CHINA3E.SolveStat        =        1.000  
 
-----   2723 VARIABLE UR_T.L  unemployment rate
+----   2812 VARIABLE UR.L  unemployment rate
 
-                      ( ALL       0.000 )
+low  0.027,    high 0.049
 
 
-----   2723 PARAMETER clim                 =        0.000  carbon emission allow
+----   2812 PARAMETER clim                 =        0.000  carbon emission allow
                                                            ance
 
 **** REPORT FILE SUMMARY
@@ -4484,7 +4555,7 @@ E x e c u t i o n
 MPS C:\Users\hero\Desktop\Github\test model - V17\225a\gamscge.dat
 
 
-EXECUTION TIME       =        0.016 SECONDS      3 MB  24.4.6 r52609 WEX-WEI
+EXECUTION TIME       =        0.015 SECONDS      3 MB  24.4.6 r52609 WEX-WEI
 
 
 USER: Yaqian Mu                                      G150107:0436AO-WIN

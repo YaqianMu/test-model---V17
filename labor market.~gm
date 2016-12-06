@@ -83,7 +83,7 @@ parameter bur(*)     the benchmark unemployment rate ;
 
 
 bwage(lmo) =   labordata('wage',lmo);
-bwage(lm)  =   sum(lmo$maplmolm(lmo,lm),labordata('wage',lmo)*sum(i,labor_q0(i,lmo)))/sum(i,labor_q0(i,lmo));
+bwage(lm)  =   sum(lmo$maplmolm(lmo,lm),labordata('wage',lmo)*sum(i,labor_q0(i,lmo)))/sum(i,labor_q0(i,lm));
 
 bur(lmo)  =   labordata('ul',lmo);
 bur(lm)  =   1-sum(i,labor_q0(i,lm))/sum(lmo$maplmolm(lmo,lm),sum(i,labor_q0(i,lmo))/(1-bur(lmo)));
