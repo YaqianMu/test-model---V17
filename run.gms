@@ -10,7 +10,11 @@ $include labor market
 
 $include backstop
 
-$include core
+*$include core
+
+*$include core_1205
+
+$include core_CETlabor
 $stop
 *$include dynamic-calibration
 *$include dynamic-»ù×¼Çé¾°

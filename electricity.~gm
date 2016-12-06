@@ -17,6 +17,7 @@ $GDXIN
 *=== transfer unit to billion yuan
 Eprop(i,sub_elec)=Eprop(i,sub_elec)/100000;
 Eprop(f,sub_elec)=Eprop(f,sub_elec)/100000;
+Eprop('tax',sub_elec)=Eprop('tax',sub_elec)/100000;
 
 DISPLAY Eprop;
 

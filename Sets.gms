@@ -40,7 +40,6 @@ i commodities in SAM table(produced goods represented by sector name
 e(i) energy supply sectors
        /Elec
        Coal
-       Oilgas
        Roil
        Gas/
 fe(i) fuel energy supply sectors
@@ -174,6 +173,7 @@ theta(x)     imputed fixed factor share of capital      from GTAP-E
 /
 ffact0        benchmark fixed factor supply
 eta           fixed factor supply elasticity
+
 
 
 

@@ -34,7 +34,11 @@ $LOAD labor_v0
 $LOAD labor_q0
 $LOAD labordata
 
+*=== transfer unit to billion yuan
+labor_v0(i,lm)=labor_v0(i,lm)/100000;
+
 labor_w0(i,lm)$labor_q0(i,lm) =labor_v0(i,lm)/labor_q0(i,lm);
+labor_w0(i,lm)$(labor_q0(i,lm) eq 0) = 0.001;
 
 
 *== adjust employment from 2010 to 2012
@@ -67,15 +71,24 @@ parameter tlabor_q0(lm)   total employment by sub_labor
           tqlabor0       total employment ;
 
 tlabor_q0(lm)=sum(i,labor_q0(i,lm));
-*tlabor0(lm)=fact("labor")*tlprop("2010",lm);
-*labor0(i,lm)=tlabor0(lm)*lprop(i,lm)     ;
 tqlabor0=sum(lm,tlabor_q0(lm));
-display labor_q0,tlabor_q0,tqlabor0;
+
+parameter tlabor_v0(lm)   total employment value by sub_labor
+          tvlabor0       total employment value;
+
+tlabor_v0(lm)=sum(i,labor_v0(i,lm));
+tvlabor0=sum(lm,tlabor_v0(lm));
+
+
+display labor_q0,tlabor_q0,tqlabor0,labor_v0,tlabor_v0,tvlabor0;
 
 
 parameter laborelec0,laborist0;
 laborelec0(sub_elec,lm)=labor_q0("Elec",lm)*lelec0(sub_elec)/fact0("labor","Elec");
 laborist0(sub_ist,lm)=list0(sub_ist)*labor_q0("IST",lm)/sum(lmm,labor_q0("IST",lmm));
+
+laborelec0(sub_elec,lm)=labor_v0("Elec",lm)*lelec0(sub_elec)/fact0("labor","Elec");
+laborist0(sub_ist,lm)=list0(sub_ist)*labor_v0("IST",lm)/sum(lmm,labor_q0("IST",lmm));
 
 display laborelec0,laborist0;
 
@@ -84,7 +97,7 @@ parameter ur0      the benchmark unemployment rate
           tqlabor_s0      total labor supply;
 
 ur0(lm)=bur(lm);
-*ur0(lm)=0;
+ur0(lm)=0;
 
 tlabor_s0(lm)=(tlabor_q0(lm)/(1-ur0(lm)));
 tqlabor_s0=sum(lm,tlabor_s0(lm));
@@ -234,5 +247,14 @@ L27        .        High
 L28        .        High
 
 /;
+
+set ll(lm) low level labor type;
+set hl(lm) high level labor type;
+
+ll(lm)$mapll(lm,'low') = 1;
+hl(lm)$mapll(lm,'high') = 1;
+
+display ll,hl;
+
 
 

@@ -51,4 +51,4 @@ ret_b(t,sub_elec)=RET1(t,sub_elec);
 
 ret0(sub_elec)=ret_b("2010",sub_elec);
 
-display PAT,rgdp0,ret0,ret_b;
+display aeei,PAT,rgdp0,ret0,ret_b;

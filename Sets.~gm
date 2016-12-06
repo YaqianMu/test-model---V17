@@ -40,7 +40,6 @@ i commodities in SAM table(produced goods represented by sector name
 e(i) energy supply sectors
        /Elec
        Coal
-       Oilgas
        Roil
        Gas/
 fe(i) fuel energy supply sectors
@@ -70,7 +69,7 @@ Trans(i)  transport
 Serv(i)   services
          /serv/
 
-pollutant /CO2,SO2/
+pollutant /CO2,SO2,NOX/
 Pitem /e,g,a/
 Psource /coal,roil,gas,process/
 
@@ -177,10 +176,13 @@ eta           fixed factor supply elasticity
 
 
 
+
 *parameter to scale exogenous endowments
 xscale
 
 ;
+
+theta(x)=0;
 
 int0(i,j)   = sam(i,j);
 fact0(f,j)  = sam(f,j);
