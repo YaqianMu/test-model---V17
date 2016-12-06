@@ -1,0 +1,98 @@
+
+--- Job run.gms Start 12/05/16 17:23:03 24.4.6 r52609 WEX-WEI x86 64bit/MS Windows
+GAMS 24.4.6   Copyright (C) 1987-2015 GAMS Development. All rights reserved
+Licensee: Yaqian Mu                                      G150107:0436AO-WIN
+          Tsinghua University, Res. Centre for International EnvironmDC6727
+          License for teaching and research at degree granting institutions
+--- Starting compilation
+--- run.gms(1) 2 Mb
+--- .sets.gms(109) 3 Mb
+--- call GDXXRW.EXE data.xlsx par=sam rng=A1
+
+GDXXRW           24.4.6 r52609 Released Jun 26, 2015 VS8 x86 32bit/MS Windows 
+Input file : C:\Users\hero\Desktop\Github\test model - V17\data.xlsx
+Output file: C:\Users\hero\Desktop\Github\test model - V17\data.gdx
+Total time = 1891 Ms
+--- .sets.gms(114) 3 Mb
+--- GDXin=C:\Users\hero\Desktop\Github\test model - V17\data.gdx
+--- .sets.gms(250) 3 Mb
+--- run.gms(3) 3 Mb
+--- .subsititution elasticities.gms(69) 3 Mb
+--- run.gms(4) 3 Mb
+--- .emission data.gms(159) 3 Mb
+--- run.gms(6) 3 Mb
+--- .electricity.gms(6) 3 Mb
+--- call GDXXRW.EXE elec.xlsx par=Eprop rng=A1:J34
+
+GDXXRW           24.4.6 r52609 Released Jun 26, 2015 VS8 x86 32bit/MS Windows 
+Input file : C:\Users\hero\Desktop\Github\test model - V17\elec.xlsx
+Output file: C:\Users\hero\Desktop\Github\test model - V17\elec.gdx
+Total time = 1703 Ms
+--- .electricity.gms(11) 3 Mb
+--- GDXin=C:\Users\hero\Desktop\Github\test model - V17\elec.gdx
+--- .electricity.gms(109) 3 Mb
+--- run.gms(7) 3 Mb
+--- .ist.gms(4) 3 Mb
+--- call GDXXRW.EXE ist.xlsx par=isprop rng=A1:C29
+
+GDXXRW           24.4.6 r52609 Released Jun 26, 2015 VS8 x86 32bit/MS Windows 
+Input file : C:\Users\hero\Desktop\Github\test model - V17\ist.xlsx
+Output file: C:\Users\hero\Desktop\Github\test model - V17\ist.gdx
+Total time = 2282 Ms
+--- .ist.gms(7) 3 Mb
+--- GDXin=C:\Users\hero\Desktop\Github\test model - V17\ist.gdx
+--- .ist.gms(48) 3 Mb
+--- run.gms(8) 3 Mb
+--- .trend.gms(5) 3 Mb
+--- call GDXXRW.EXE trend.xlsx par=PAT rng=A1:D18   par=RET1 rng=A26:I35   par=RET2 rng=A37:I46   par=sffelec_b rng=A47:I57  par=sffelec_BAU rng=A58:I68
+
+GDXXRW           24.4.6 r52609 Released Jun 26, 2015 VS8 x86 32bit/MS Windows 
+Input file : C:\Users\hero\Desktop\Github\test model - V17\trend.xlsx
+Output file: C:\Users\hero\Desktop\Github\test model - V17\trend.gdx
+Total time = 1937 Ms
+--- .trend.gms(12) 3 Mb
+--- GDXin=C:\Users\hero\Desktop\Github\test model - V17\trend.gdx
+--- .trend.gms(54) 3 Mb
+--- run.gms(9) 3 Mb
+--- .labor market.gms(24) 3 Mb
+--- call GDXXRW.EXE labor.xlsx par=labor_q0 rng=A1:AC19  par=labor_v0 rng=A21:AC39 par=labordata  rng=A41:AC43
+
+GDXXRW           24.4.6 r52609 Released Jun 26, 2015 VS8 x86 32bit/MS Windows 
+Input file : C:\Users\hero\Desktop\Github\test model - V17\labor.xlsx
+Output file: C:\Users\hero\Desktop\Github\test model - V17\labor.gdx
+Total time = 1656 Ms
+--- .labor market.gms(31) 3 Mb
+--- GDXin=C:\Users\hero\Desktop\Github\test model - V17\labor.gdx
+--- .labor market.gms(238) 3 Mb
+--- run.gms(11) 3 Mb
+--- .backstop.gms(57) 3 Mb
+--- run.gms(13) 3 Mb
+--- .core.gms(345) 3 Mb
+--- Running the MPSGE preprocessor ...
+--- ..mpsgeset(19) 3 Mb
+--- call gmsge_nx "C:\Users\hero\Desktop\Github\test model - V17\225a\gamscge.dat"
+--- ..mpsgeset(20) 3 Mb
+--- ...gamsgeh.dat(199) 3 Mb 1 Error
+*** Error 140 in C:\Users\hero\Desktop\Github\test model - V17\225a\gamsgeh.dat
+    Unknown symbol
+--- ...gamsgeh.dat(724) 3 Mb
+--- ..mpsgeset(22) 3 Mb
+--- .core.gms(379) 3 Mb
+--- ..China3E.gen(149) 3 Mb 2 Errors
+*** Error 140 in C:\Users\hero\Desktop\Github\test model - V17\China3E.gen
+    Unknown symbol
+--- ..China3E.gen(157) 3 Mb 3 Errors
+*** Error 140 in C:\Users\hero\Desktop\Github\test model - V17\China3E.gen
+    Unknown symbol
+--- ..China3E.gen(403) 3 Mb 4 Errors
+*** Error 140 in C:\Users\hero\Desktop\Github\test model - V17\China3E.gen
+    Unknown symbol
+--- ..China3E.gen(915) 3 Mb
+--- .core.gms(381) 3 Mb 5 Errors
+*** Error 257 in C:\Users\hero\Desktop\Github\test model - V17\core.gms
+    Solve statement not checked because of previous errors
+--- .core.gms(486) 3 Mb
+--- run.gms(14) 3 Mb 5 Errors
+*** Status: Compilation error(s)
+--- Job run.gms Stop 12/05/16 17:23:13 elapsed 0:00:10.266
+Exit code = 2

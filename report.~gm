@@ -1,0 +1,164 @@
+
+*----------------
+*Report resulsts
+*----------------
+
+parameters
+
+outdec     decimal places to report in output
+report1    reporting variable
+report2    reporting variable
+report3    reporting variable
+mscale     output money scale /10000/
+;
+
+*because we need to change the output results from 10E12 to 10E8 Chinese Yuan
+*the decimal places to report in output will be 6
+outdec(t)             =3;
+$setglobal c_decimals outdec
+$setglobal col_set t
+
+report1("e use (million tces)",t)    =  sum(fe,euse(fe,t));
+report1("carb (million tonnes)",t)   =  sum(fe,carb_emit(fe,t));
+report1("sulf (million tonnes)",t)   =  sum(fe,sulf_emit(fe,t))+sulf_emit('process',t);
+report1("p_c  (Yuan/t)",t)           =  pcarbon(t);
+report1("p_s  (Yuan/t)",t)           =  psulfur(t);
+report1("rate  (Yuan)",t)            =  pdfact('capital',t);
+report1("wage  (Yuan)",t)            =  pdfact('labor',t);
+report1("w (100million Yuan)",t)     =  mscale*welfare(t);
+report1("GDP (100million Yuan)",t)   =  mscale*gdp(t);
+report1("k (100million Yuan)",t)     =  mscale*kstock(t);
+report1("i (100million Yuan)",t)     =  mscale*invest_k(t);
+
+parameters
+
+e_in       inputs of energy to industry and final demand activities(million tce)
+e_shr      activity share of energy in total(%)
+carb_in    inputs of carbon to industry and final demand activities(million tonnes)
+carb_shr   activity share of carbon emissions in total(%)
+h_in       inputs of knowledge to industry and final demand activities(2005 100million Chinese Yuan)
+h_shr      activity share of total endowment of knowledge(%)
+e_y_shr    value share of energy inputs in industry output(%)
+h_y_shr    value share of knowledge inputs in industry output(%)
+
+;
+
+
+e_in(i,t)                           =  sum(ee$(not elec(ee)),input(ee,i,t)*ecoef(ee));
+
+e_in("cons",t)                      =  sum(ee$(not elec(ee)),cons(ee,t)*ecoef(ee));
+
+e_in("inv",t)                       =  sum(ee$(not elec(ee)),invk(ee,t)*ecoef(ee));
+
+
+e_shr(i,t)                          =  e_in(i,t)/sum(e,euse(e,t));
+e_shr("inter",t)                    =  sum(i,e_in(i,t))/sum(e,euse(e,t));
+e_shr("cons",t)                     =  e_in("cons",t)/sum(e,euse(e,t));
+e_shr("inv",t)                      =  e_in("inv",t)/sum(e,euse(e,t));
+
+
+carb_in(i,t)                        =  sum(e,input(e,i,t)*ecoef(e)*ccoef_p(e));
+carb_in("cons",t)                   =  sum(e,cons(e,t)*ecoef(e)*ccoef_p(e));
+carb_in("inv",t)                    =  sum(e,invk(e,t)*ecoef(e)*ccoef_p(e));
+
+carb_shr(i,t)                       =  carb_in(i,t)/sum(e,carb_emit(e,t));
+carb_shr("inter",t)                 =  sum(i,carb_in(i,t))/sum(e,carb_emit(e,t));
+carb_shr("cons",t)                  =  carb_in("cons",t)/sum(e,carb_emit(e,t));
+carb_shr("inv",t)                   =  carb_in("inv",t)/sum(e,carb_emit(e,t));
+
+
+e_y_shr(i,t)                        =  sum(e,input(e,i,t)*pamt(e,t))/(pdom(i,t)*output(i,t));
+
+
+gdp_comp("cons",t)           =  mscale*gdp_comp("cons",t);
+gdp_comp("i",t)              =  mscale*gdp_comp("i",t)   ;
+gdp_comp("nx",t)             =  mscale*gdp_comp("nx",t)   ;
+
+file outfile1 /Results1_TDGE.prn/;
+put outfile1;
+
+$libinclude gams2tbl report1
+$libinclude gams2tbl elecshare
+$libinclude gams2tbl gdp_comp
+$libinclude gams2tbl e_in
+$libinclude gams2tbl e_shr
+$libinclude gams2tbl carb_in
+$libinclude gams2tbl carb_shr
+$libinclude gams2tbl e_y_shr
+
+putclose outfile1;
+
+file outfile /Results2_TDGE.prn/;
+put outfile;
+
+
+
+demand(i,t)                  =   mscale*demand(i,t);
+
+output(i,t)                  =   mscale*output(i,t);
+cons(i,t)                    =   mscale*cons(i,t);
+
+
+invk(i,t)                    =   mscale*invk(i,t);
+
+
+
+fact_supp(f,t)               =   mscale*fact_supp(f,t);
+ffact_supp(x,t)              =   mscale*ffact_supp(x,t) ;
+ffact_supp(sub_elec,t)       =   mscale*ffact_supp(sub_elec,t);
+
+
+$libinclude gams2tbl pdom
+$libinclude gams2tbl pamt
+$libinclude gams2tbl pdfact
+$libinclude gams2tbl pfdem
+$libinclude gams2tbl pff
+
+$libinclude gams2tbl demand
+$libinclude gams2tbl output
+$libinclude gams2tbl cons
+$libinclude gams2tbl invk
+
+
+$libinclude gams2tbl fact_supp
+$libinclude gams2tbl ffact_supp
+
+$libinclude gams2tbl euse
+$libinclude gams2tbl carb_emit
+
+$setglobal title "aggregate energy use,carbon emissions,carbon price,welfare,k and h stocks"
+
+$libinclude gams2tbl
+
+loop(j,
+
+     report2(i,t)      = mscale*input(i,j,t);
+
+$setglobal title "quantity of intermediate inputs demanded by sector 'j.tl,' (2005 Chinese 100million Yuan)"
+
+$libinclude gams2tbl report2
+
+     report3(f,t)      =mscale*fact_dem(f,j,t);
+
+$setglobal title "quantity of factor inputs demanded by sector',j,tl,'(2005 Chineses 100million Yuan)"
+
+);
+
+putclose outfile;
+
+*=== Export to Excel using GDX utilities
+
+*=== First unload to GDX file (occurs during execution phase)
+execute_unload "results.gdx" report1 carb_emit gdp euse
+
+*=== Now write to variable levels to Excel file from GDX
+*=== Since we do not specify a sheet, data is placed in first sheet
+execute 'gdxxrw.exe results.gdx par=report1'
+
+
+
+
+
+
+
+

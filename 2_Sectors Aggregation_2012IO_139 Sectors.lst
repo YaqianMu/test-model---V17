@@ -1,0 +1,262 @@
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/01/16 15:07:13 Page 1
+Mapping and Aggregating Input-Output table into GAMS
+C o m p i l a t i o n
+
+
+   2   
+   3  *=========================================================================
+      ====
+   4   
+      (1) This program/code greatly benefited from Corong, Erwin (2007).
+          "Aggregating Input-Output (IO) table in GAMS".Available at: www.pep-ne
+      t.org
+       
+      (2) The codes used in this exercise is a modified version to deal with the
+          aggregation of sectors in China's IO table.
+       
+      (3) All errors herein remain my sole responsibility.
+       
+      (4) This program maps IO table data data from Excel to GAMS using GDX faci
+      lity.
+       
+      (5) Input-Output: The IO Table used here is China's 2012 IO table with 139
+          original sectors.
+       
+      (6) This code is easy to reset for any new aggregating proposal.
+       
+      By Yaqian Mu
+      Please send comments to muyaqian13@gmail.com
+      October 2016
+  25   
+  26  *=========================================================================
+      ====
+  27   
+  28  *========================= Read data from excel ==========================
+      ====
+  30  *139 sectors with 42 labors
+  31  *=========================================================================
+      ====
+  32   
+  33  *======================= Defining a name for the data ====================
+      ====
+  34  *Defining a name for the data
+  35  parameter
+  36  iodata(*,*)      io data
+  37  *=========================================================================
+      ====
+  38   
+  39  *========================= CALLING AND LOADING GDX FILE ==================
+      ====
+  40  *Specify the GDX file to be used for reading
+**** File: C:\Users\hero\Desktop\Github\test model - V17\2_Input_Data.gdx
+**** Msg : No such file or directory
+  41  $gdxin 2_Input_Data.gdx
+****                        $510
+  42   
+  43  *Read GAMS symbol from the GDX file. Note that the word "iodata" has been
+  44  *declared above before the the $load command
+  45  $load iodata
+****      $502
+  46   
+  47  display iodata;
+****               $141
+  48  *=========================================================================
+      ====
+  49   
+  50  *============================= SET DECLARATION ===========================
+      ====
+  51  *set definitions and maps
+  52   
+  53  set      i accounts in SAM   /
+  54           Elec        Generation Transmission and distribution of power
+  55           Coal        Mining and washing of coal
+  56           Oilgas        Mining of petroleum and natural gas
+  57           Roil        Refining of oil
+  58           Gas        Supply of gas
+  59           Agri        Agriculture
+  60           Mine        Other mining
+  61           Food        Food
+  62           Paper        Paper
+  63           Chem        Chemical industry
+  64           CM        Construction Materials
+  65           IST        Iron and Steel
+  66           NFM        Non-Ferrous Metals
+  67           EII        Other Energy intensive industries
+  68           OM        Other manufacturing
+  69           Air        Air Transport
+  70           Tran        Other Transport
+  71           Serv        Services
+  72           labor,capital,tax,Household,GOVERNMENT,INVESTMENT, EXPORT, IMPORT
+      , ERROR,L1*L42 /
+  73   
+  74  Set  a(i) aggregrated sectors /
+  75           Elec        Generation Transmission and distribution of power
+  76           Coal        Mining and washing of coal
+  77           Oilgas        Mining of petroleum and natural gas
+  78           Roil        Refining of oil
+  79           Gas        Supply of gas
+  80           Agri        Agriculture
+  81           Mine        Other mining
+  82           Food        Food
+  83           Paper        Paper
+  84           Chem        Chemical industry
+  85           CM        Construction Materials
+  86           IST        Iron and Steel
+  87           NFM        Non-Ferrous Metals
+  88           EII        Other Energy intensive industries
+  89           OM        Other manufacturing
+  90           Air        Air Transport
+  91           Tran        Other Transport
+  92           Serv        Services
+  93           /
+  94   
+  95           b(i) /labor,capital,tax/
+  96           c(i) /Household,GOVERNMENT,INVESTMENT, EXPORT, IMPORT, ERROR/
+  97           d(i)
+  98           e(i)
+  99  ;
+ 100  d(i)     =       a(i) +  c(i);
+ 101  e(i)     =       a(i) +  b(i);
+ 102   
+ 103  alias  (i,j);
+ 104  alias  (a,aa);
+ 105   
+ 106  Parameter sam(i,j);
+ 107   
+ 108  *== accounts in the original IO table
+ 109   
+ 110  *set io /1*139,CV,CC,CG,FC,CS,EX,IM,ER,COMP,ITXN,DEPR,OPSU,L1*L42/
+ 111   
+ 112  set m   original sectors /1*139 /
+ 113   
+ 114  set fd  final demands /CV,CC,CG,FC,CS,EX,IM,ER/
+ 115   
+       
+               农村居民消费        CV   COMSUMPTION OF VILLAGE HOUSEHOLD
+               城镇居民消费        CC   COMSUMPTION OF CITY AND TOWN HOUSEHOLD
+               政府消费            CG   COMSUMPTION OF GOVERNMENT
+               固定资本形成总额    FC   FIXED CAPITAL FORMATION
+               存货增加            CS   CHANGE IN STOCKS
+               出口                EX   EXPORT
+               进口                IM   IMPORT
+               误差                ER   ERRORS
+       
+       
+ 129   
+ 130  set va   value added /COMP,ITXN,DEPR,OPSU /
+       
+               劳动者报酬        COMP   Compensation
+               生产税净额        ITXN   Indirect Tax & Net of Subsidies
+               固定资产折旧      DEPR   Depreciation
+               营业盈余          OPSU   Operating Surplus
+       
+ 139   
+ 140  ALIAS (m,n);
+ 141   
+ 142  set em(i) employment number /L1*L42/
+       
+               全国        NA   Nation
+               城镇        CT   City&Town
+               城市        CI   City
+               镇          TO   Town
+               乡村        VI   Village
+       
+ 152   
+ 153   
+ 154  parameter I_IO(m,n) ;
+ 155  parameter I_FD(m,fd);
+ 156  parameter I_VA(va,m);
+ 157  parameter I_EM(em,m);
+ 158   
+ 159  I_IO(m,n)        =       iodata(m,n);
+ 160  I_FD(m,fd)       =       iodata(m,fd);
+ 161  I_VA(va,m)       =       iodata(va,m);
+ 162  I_EM(em,m)       =       iodata(em,m);
+ 163   
+ 164  display I_IO, I_FD, I_VA, I_EM;
+ 165   
+ 166   
+ 167  *=========================Data Balance ===================================
+      ====
+ 168  set t  /1*100/  ;
+ 169  parameter IO(t,i,j)      IO data
+ 170            Tinput(t,a)    input
+ 171            Toutput(t,a)   output
+ 172            DD(t,a)        column sum minus row sum
+ 173            delta(t,a)     adjust rate
+ 174  ;
+ 175  display sam;
+****            $141
+ 176   
+ 178  IO('1',i,j)=sam(i,j);
+ 179  loop(t,
+ 180  Tinput(t,a)=sum(aa,IO(t,aa,a))+sum(b,sam(b,a));
+ 181   
+ 182  DD(t,a)=Tinput(t,a)-sum(d,IO(t,a,d))+2*IO(t,a,'import');
+ 183  Toutput(t,a)=Tinput(t,a);
+ 184   
+ 185  delta(t,a)=DD(t,a)/Toutput(t,a);
+ 186   
+ 187   
+ 188  IO(t+1,a,d)=IO(t,a,d)*(1+delta(t,a));
+ 189  IO(t+1,b,d)=IO(t,b,d)
+ 190  );
+ 191   
+ 192   
+ 193  display IO, Tinput,Toutput,delta,DD;
+ 194   
+ 195  variable x(i,j);
+ 196  x.l(i,j)=IO('100',i,j);
+ 197  display x.l;
+ 198   
+STOP C:\Users\hero\Desktop\Github\Data Process\IO in GAMS （Match & Mapping）\2_
+     Sectors Aggregation_2012IO_139 Sectors.gms
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/01/16 15:07:13 Page 2
+Mapping and Aggregating Input-Output table into GAMS
+Error Messages
+
+
+141  Symbol declared but no values have been assigned. Check for missing
+        data definition, assignment, data loading or implicit assignment
+        via a solve statement.
+        A wild shot: You may have spurious commas in the explanatory
+        text of a declaration. Check symbol reference list.
+502  GDXIN  file not open - ignore rest of line
+510  Unable to open gdx file for $GDXIN
+
+**** 4 ERROR(S)   0 WARNING(S)
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/01/16 15:07:13 Page 3
+Mapping and Aggregating Input-Output table into GAMS
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\hero\Desktop\Github\Data Proc
+                                          ess\IO in GAMS （Match & Mapping）\2_S
+                                          ectors Aggregation_2012IO_139 Sectors.
+                                          gms
+     2       29 CALL           1      29  gdxxrw 2_Input_Data.xlsx par=iodata rn
+                                          g=A1
+     3      199 STOP           1     199  C:\Users\hero\Desktop\Github\Data Proc
+                                          ess\IO in GAMS （Match & Mapping）\2_S
+                                          ectors Aggregation_2012IO_139 Sectors.
+                                          gms
+
+
+COMPILATION TIME     =        0.891 SECONDS      3 MB  24.4.6 r52609 WEX-WEI
+
+
+USER: Yaqian Mu                                      G150107:0436AO-WIN
+      Tsinghua University, Res. Centre for International EnvironmDC6727
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\hero\Desktop\Github\Data Process\IO in GAMS （Match & Mappin
+           g）\2_Sectors Aggregation_2012IO_139 Sectors.gms
+Output     C:\Users\hero\Desktop\Github\test model - V17\2_Sectors Aggregation_2
+           012IO_139 Sectors.lst
+
+**** USER ERROR(S) ENCOUNTERED

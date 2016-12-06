@@ -1,0 +1,97 @@
+GAMS 24.4.3  r51699 Released Apr  2, 2015 WIN-VS8 x86 32bit/MS Windows 03/29/16 16:26:14 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  *----------------------------------------------*
+   2  *Parameters with trend
+   3  *0317 加入GDP趋势，劳动力趋势
+   4  *----------------------------------------------*
+   6   
+   7  Parameter PAT(*,*) parameters with trend;
+   8  Parameter RET1(*,*) renewable electricity trend;
+   9  Parameter RET2(*,*) renewable electricity trend;
+GDXIN   E:\母亚乾在清华\组内事务\自然科学基金\混合模型\test model - V10- markup\
+        trend.gdx
+--- LOAD  PAT = 1:PAT
+--- LOAD  RET1 = 2:RET1
+--- LOAD  RET2 = 3:RET2
+  15   
+  16  Parameter rgdp_b(t)      real gdp pathway;
+****                   $120
+  17  Parameter rgdp0          real gdp;
+  18  Parameter aeei(*)        auto energy effiency index;
+  19  Parameter gprod_b(t)    benchmark productivity index;
+  20  Parameter gprod0        benchmark productivity index;
+  21  Parameter lgrowth_b(t)      labor growth rate;
+  22   
+  23  Parameter ret0      renewable electricity trend;
+  24  Parameter ret_b(t,*)      benchmark renewable electricity trend;
+  25   
+  26  rgdp_b(t)=PAT(t,"rgdp");
+  27  rgdp0=rgdp_b("2010");
+  28  aeei(i)=1;
+****       $120,340
+  29  aeei("fd")=1;
+  30  gprod_b(t)=PAT(t,"gprod");
+  31  gprod0=gprod_b("2010");
+****                      $353
+  32  lgrowth_b(t)=PAT(t,"lgrowth");
+  33   
+  34  *高比例情景
+  35  *ret_b(t,sub_elec)=RET1(t,sub_elec);
+  36  *参考情景
+  37  ret_b(t,sub_elec)=RET2(t,sub_elec);
+****                 $120,340
+  38   
+  39  ret0(sub_elec)=ret_b("2010",sub_elec);
+****                            $353
+  40   
+  41  display PAT,rgdp0,ret0,ret_b;
+GAMS 24.4.3  r51699 Released Apr  2, 2015 WIN-VS8 x86 32bit/MS Windows 03/29/16 16:26:14 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Error Messages
+
+
+120  Unknown identifier entered as set
+340  A label/element with the same name exist. You may have forgotten
+        to quote a label/element reference. For example,
+        set i / a,b,c /; parameter x(i); x('a') = 10;
+353  The domain for this index position is unknown and the element
+        cannot be checked at this point. Missing data statement.
+
+**** 7 ERROR(S)   0 WARNING(S)
+GAMS 24.4.3  r51699 Released Apr  2, 2015 WIN-VS8 x86 32bit/MS Windows 03/29/16 16:26:14 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  E:\母亚乾在清华\组内事务\自然科学基金\
+                                          混合模型\test model - V10- markup\Tren
+                                          d.gms
+     2        5 CALL           1       5  GDXXRW.EXE trend.xlsx par=PAT rng=A1:D
+                                          10   par=RET1 rng=A14:I23   par=RET2 r
+                                          ng=A25:I34
+     3       10 GDXIN          1      10  E:\母亚乾在清华\组内事务\自然科学基金\
+                                          混合模型\test model - V10- markup\tren
+                                          d.gdx
+
+
+COMPILATION TIME     =        5.859 SECONDS      3 MB  24.4.3 r51699 WIN-VS8
+
+
+USER: Yaqian Mu                                      G150107:0436AO-WIN
+      Tsinghua University, Res. Centre for International EnvironmDC6727
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      E:\母亚乾在清华\组内事务\自然科学基金\混合模型\test model - V10- mark
+           up\Trend.gms
+Output     E:\母亚乾在清华\组内事务\自然科学基金\混合模型\test model - V10- mark
+           up\Trend.lst
+
+**** USER ERROR(S) ENCOUNTERED
