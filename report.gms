@@ -1,88 +1,67 @@
-parameter
-report1    reporting variable
-report2    reporting variable
-report3    reporting variable
-report4    reporting variable
-report5
-report6
-report7
-report8
-report9
-report10
-report11
-report12
-;
-*UNEM
-*Pwage;;
+* --
+* -- PANDA - PRC Aggregate National Development Assessment Model
+* --
+* --           All rights reserved
+* --
+* --           David Roland-Holst, Samuel G. Evans
+* --           Cecilia Han Springer, and MU Yaqian
+* --
+* --           Berkeley Energy and Resources, BEAR LLC
+* --           1442A Walnut Street, Suite 108
+* --           Berkeley, CA 94705 USA
+* --
+* --           Email: dwrh@berkeley.edu
+* --           Tel: 510-220-4567
+* --           Fax: 510-524-4591
+* --
+* --           October, 2016
 
-*report1(lm)=sum(i,qlin.l(lm,i))+sum(sub_elec,qlin_ele.l(lm,sub_elec));
-*report1(lm)=ur.l(lm)-ur0(lm);
-*report1(lm)=ur0(lm)*(pl.l(lm)/wage("0.11",lm))**(-10)-ur.l(lm);
-*display report1;
+* --
 
-$ontext
-
-
-
-*set rate reduction rate /0,10,20,30,40,50,60,70,80,90/  ;
-set z reduction rate /0,1,2,3,4,5,6,7,8,9/  ;
-parameter rate(z) /0=0,
-                   1=0.1,
-                   2=0.2,
-                   3=0.3,
-                   4=0.4,
-                   5=0.5,
-                   6=0.6,
-                   7=0.7,
-                   8=0.8,
-                   9=0.9/;
+* -- postscn.gms
+* --
+* -- This file produces scnulation results in Excel compatible CSV files
+* -- Two files are produced for each interval, a reportfile containing desired scnulation variables,
+* --      and a samfile containing complete Social Accounting Matrices
+* --
 
 
-loop(z,
-*clim=(1-(ord(rate)-1)/10)*Temission1("co2");
-*clim_s("elec")=(1-(ord(rate)-1)/10)*Temission0('co2',"elec");
-*clim_s("EII")=(1-(ord(rate)-1)/10)*Temission0('co2',"EII");
-*clim_s("construction")=(1-(ord(rate)-1)/10)*Temission0('co2',"construction");
-clim_s("elec")=(1-rate(z))*Temission0('co2',"elec");
+*=====================================generation of accounting scalar====================
 
-*sigma("kle_ele") = rate(z)*0.6;
-$include China3E.gen
+*=====================================transfer to csv file================================
 
-solve China3E using mcp;
+* ----- Output the results
 
-display China3E.modelstat, China3E.solvestat,clim,rate,sigma;
 
-UNEM(lm,z)=UR.l(lm);
-pwage(lm,z)=pl.l(lm);
+put reportfile ;
 
-report1(z,i)=qdout.l(i);
-report2(z,i)=sum(fe,ccoef_p(fe)*qin.l(fe,i));
-report2(z,sub_elec)=sum(fe,ccoef_p(fe)*qin_ele.l(fe,sub_elec));
-report2(z,fe)=0;
-report2(z,"household")=sum(fe,ccoef_h(fe)*qc.l(fe));
-report3(z,i,j)=qin.l(i,j);
-report3(z,i,sub_elec)=qin_ele.l(i,sub_elec);
-report3(z,i,"household")=qc.l(i);
-report4(z,i)=qffin.l(i);
-report4(z,sub_elec)=qffelec.l(sub_elec);
-report5(z)=   pcons.l*grosscons.l+pinv.l*grossinvk.l+sum(i,py.l(i)*((nx0(i)+xinv0(i)+xcons0(i))*xscale));
-report6(z,lm)= sum(i,qlin.l(lm,i))+sum(sub_elec,qlin_ele.l(lm,sub_elec));
-report7(z)= sum(i,qkin.l(i))+sum(sub_elec,qkin_ele.l(sub_elec));
-report8(z,sub_elec)=qelec.l(sub_elec);
-report9(z,sub_elec,lm)=qlin_ele.l(lm,sub_elec);
 
+* ----- Sectoral results
+
+loop(i,
+  put rate(z),'2012', 'out', i.tl, sce.tl,'q', (qdout.l(i)),China3E.modelstat / ;
+  put rate(z),'2012', 'ECO2', i.tl, sce.tl,'q', (report2(z,i)),China3E.modelstat / ;
+  loop(lm,
+  put rate(z),'2012', lm.tl, i.tl, sce.tl,'q', (qlin.l(i,lm)),China3E.modelstat / ;
+  put rate(z),'2012', lm.tl, "total", sce.tl,'q', (report6(z,lm,"total")),China3E.modelstat / ;
+  put rate(z),'2012', lm.tl, i.tl, sce.tl,'wage', (pl.l(i,lm)),China3E.modelstat / ;
+      );
+) ;
+
+  put rate(z),'2012', 'ECO2', 'fd', sce.tl,'q', (report2(z,"household")),China3E.modelstat / ;
+
+* ----- employment results
+loop(lm,
+  put rate(z),'2012', lm.tl, '', sce.tl,'ur', (UR.l(lm)),China3E.modelstat / ;
+  loop(sub_elec,
+  put rate(z),'2012', lm.tl, sub_elec.tl, sce.tl,'q', (qlin_ele.l(sub_elec,lm)),China3E.modelstat / ;
+      );
 );
-execute_unload "results.gdx" UNEM Pwage report1 report2 report3  report4 report5  report6 report7 report8  report9
-execute 'gdxxrw.exe results.gdx par=unem rng=UNEM!'
-execute 'gdxxrw.exe results.gdx par=Pwage rng=wage!'
-execute 'gdxxrw.exe results.gdx par=report1 rng=output!'
-execute 'gdxxrw.exe results.gdx par=report2 rng=emission!'
-execute 'gdxxrw.exe results.gdx par=report3 rng=input!'
-execute 'gdxxrw.exe results.gdx par=report4 rng=ffactor!'
-execute 'gdxxrw.exe results.gdx par=report5 rng=GDP!'
-execute 'gdxxrw.exe results.gdx par=report6 rng=labor!'
-execute 'gdxxrw.exe results.gdx par=report7 rng=capital!'
-execute 'gdxxrw.exe results.gdx par=report8 rng=ele_out!'
-execute 'gdxxrw.exe results.gdx par=report9 rng=ele_labor!'
 
-$offtext
+loop(cm,
+  put z.tl,'2012', 'clim_s', cm.tl, sce.tl,'S1', (clim_s(cm)),China3E.modelstat / ;
+);
+  put z.tl,'2012', 'clim_a', '', sce.tl,'S1', (clim_a),China3E.modelstat / ;
+
+* ----- macro results
+  put rate(z),'2012', 'GDP', '', sce.tl,'q', rgdp.l,China3E.modelstat / ;

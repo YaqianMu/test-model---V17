@@ -1,157 +1,698 @@
 B 2 C o m p i l a t i o n
-B 1866 Include File Summary
-B 1932 E x e c u t i o n
-I 1933 SAM
-I 2061 ffact0
-I 2067 fact0
-I 2085 int0
-I 2151 inv0
-I 2159 xinv0
-I 2165 cons0
-I 2174 xcons0
-I 2178 nx0
-I 2188 output0
-I 2198 xexp0
-I 2202 exp0
-I 2211 fact
-I 2216 tax0
-I 2225 tx0
-I 2234 a0
-I 2243 output0
-I 2253 imp0
-I 2257 ximp0
-I 2267 nx0
-I 2277 inv0
-I 2285 cons0
-I 2293 xinv0
-I 2300 xcons0
-I 2304 epslon
-I 2309 cj
-I 2314 eet1
-I 2319 eet2
-I 2324 eej
-I 2329 eeg_s
-I 2357 eeg
-I 2363 co2f
-I 2368 ecoef
-I 2374 ccoef_P
-I 2380 ccoef_h
-I 2386 scoef_e
-I 2401 ncoef_e
-I 2416 emission0
-I 2481 Temission0
-I 2508 climit
-I 2519 clim_t
-I 2525 clim0
-I 2527 Temission1
-I 2532 Temission2
-I 2537 Eprop
-I 2614 taxelec0
-I 2621 ffelec0
-I 2627 lelec0
-I 2634 kelec0
-I 2641 intelec0
-I 2681 outputelec0
-I 2688 taxelec0
-I 2695 tx0
-I 2704 emission0
-I 2769 p_ff
-I 2776 Toutputelec0
-I 2777 check1
-I 2778 esub
-I 2809 Isprop
-I 2843 list0
-I 2848 kist0
-I 2853 intist0
-I 2866 outputist0
-I 2871 taxist0
-I 2876 tx0
-I 2885 aeei
-I 2893 PAT
-I 2917 rgdp0
-I 2918 ret0
-I 2924 ret_b
-I 2935 labor_v0
-I 3044 labor_q0
-I 3152 labor_w0
-I 3177 bur
-I 3187 bwage
-I 3200 fwage_s
-I 3224 awage_e
-I 3229 labor_q0
-I 3337 tlabor_q0
-I 3343 tqlabor0
-I 3344 labor_v0
-I 3453 tlabor_v0
-I 3459 tvlabor0
-I 3461 laborelec0
-I 3476 laborist0
-I 3484 ur0
-I 3489 tlabor_s0
-I 3495 tqlabor_s0
-I 3496 ll
-I 3501 hl
-B 3508 Model Statistics    SOLVE CHINA3E Using MCP From line 2973
-B 3526 Solution Report     SOLVE CHINA3E Using MCP From line 2973
-F 3578 DUMMY01
-F 3586 EQ_001
-F 3596 EQ_002
-F 3606 EQ_003
-F 3613 EQ_004
-F 3619 EQ_005
-F 3620 EQ_006
-F 3621 EQ_007
-F 3631 EQ_008
-F 3636 EQ_009
-F 3641 EQ_010
-F 3642 EQ_011
-G 3646 Y
-G 3669 CONSUM
-G 3673 INVEST
-G 3674 WELF
-G 3679 YELEC
-G 3693 L_A
-G 3700 PY
-G 3723 PELEC
-G 3737 PLS
-G 3744 PL
-G 3785 PK
-G 3791 PFFACT
-G 3801 PFFELEC
-G 3811 PCONS
-G 3815 PINV
-G 3816 PU
-G 3817 RA
-G 3823 SFF
-G 3833 SFFELEC
-G 3843 UR
-G 3850 T_RE
-G 3858 RGDP
-G 3862 GPROD
-G 3866 GPROD2
-G 3873 QDOUT
-G 3896 QC
-G 3919 GROSSCONS
-G 3923 QINVK
-G 3946 GROSSINVK
-G 3950 UTIL
-G 3951 QIN
-G 4280 QIN_ELE
-G 4447 QKIN
-G 4470 QLIN
-G 4511 QLIN_ELE
-G 4534 QKIN_ELE
-G 4548 QFFIN
-G 4558 QFFELEC
-G 4568 QELEC
-G 4582 ECO2
-G 4605 ECO2_S
-G 4628 ECO2_SE
-G 4642 ECO2_H
-G 4646 DPERMITS
-G 4660 SPERMITS
-B 4683 E x e c u t i o n
-I 4686 CHINA3E
-I 4687 CHINA3E
-I 4688 UR
-I 4694 clim
+B 2081 Include File Summary
+B 2155 E x e c u t i o n
+I 2156 SAM
+I 2284 ffact0
+I 2290 fact0
+I 2308 int0
+I 2374 inv0
+I 2382 xinv0
+I 2388 cons0
+I 2397 xcons0
+I 2401 nx0
+I 2411 output0
+I 2421 xexp0
+I 2425 exp0
+I 2434 fact
+I 2439 tax0
+I 2448 tx0
+I 2457 a0
+I 2466 output0
+I 2476 imp0
+I 2480 ximp0
+I 2490 nx0
+I 2500 inv0
+I 2508 cons0
+I 2516 xinv0
+I 2523 xcons0
+I 2527 epslon
+I 2532 cj
+I 2537 eet1
+I 2542 eet2
+I 2547 eej
+I 2552 eeg_s
+I 2580 eeg
+I 2586 co2f
+I 2591 ecoef
+I 2597 ccoef_P
+I 2603 ccoef_h
+I 2609 scoef_e
+I 2624 ncoef_e
+I 2639 emission0
+I 2704 Temission0
+I 2731 climit
+I 2742 clim_t
+I 2748 clim0
+I 2750 Temission1
+I 2755 Temission2
+I 2760 Eprop
+I 2837 taxelec0
+I 2844 ffelec0
+I 2850 lelec0
+I 2857 kelec0
+I 2864 intelec0
+I 2904 outputelec0
+I 2911 taxelec0
+I 2918 tx0
+I 2927 emission0
+I 2992 p_ff
+I 2999 Toutputelec0
+I 3000 check1
+I 3001 esub
+I 3032 Isprop
+I 3066 list0
+I 3071 kist0
+I 3076 intist0
+I 3089 outputist0
+I 3094 taxist0
+I 3099 tx0
+I 3108 aeei
+I 3116 PAT
+I 3140 rgdp0
+I 3141 ret0
+I 3147 ret_b
+I 3158 labor_v0
+I 3267 labor_q0
+I 3375 labor_w0
+I 3400 bur
+I 3410 bwage
+I 3423 fwage_s
+I 3447 awage_e
+I 3452 labor_q0
+I 3560 tlabor_q0
+I 3566 tqlabor0
+I 3567 labor_v0
+I 3676 tlabor_v0
+I 3682 tvlabor0
+I 3684 laborelec0
+I 3699 laborist0
+I 3707 ur0
+I 3712 tlabor_s0
+I 3718 tqlabor_s0
+I 3719 ll
+I 3724 hl
+B 3731 Model Statistics    SOLVE CHINA3E Using MCP From line 2972
+B 3749 Solution Report     SOLVE CHINA3E Using MCP From line 2972
+F 3801 DUMMY01
+F 3809 EQ_001
+F 3819 EQ_002
+F 3829 EQ_003
+F 3836 EQ_004
+F 3842 EQ_005
+F 3843 EQ_006
+F 3844 EQ_007
+F 3854 EQ_008
+F 3859 EQ_009
+F 3864 EQ_010
+F 3865 EQ_011
+G 3869 Y
+G 3892 CONSUM
+G 3896 INVEST
+G 3897 WELF
+G 3902 YELEC
+G 3916 L_A
+G 3923 PY
+G 3946 PELEC
+G 3960 PLS
+G 3967 PL
+G 4008 PK
+G 4014 PFFACT
+G 4024 PFFELEC
+G 4034 PCONS
+G 4038 PINV
+G 4039 PU
+G 4040 RA
+G 4046 SFF
+G 4056 SFFELEC
+G 4066 UR
+G 4073 T_RE
+G 4081 RGDP
+G 4085 GPROD
+G 4089 GPROD2
+G 4096 QDOUT
+G 4119 QC
+G 4142 GROSSCONS
+G 4146 QINVK
+G 4169 GROSSINVK
+G 4173 UTIL
+G 4174 QIN
+G 4503 QIN_ELE
+G 4670 QKIN
+G 4693 QLIN
+G 4734 QLIN_ELE
+G 4757 QKIN_ELE
+G 4771 QFFIN
+G 4781 QFFELEC
+G 4791 QELEC
+G 4805 ECO2
+G 4828 ECO2_S
+G 4851 ECO2_SE
+G 4865 ECO2_H
+G 4869 DPERMITS
+G 4883 SPERMITS
+B 4906 E x e c u t i o n
+I 4909 CHINA3E
+I 4910 CHINA3E
+I 4911 UR
+I 4917 clim
+I 4921 sce_s
+B 4942 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 4967 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 5025 E x e c u t i o n
+I 5028 CHINA3E
+I 5029 CHINA3E
+I 5030 clim_s
+I 5036 clim_a
+I 5038 rate
+I 5044 sigma
+B 5051 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 5076 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 5134 E x e c u t i o n
+I 5137 CHINA3E
+I 5138 CHINA3E
+I 5139 clim_s
+I 5145 clim_a
+I 5147 rate
+I 5153 sigma
+B 5160 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 5185 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 5243 E x e c u t i o n
+I 5246 CHINA3E
+I 5247 CHINA3E
+I 5248 clim_s
+I 5254 clim_a
+I 5256 rate
+I 5262 sigma
+B 5269 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 5294 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 5352 E x e c u t i o n
+I 5355 CHINA3E
+I 5356 CHINA3E
+I 5357 clim_s
+I 5363 clim_a
+I 5365 rate
+I 5371 sigma
+B 5378 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 5403 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 5461 E x e c u t i o n
+I 5464 CHINA3E
+I 5465 CHINA3E
+I 5466 clim_s
+I 5472 clim_a
+I 5474 rate
+I 5480 sigma
+B 5487 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 5512 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 5570 E x e c u t i o n
+I 5573 CHINA3E
+I 5574 CHINA3E
+I 5575 clim_s
+I 5581 clim_a
+I 5583 rate
+I 5589 sigma
+B 5596 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 5621 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 5679 E x e c u t i o n
+I 5682 CHINA3E
+I 5683 CHINA3E
+I 5684 clim_s
+I 5690 clim_a
+I 5692 rate
+I 5698 sigma
+B 5705 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 5730 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 5788 E x e c u t i o n
+I 5791 CHINA3E
+I 5792 CHINA3E
+I 5793 clim_s
+I 5799 clim_a
+I 5801 rate
+I 5807 sigma
+B 5814 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 5839 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 5897 E x e c u t i o n
+I 5900 CHINA3E
+I 5901 CHINA3E
+I 5902 clim_s
+I 5908 clim_a
+I 5910 rate
+I 5916 sigma
+B 5923 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 5948 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 6006 E x e c u t i o n
+I 6009 CHINA3E
+I 6010 CHINA3E
+I 6011 clim_s
+I 6017 clim_a
+I 6019 rate
+I 6025 sigma
+B 6032 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 6057 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 6115 E x e c u t i o n
+I 6118 CHINA3E
+I 6119 CHINA3E
+I 6120 clim_s
+I 6126 clim_a
+I 6128 rate
+I 6134 sigma
+B 6141 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 6166 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 6230 E x e c u t i o n
+I 6233 CHINA3E
+I 6234 CHINA3E
+I 6235 clim_s
+I 6241 clim_a
+I 6243 rate
+I 6249 sigma
+B 6256 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 6281 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 6339 E x e c u t i o n
+I 6342 CHINA3E
+I 6343 CHINA3E
+I 6344 clim_s
+I 6350 clim_a
+I 6352 rate
+I 6358 sigma
+B 6365 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 6390 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 6448 E x e c u t i o n
+I 6451 CHINA3E
+I 6452 CHINA3E
+I 6453 clim_s
+I 6459 clim_a
+I 6461 rate
+I 6467 sigma
+B 6474 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 6499 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 6557 E x e c u t i o n
+I 6560 CHINA3E
+I 6561 CHINA3E
+I 6562 clim_s
+I 6568 clim_a
+I 6570 rate
+I 6576 sigma
+B 6583 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 6608 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 6666 E x e c u t i o n
+I 6669 CHINA3E
+I 6670 CHINA3E
+I 6671 clim_s
+I 6677 clim_a
+I 6679 rate
+I 6685 sigma
+B 6692 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 6717 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 6775 E x e c u t i o n
+I 6778 CHINA3E
+I 6779 CHINA3E
+I 6780 clim_s
+I 6786 clim_a
+I 6788 rate
+I 6794 sigma
+B 6801 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 6826 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 6884 E x e c u t i o n
+I 6887 CHINA3E
+I 6888 CHINA3E
+I 6889 clim_s
+I 6895 clim_a
+I 6897 rate
+I 6903 sigma
+B 6910 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 6935 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 6993 E x e c u t i o n
+I 6996 CHINA3E
+I 6997 CHINA3E
+I 6998 clim_s
+I 7004 clim_a
+I 7006 rate
+I 7012 sigma
+B 7019 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 7044 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 7102 E x e c u t i o n
+I 7105 CHINA3E
+I 7106 CHINA3E
+I 7107 clim_s
+I 7113 clim_a
+I 7115 rate
+I 7121 sigma
+B 7128 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 7153 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 7211 E x e c u t i o n
+I 7214 CHINA3E
+I 7215 CHINA3E
+I 7216 clim_s
+I 7222 clim_a
+I 7224 rate
+I 7230 sigma
+B 7237 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 7262 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 7320 E x e c u t i o n
+I 7323 CHINA3E
+I 7324 CHINA3E
+I 7325 clim_s
+I 7331 clim_a
+I 7333 rate
+I 7339 sigma
+B 7346 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 7371 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 7429 E x e c u t i o n
+I 7432 CHINA3E
+I 7433 CHINA3E
+I 7434 clim_s
+I 7440 clim_a
+I 7442 rate
+I 7448 sigma
+B 7455 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 7480 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 7538 E x e c u t i o n
+I 7541 CHINA3E
+I 7542 CHINA3E
+I 7543 clim_s
+I 7549 clim_a
+I 7551 rate
+I 7557 sigma
+B 7564 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 7589 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 7647 E x e c u t i o n
+I 7650 CHINA3E
+I 7651 CHINA3E
+I 7652 clim_s
+I 7658 clim_a
+I 7660 rate
+I 7666 sigma
+B 7673 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 7698 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 7756 E x e c u t i o n
+I 7759 CHINA3E
+I 7760 CHINA3E
+I 7761 clim_s
+I 7767 clim_a
+I 7769 rate
+I 7775 sigma
+B 7782 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 7807 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 7865 E x e c u t i o n
+I 7868 CHINA3E
+I 7869 CHINA3E
+I 7870 clim_s
+I 7876 clim_a
+I 7878 rate
+I 7884 sigma
+B 7891 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 7916 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 7974 E x e c u t i o n
+I 7977 CHINA3E
+I 7978 CHINA3E
+I 7979 clim_s
+I 7985 clim_a
+I 7987 rate
+I 7993 sigma
+B 8000 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 8025 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 8083 E x e c u t i o n
+I 8086 CHINA3E
+I 8087 CHINA3E
+I 8088 clim_s
+I 8094 clim_a
+I 8096 rate
+I 8102 sigma
+B 8109 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 8134 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 8192 E x e c u t i o n
+I 8195 CHINA3E
+I 8196 CHINA3E
+I 8197 clim_s
+I 8203 clim_a
+I 8205 rate
+I 8211 sigma
+B 8218 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 8243 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 8301 E x e c u t i o n
+I 8304 CHINA3E
+I 8305 CHINA3E
+I 8306 clim_s
+I 8312 clim_a
+I 8314 rate
+I 8320 sigma
+B 8327 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 8352 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 8410 E x e c u t i o n
+I 8413 CHINA3E
+I 8414 CHINA3E
+I 8415 clim_s
+I 8421 clim_a
+I 8423 rate
+I 8429 sigma
+B 8436 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 8461 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 8519 E x e c u t i o n
+I 8522 CHINA3E
+I 8523 CHINA3E
+I 8524 clim_s
+I 8530 clim_a
+I 8532 rate
+I 8538 sigma
+B 8545 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 8570 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 8628 E x e c u t i o n
+I 8631 CHINA3E
+I 8632 CHINA3E
+I 8633 clim_s
+I 8639 clim_a
+I 8641 rate
+I 8647 sigma
+B 8654 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 8679 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 8737 E x e c u t i o n
+I 8740 CHINA3E
+I 8741 CHINA3E
+I 8742 clim_s
+I 8748 clim_a
+I 8750 rate
+I 8756 sigma
+B 8763 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 8788 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 8846 E x e c u t i o n
+I 8849 CHINA3E
+I 8850 CHINA3E
+I 8851 clim_s
+I 8857 clim_a
+I 8859 rate
+I 8865 sigma
+B 8872 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 8897 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 8955 E x e c u t i o n
+I 8958 CHINA3E
+I 8959 CHINA3E
+I 8960 clim_s
+I 8966 clim_a
+I 8968 rate
+I 8974 sigma
+B 8981 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 9006 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 9064 E x e c u t i o n
+I 9067 CHINA3E
+I 9068 CHINA3E
+I 9069 clim_s
+I 9075 clim_a
+I 9077 rate
+I 9083 sigma
+B 9090 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 9115 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 9173 E x e c u t i o n
+I 9176 CHINA3E
+I 9177 CHINA3E
+I 9178 clim_s
+I 9184 clim_a
+I 9186 rate
+I 9192 sigma
+B 9199 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 9224 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 9282 E x e c u t i o n
+I 9285 CHINA3E
+I 9286 CHINA3E
+I 9287 clim_s
+I 9293 clim_a
+I 9295 rate
+I 9301 sigma
+B 9308 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 9333 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 9391 E x e c u t i o n
+I 9394 CHINA3E
+I 9395 CHINA3E
+I 9396 clim_s
+I 9402 clim_a
+I 9404 rate
+I 9410 sigma
+B 9417 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 9442 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 9500 E x e c u t i o n
+I 9503 CHINA3E
+I 9504 CHINA3E
+I 9505 clim_s
+I 9511 clim_a
+I 9513 rate
+I 9519 sigma
+B 9526 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 9551 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 9609 E x e c u t i o n
+I 9612 CHINA3E
+I 9613 CHINA3E
+I 9614 clim_s
+I 9620 clim_a
+I 9622 rate
+I 9628 sigma
+B 9635 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 9660 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 9718 E x e c u t i o n
+I 9721 CHINA3E
+I 9722 CHINA3E
+I 9723 clim_s
+I 9729 clim_a
+I 9731 rate
+I 9737 sigma
+B 9744 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 9769 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 9830 E x e c u t i o n
+I 9833 CHINA3E
+I 9834 CHINA3E
+I 9835 clim_s
+I 9841 clim_a
+I 9843 rate
+I 9849 sigma
+B 9856 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 9881 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 9942 E x e c u t i o n
+I 9945 CHINA3E
+I 9946 CHINA3E
+I 9947 clim_s
+I 9953 clim_a
+I 9955 rate
+I 9961 sigma
+B 9968 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 9993 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 10054 E x e c u t i o n
+I 10057 CHINA3E
+I 10058 CHINA3E
+I 10059 clim_s
+I 10065 clim_a
+I 10067 rate
+I 10073 sigma
+B 10080 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 10105 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 10163 E x e c u t i o n
+I 10166 CHINA3E
+I 10167 CHINA3E
+I 10168 clim_s
+I 10174 clim_a
+I 10176 rate
+I 10182 sigma
+B 10189 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 10214 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 10272 E x e c u t i o n
+I 10275 CHINA3E
+I 10276 CHINA3E
+I 10277 clim_s
+I 10284 clim_a
+I 10286 rate
+I 10292 sigma
+B 10299 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 10324 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 10382 E x e c u t i o n
+I 10385 CHINA3E
+I 10386 CHINA3E
+I 10387 clim_s
+I 10394 clim_a
+I 10396 rate
+I 10402 sigma
+B 10409 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 10434 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 10492 E x e c u t i o n
+I 10495 CHINA3E
+I 10496 CHINA3E
+I 10497 clim_s
+I 10504 clim_a
+I 10506 rate
+I 10512 sigma
+B 10519 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 10544 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 10602 E x e c u t i o n
+I 10605 CHINA3E
+I 10606 CHINA3E
+I 10607 clim_s
+I 10614 clim_a
+I 10616 rate
+I 10622 sigma
+B 10629 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 10654 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 10712 E x e c u t i o n
+I 10715 CHINA3E
+I 10716 CHINA3E
+I 10717 clim_s
+I 10724 clim_a
+I 10726 rate
+I 10732 sigma
+B 10739 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 10764 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 10825 E x e c u t i o n
+I 10828 CHINA3E
+I 10829 CHINA3E
+I 10830 clim_s
+I 10837 clim_a
+I 10839 rate
+I 10845 sigma
+B 10852 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 10877 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 10938 E x e c u t i o n
+I 10941 CHINA3E
+I 10942 CHINA3E
+I 10944 clim_s
+I 10949 clim_a
+I 10951 rate
+I 10957 sigma
+B 10964 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 10989 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 11050 E x e c u t i o n
+I 11053 CHINA3E
+I 11054 CHINA3E
+I 11056 clim_s
+I 11061 clim_a
+I 11063 rate
+I 11069 sigma
+B 11076 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 11101 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 11162 E x e c u t i o n
+I 11165 CHINA3E
+I 11166 CHINA3E
+I 11168 clim_s
+I 11173 clim_a
+I 11175 rate
+I 11181 sigma
+B 11188 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 11213 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 11274 E x e c u t i o n
+I 11277 CHINA3E
+I 11278 CHINA3E
+I 11280 clim_s
+I 11285 clim_a
+I 11287 rate
+I 11293 sigma
+B 11300 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 11325 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 11386 E x e c u t i o n
+I 11389 CHINA3E
+I 11390 CHINA3E
+I 11392 clim_s
+I 11397 clim_a
+I 11399 rate
+I 11405 sigma
+B 11412 Model Statistics    SOLVE CHINA3E Using MCP From line 4009
+B 11437 Solution Report     SOLVE CHINA3E Using MCP From line 4009
+B 11498 E x e c u t i o n
+I 11501 CHINA3E
+I 11502 CHINA3E
+I 11504 clim_s
+I 11509 clim_a
+I 11511 rate
+I 11517 sigma

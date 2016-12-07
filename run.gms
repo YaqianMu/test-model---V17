@@ -19,6 +19,6 @@ $include core
 *$include dynamic-calibration
 *$include dynamic-基准情景
 *$include dynamic-政策情景
-$include report
+$include sim
 
 $stop
