@@ -104,16 +104,8 @@ set      sub_elec /T_D, Coal, Gas, Oil, Nuclear, Hydro, Wind, Solar, Biomass/
          hne(sub_elec)  hydro and nuclear electricity /Nuclear, Hydro/
          wsb(sub_elec)  wind and solar biomass/Wind, Solar, Biomass/;
 
-alias (sub_elec,sub_elecc);
+alias (sub_elec,sub_elecc)
 
-$CALL GDXXRW.EXE data/data.xlsx par=sam rng=A1
-
-
-*=== Now import data from GDX
-Parameter SAM(*,*);
-$GDXIN data.gdx
-$LOAD SAM
-$GDXIN
 
 *=== transfer unit to billion yuan
 sam(i,j)=sam(i,j)/100000;

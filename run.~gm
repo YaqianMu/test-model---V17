@@ -1,3 +1,4 @@
+
 $include sets
 
 $include subsititution elasticities
@@ -10,12 +11,12 @@ $include labor market
 
 $include backstop
 
-*$include core
-
+$include core
+$stop
 *$include core_1205
 
 *$include core_CETlabor
-$stop
+
 *$include dynamic-calibration
 *$include dynamic-基准情景
 $include dynamic-政策情景

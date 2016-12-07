@@ -15,8 +15,10 @@ $include core
 *$include core_1205
 
 *$include core_CETlabor
-$stop
+
 *$include dynamic-calibration
 *$include dynamic-基准情景
-$include dynamic-政策情景
-*$include report
+*$include dynamic-政策情景
+$include report
+
+$stop

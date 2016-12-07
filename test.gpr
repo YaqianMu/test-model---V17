@@ -1785,9 +1785,6 @@ PlaneRownr=-1
 [RP:DYNAMIC - 副本]
 1=
 
-[RP:UNTITLED_1]
-1=
-
 [RP:UNTITLED_2]
 1=
 
@@ -1808,9 +1805,6 @@ PlaneRownr=-1
 
 [RP:LABOR MARKET - 副本]
 1=
-
-[SOLVERS]
-MCP=PATH
 
 [RP:最小二乘法]
 1=
@@ -2173,76 +2167,83 @@ PlaneRownr=-1
 [RP:SECTORAL AGGREGATION_4]
 1=
 
-[RP:BACKSTOP]
-1=
-
-[RP:EMISSION DATA]
-1=
-
-[RP:SUBSITITUTION ELASTICITIES]
-1=
-
-[RP:DYNAMIC-CALIBRATION - 副本]
-1=
-
-[RP:TREND]
-1=
-
-[RP:ELECTRICITY]
-1=
-
-[RP:SETS]
-1=
-
 [RP:IST]
 1=
 
-[RP:CORE]
+[OPENWINDOW_1]
+MAXIM=0
+TOP=0
+LEFT=55
+HEIGHT=723
+WIDTH=1086
+
+[RP:BACKSTOP]
 1=
 
-[RP:REPORT]
+[RP:CORE_CET_MULTYLABOR]
 1=
 
-[RP:RUN]
-1=
+[SOLVERS]
+MCP=PATH
 
 [RP:WAGE_BALANCE]
+1=
+
+[RP:ELEC_SPLIT]
 1=
 
 [RP:LABOR MARKET]
 1=
 
-[MRUFILES]
-1=C:\Users\hero\Desktop\Github\test model - V17\report.gms
-2=C:\Users\hero\Desktop\Github\test model - V17\labor market.lst
-3=C:\Users\hero\Desktop\Github\test model - V17\Sets.lst
-4=C:\Users\hero\Desktop\Github\Data Process\IO in GAMS （Match & Mapping）\2_Sectors Aggregation_2012IO_139 Sectors.gms
-5=C:\Users\hero\Desktop\Github\test model - V17\2_Sectors Aggregation_2012IO_139 Sectors.lst
-6=C:\Users\hero\Desktop\Github\Data Process\electricity\Sectoral Aggregation.gms
-7=E:\母亚乾在清华\清华学术\paper\INDC_2016\test model - V16 -0523-更新电力目标\x.gdx
-8=E:\母亚乾在清华\组内事务\自然科学基金\混合模型\test model - V16 -0523-更新电力目标\Trend.gms
+[RP:CORE_CETLABOR]
+1=
 
-[OPENWINDOW_1]
-FILE0=C:\Users\hero\Desktop\Github\Data Process\Education & Region\Wage_balance.gms
-FILE1=C:\Users\hero\Desktop\Github\Data Process\Education & Region\Wage_balance.lst
-FILE2=C:\Users\hero\Desktop\Github\test model - V17\backstop.gms
-FILE3=C:\Users\hero\Desktop\Github\test model - V17\core.gms
-FILE4=C:\Users\hero\Desktop\Github\test model - V17\dynamic-calibration - 副本.gms
-FILE5=C:\Users\hero\Desktop\Github\test model - V17\dynamic-calibration.gms
-FILE6=C:\Users\hero\Desktop\Github\test model - V17\dynamic-基准情景.gms
-FILE7=C:\Users\hero\Desktop\Github\test model - V17\dynamic-政策情景.gms
-FILE8=C:\Users\hero\Desktop\Github\test model - V17\electricity.gms
-FILE9=C:\Users\hero\Desktop\Github\test model - V17\emission data.gms
-FILE10=C:\Users\hero\Desktop\Github\test model - V17\IST.gms
-FILE11=C:\Users\hero\Desktop\Github\test model - V17\labor market.gms
-FILE12=C:\Users\hero\Desktop\Github\test model - V17\run.gms
-FILE13=C:\Users\hero\Desktop\Github\test model - V17\run.lst
-FILE14=C:\Users\hero\Desktop\Github\test model - V17\Sets.gms
-FILE15=C:\Users\hero\Desktop\Github\test model - V17\subsititution elasticities.gms
-FILE16=C:\Users\hero\Desktop\Github\test model - V17\Trend.gms
-FILE17=C:\Users\hero\Desktop\Github\Data Process\Education & Region\Wage_balance.gms
-MAXIM=1
-TOP=0
-LEFT=55
-HEIGHT=723
-WIDTH=1086
+[RP:REPORT]
+1=
+
+[RP:EMISSION DATA]
+1=
+
+[RP:CORE]
+1=
+
+[RP:UNTITLED_1]
+1=
+
+[RP:CORE_STATIC_EMPLOYMENT]
+1=
+
+[RP:ELECTRICITY]
+1=
+
+[RP:PANDA_EXP1]
+1=
+
+[RP:SUBSITITUTION ELASTICITIES]
+1=
+
+[RP:TREND]
+1=
+
+[RP:DYNAMIC-CALIBRATION - 副本]
+1=
+
+[RP:DATA]
+1=
+
+[RP:SETS]
+1=
+
+[RP:RUN]
+1=
+
+[MRUFILES]
+1=C:\Users\hero\Desktop\Github\test model - V17\run.gms
+2=C:\Users\hero\Desktop\Github\test model - V17\run.lst
+3=C:\Users\hero\Desktop\Github\test model - V17\Data\data.gms
+4=C:\Users\hero\Desktop\Github\test model - V17\Code\Trend.gms
+5=C:\Users\hero\Desktop\Github\test model - V17\Code\subsititution elasticities.gms
+6=C:\Users\hero\Desktop\Github\test model - V17\Code\Sets.gms
+7=C:\Users\hero\Desktop\Github\test model - V17\Code\run.gms
+8=C:\Users\hero\Desktop\Github\test model - V17\Code\report.gms
+9=C:\Users\hero\Desktop\Github\test model - V17\Code\labor market.gms

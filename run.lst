@@ -1,74 +1,76 @@
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 15:44:43 Page 1
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 16:34:58 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
+   1   
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\sets.gms
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 15:44:43 Page 2
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 16:34:58 Page 2
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
 C o m p i l a t i o n
 
 
-   3   
+   4   
       China-3E
       Author:Yaqian Mu, Tsinghua University (muyaqian00@163.com)
       UpDate:    12-2016
-   9   
- 255   
+  10   
+ 254   
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\subsititution elasticit
            ies.gms
- 257  *12ÔÂ17ÈÕ£¬ÐÞ¸ÄÁË·Ç»¯Ê¯ÄÜÔ´×ÔÈ»ÒªËØ¹©¸øµÄµ¯ÐÔ
+ 256  *12ÔÂ17ÈÕ£¬ÐÞ¸ÄÁË·Ç»¯Ê¯ÄÜÔ´×ÔÈ»ÒªËØ¹©¸øµÄµ¯ÐÔ
+ 257   
  258   
  259   
- 260   
- 261  parameter  esub_inv     elasticity of substitution among inputs to investm
+ 260  parameter  esub_inv     elasticity of substitution among inputs to investm
       ent
- 262             esub_c       elasticity of substitution among inputs to consump
+ 261             esub_c       elasticity of substitution among inputs to consump
       tion
- 263             esub_s       elasticity of substitution among investment types
- 264             esub                                                           
+ 262             esub_s       elasticity of substitution among investment types
+ 263             esub                                                           
       ;
- 265  parameter sigma
- 266            esub_es
- 267            esubva(i)
- 268            esubd(i)
- 269  ;
- 270  *subsititution elasticities from Ke Wang
- 271  esub("coal","kl")=0.80;
- 272  esub("gas","kl")=0.82;
- 273  esub("roil","kl")=0.74;
- 274  esub("elec","kl")=0.81;
- 275   
- 276  esub(i,"ff")=0.6;
- 277  esub("gas","ff")=0.5;
- 278  esub("coal","ff")=0.7;
- 279  esub("elec","ff")=0.4;
- 280   
- 281  esub_inv   =0.25 ;
- 282   
- 283  *from Eppa 4.1
- 284  esub_c     =0.25 ;
- 285  sigma("ene_fd") = 0.4;
- 286   
- 287  esub_s     =10 ;
+ 264  parameter sigma
+ 265            esub_es
+ 266            esubva(i)
+ 267            esubd(i)
+ 268  ;
+ 269  *subsititution elasticities from Ke Wang
+ 270  esub("coal","kl")=0.80;
+ 271  esub("gas","kl")=0.82;
+ 272  esub("roil","kl")=0.74;
+ 273  esub("elec","kl")=0.81;
+ 274   
+ 275  esub(i,"ff")=0.6;
+ 276  esub("gas","ff")=0.5;
+ 277  esub("coal","ff")=0.7;
+ 278  esub("elec","ff")=0.4;
+ 279   
+ 280  esub_inv   =0.25 ;
+ 281   
+ 282  *from Eppa 4.1
+ 283  esub_c     =0.25 ;
+ 284  sigma("ene_fd") = 0.4;
+ 285   
+ 286  esub_s     =10 ;
+ 287   
  288   
- 289   
- 290  *from EPPA
- 291  sigma("ele_p") = 0.5;
- 292  sigma("ene_p") = 1;
- 293   
- 294  eta("coal") =2.0;
- 295  eta("oilgas")=1.0;
- 296  eta("agri")=0.5;
- 297  eta("mine")=2.0;
- 298  eta("gas")=1.0 ;
- 299  eta("elec")= 0.5;
- 300   
- 301  eta("biomass")= 0.5 ;
- 302  eta("hydro")= 0.1;
- 303  eta("wind")= 1.5 ;
- 304  eta("solar")= 1.5 ;
- 305  eta("nuclear")= 0.5 ;
+ 289  *from EPPA
+ 290  sigma("ele_p") = 0.5;
+ 291  sigma("ene_p") = 1;
+ 292   
+ 293  eta("coal") =2.0;
+ 294  eta("oilgas")=1.0;
+ 295  eta("agri")=0.5;
+ 296  eta("mine")=2.0;
+ 297  eta("gas")=1.0 ;
+ 298  eta("elec")= 0.5;
+ 299   
+ 300  eta("biomass")= 0.5 ;
+ 301  eta("hydro")= 0.1;
+ 302  eta("wind")= 1.5 ;
+ 303  eta("solar")= 1.5 ;
+ 304  eta("nuclear")= 0.5 ;
+ 305   
  306   
  307   
  308   
@@ -76,586 +78,585 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\subsititution elasticit
  310   
  311   
  312   
- 313   
- 314  parameter eslm  ¸ßË®Æ½ÀÍ¶¯Á¦ÓëÆäËûÒªËØµÄÌæ´úµ¯ÐÔ;
- 315   
- 316  eslm("l")=1;
- 317  eslm("ll")=1.5;
- 318  eslm("lh")=1.5;
+ 313  parameter eslm  ¸ßË®Æ½ÀÍ¶¯Á¦ÓëÆäËûÒªËØµÄÌæ´úµ¯ÐÔ;
+ 314   
+ 315  eslm("l")=1;
+ 316  eslm("ll")=1.5;
+ 317  eslm("lh")=1.5;
+ 318   
  319   
- 320   
- 321  eslm("l")=0;
- 322  *eslm("ll")=0;
- 323  *eslm("lh")=0;
+ 320  eslm("l")=0;
+ 321  *eslm("ll")=0;
+ 322  *eslm("lh")=0;
+ 323   
  324   
- 325   
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\emission data.gms
- 327   
- 328  *----------------------------------------------*
- 329  *setup benchmark Emission
- 330  *20151215        ¸ù¾ÝEPPA·½·¨£¬Êý¾Ý£¬ÄÜÔ´Æ½ºâ±í£¬Í¶Èë²ú³ö±í¸üÐÂ2010ÄêÅÅ·ÅÊ
+ 326   
+ 327  *----------------------------------------------*
+ 328  *setup benchmark Emission
+ 329  *20151215        ¸ù¾ÝEPPA·½·¨£¬Êý¾Ý£¬ÄÜÔ´Æ½ºâ±í£¬Í¶Èë²ú³ö±í¸üÐÂ2010ÄêÅÅ·ÅÊ
       ý¾Ý£¬È·¶¨ÅÅ·ÅÏµÊý
- 331  *20161201        ¸ù¾ÝEPPA·½·¨£¬Êý¾Ý£¬ÄÜÔ´Æ½ºâ±í£¬Í¶Èë²ú³ö±í¸üÐÂ2012ÄêÅÅ·ÅÊ
+ 330  *20161201        ¸ù¾ÝEPPA·½·¨£¬Êý¾Ý£¬ÄÜÔ´Æ½ºâ±í£¬Í¶Èë²ú³ö±í¸üÐÂ2012ÄêÅÅ·ÅÊ
       ý¾Ý£¬È·¶¨ÅÅ·ÅÏµÊý
- 332  *----------------------------------------------*
- 333   
- 334  *== CO2 emission data
- 335   
- 336  *$CALL GDXXRW.EXE emission.xlsx par=edata rng=A1:I11    par=climit   rng=A
+ 331  *----------------------------------------------*
+ 332   
+ 333  *== CO2 emission data
+ 334   
+ 335  *$CALL GDXXRW.EXE emission.xlsx par=edata rng=A1:I11    par=climit   rng=A
       14:C31
- 337   
- 338  *Parameter edata(*,*) input data of emission;
- 339  *Parameter climit(*,*) input data of emission;
- 340  *$GDXIN emission.gdx
- 341  *$LOAD edata
- 342  *$LOAD climit
- 343  *$GDXIN
- 344   
- 345  *parameters for energy and emission accounts
- 346  parameter emission0(pollutant,pitem,*,*)  sectoral emission by source
- 347            Temission0                     sectoral emission
- 348            Temission1                     Total emission
- 349            Temission2;
+ 336   
+ 337  *Parameter edata(*,*) input data of emission;
+ 338  *Parameter climit(*,*) input data of emission;
+ 339  *$GDXIN emission.gdx
+ 340  *$LOAD edata
+ 341  *$LOAD climit
+ 342  *$GDXIN
+ 343   
+ 344  *parameters for energy and emission accounts
+ 345  parameter emission0(pollutant,pitem,*,*)  sectoral emission by source
+ 346            Temission0                     sectoral emission
+ 347            Temission1                     Total emission
+ 348            Temission2;
+ 349   
  350   
- 351   
- 352  parameter
- 353  epslon        coefficient of carbon contents (100M tons per EJ)
- 354  eet1          energy consumption in Íò¶Ö±ê×¼Ãº      µÈÐ§ÃººÄ
- 355  eet2          energy consumption in Íò¶Ö±ê×¼Ãº      ÈÈµ±Á¿
- 356  eej           energy consumption in EJ
- 357  eeg           energy goods consumption in billion yuan  except energy as f
+ 351  parameter
+ 352  epslon        coefficient of carbon contents (100M tons per EJ)
+ 353  eet1          energy consumption in Íò¶Ö±ê×¼Ãº      µÈÐ§ÃººÄ
+ 354  eet2          energy consumption in Íò¶Ö±ê×¼Ãº      ÈÈµ±Á¿
+ 355  eej           energy consumption in EJ
+ 356  eeg           energy goods consumption in billion yuan  except energy as f
       eedstock input
- 358  eeg_s         energy goods consumption in billion yuan  except energy as f
+ 357  eeg_s         energy goods consumption in billion yuan  except energy as f
       eedstock input by sector
- 359  co2f          co2 emission by fuel in 100 million tons(ÒÚ¶Ö)
- 360   
- 361  r_feed(fe,i)   adjusted Feedstocks use ratio of fuels by pertrochemistry s
+ 358  co2f          co2 emission by fuel in 100 million tons(ÒÚ¶Ö)
+ 359   
+ 360  r_feed(fe,i)   adjusted Feedstocks use ratio of fuels by pertrochemistry s
       ector
- 362  b_CO2(fe)      IEA CO2 emissions 2012 (Billion tonnes)
- 363  cj            adjust factor for epslon to match IEA baseline
- 364   
- 365  ecoef         energy coefficient (Íò¶Ö±ê×¼Ãº per billion yuan)   energy fr
+ 361  b_CO2(fe)      IEA CO2 emissions 2012 (Billion tonnes)
+ 362  cj            adjust factor for epslon to match IEA baseline
+ 363   
+ 364  ecoef         energy coefficient (Íò¶Ö±ê×¼Ãº per billion yuan)   energy fr
       om quantity of value to physical
- 366  ccoef_P       carbon coefficient of production(billion T per Billion yuan)
- 367  ccoef_h       carbon coefficient of consumption(billion T per Billion yuan
+ 365  ccoef_P       carbon coefficient of production(billion T per Billion yuan)
+ 366  ccoef_h       carbon coefficient of consumption(billion T per Billion yuan
       )
- 368  ;
- 369   
- 370  table edata (*,*)
- 371              coal                 roil                    gas
- 372  epslon      0.24686              0.199                   0.137
- 373  eet1        200327.100000000     55774.870000000         16441.210000000
- 374  eet2        200327.100000000     55774.870000000         16441.210000000
- 375  eej         58.71106516          16.3462758              4.818524062
- 376  ;
- 377   
- 378  epslon(fe)       =       edata("epslon",fe);
- 379  eet1(fe)          =      edata("eet1",fe);
- 380  *eet1(sub_elec)    =      edata("eet1",sub_elec);
- 381  eet2(fe)          =      edata("eet2",fe);
- 382  *eet2(sub_elec)    =       edata("eet2",sub_elec);
- 383  eej(fe)          =       eet1(fe)*10000*1000*7000*1000*4.1868/10**18;
- 384   
- 385  *==grasped from IEA, CO2 emissions from fuel combustion Highlights, 2015
- 386   
- 387  b_CO2("coal")=71.539/10 ;
- 388  b_CO2("roil")=10.789/10 ;
- 389  b_CO2("gas")=2.581/10  ;
- 390   
- 391  cj(fe)         =       b_CO2(fe)*10*12/44/epslon(fe)/eej(fe);
- 392   
- 393  co2f(fe)       =       epslon(fe)*cj(fe)*eej(fe)*44/12;
- 394   
- 395  *==calculated from 2012 energy balance table
- 396  r_feed("coal","coal") = 0.504025875;
- 397  r_feed("coal","chem") = 0.267979697;
- 398  r_feed("roil","chem") = 0.595631707;
- 399   
- 400  eeg_s(fe,i)        =       int0(fe,i)*(1-r_feed(fe,i));
- 401  eeg_s(fe,"cons")   =       cons0(fe);
- 402  eeg(fe)          =       sum(i,eeg_s(fe,i)) + eeg_s(fe,"cons");
- 403   
- 404  ecoef(fe)        =       eet1(fe)/eeg(fe);
- 405  ccoef_P(fe)      =       co2f(fe)/eeg(fe);
- 406  ccoef_h(fe)      =       ccoef_P(fe);
- 407   
- 408  display epslon, cj, eet1, eet2, eej,eeg_s,eeg, co2f, ecoef,ccoef_p,ccoef_h
+ 367  ;
+ 368   
+ 369  table edata (*,*)
+ 370              coal                 roil                    gas
+ 371  epslon      0.24686              0.199                   0.137
+ 372  eet1        200327.100000000     55774.870000000         16441.210000000
+ 373  eet2        200327.100000000     55774.870000000         16441.210000000
+ 374  eej         58.71106516          16.3462758              4.818524062
+ 375  ;
+ 376   
+ 377  epslon(fe)       =       edata("epslon",fe);
+ 378  eet1(fe)          =      edata("eet1",fe);
+ 379  *eet1(sub_elec)    =      edata("eet1",sub_elec);
+ 380  eet2(fe)          =      edata("eet2",fe);
+ 381  *eet2(sub_elec)    =       edata("eet2",sub_elec);
+ 382  eej(fe)          =       eet1(fe)*10000*1000*7000*1000*4.1868/10**18;
+ 383   
+ 384  *==grasped from IEA, CO2 emissions from fuel combustion Highlights, 2015
+ 385   
+ 386  b_CO2("coal")=71.539/10 ;
+ 387  b_CO2("roil")=10.789/10 ;
+ 388  b_CO2("gas")=2.581/10  ;
+ 389   
+ 390  cj(fe)         =       b_CO2(fe)*10*12/44/epslon(fe)/eej(fe);
+ 391   
+ 392  co2f(fe)       =       epslon(fe)*cj(fe)*eej(fe)*44/12;
+ 393   
+ 394  *==calculated from 2012 energy balance table
+ 395  r_feed("coal","coal") = 0.504025875;
+ 396  r_feed("coal","chem") = 0.267979697;
+ 397  r_feed("roil","chem") = 0.595631707;
+ 398   
+ 399  eeg_s(fe,i)        =       int0(fe,i)*(1-r_feed(fe,i));
+ 400  eeg_s(fe,"cons")   =       cons0(fe);
+ 401  eeg(fe)          =       sum(i,eeg_s(fe,i)) + eeg_s(fe,"cons");
+ 402   
+ 403  ecoef(fe)        =       eet1(fe)/eeg(fe);
+ 404  ccoef_P(fe)      =       co2f(fe)/eeg(fe);
+ 405  ccoef_h(fe)      =       ccoef_P(fe);
+ 406   
+ 407  display epslon, cj, eet1, eet2, eej,eeg_s,eeg, co2f, ecoef,ccoef_p,ccoef_h
       ;
+ 408   
  409   
- 410   
- 411  *== air pollutant emission data  SO2 and NOX based on Global Emissions EDG
+ 410  *== air pollutant emission data  SO2 and NOX based on Global Emissions EDG
       AR v4.3.1 from   Non-CO2 Emission by sector 2010.xlsx in emission fold
+ 411   
  412   
- 413   
- 414  parameter scoef_e(*,*)        SO2 emission million ton per billion yuan
- 415            slim                        so2 emission limits million ton;
- 416   
- 417  parameter ncoef_e(*,*)        NOX emission million ton per billion yuan
- 418            nlim                        NOX emission limits million ton;
+ 413  parameter scoef_e(*,*)        SO2 emission million ton per billion yuan
+ 414            slim                        so2 emission limits million ton;
+ 415   
+ 416  parameter ncoef_e(*,*)        NOX emission million ton per billion yuan
+ 417            nlim                        NOX emission limits million ton;
+ 418   
  419   
  420   
- 421   
- 422  scoef_e('process',i)     =sam('SO2_emission_process',i)/output0(i);
- 423  scoef_e('process','fd')     =sam('SO2_emission_process','household')/sum(i
+ 421  scoef_e('process',i)     =sam('SO2_emission_process',i)/output0(i);
+ 422  scoef_e('process','fd')     =sam('SO2_emission_process','household')/sum(i
       ,cons0(i));
- 424   
- 425  ncoef_e('process',i)     =sam('NOX_emission_process',i)/output0(i);
- 426  ncoef_e('process','fd')     =sam('NOX_emission_process','household')/sum(i
+ 423   
+ 424  ncoef_e('process',i)     =sam('NOX_emission_process',i)/output0(i);
+ 425  ncoef_e('process','fd')     =sam('NOX_emission_process','household')/sum(i
       ,cons0(i));
- 427   
- 428  emission0('co2','e',fe,i)=ccoef_p(fe)*int0(fe,i);
- 429   
- 430  emission0('co2','e',fe,'fd')=ccoef_h(fe)*cons0(fe);
- 431   
- 432  emission0('so2','e','process',i)=scoef_e('process',i)*output0(i) ;
- 433  emission0('so2','e','process','fd')=scoef_e('process','fd')*sum(i,cons0(i)
+ 426   
+ 427  emission0('co2','e',fe,i)=ccoef_p(fe)*int0(fe,i);
+ 428   
+ 429  emission0('co2','e',fe,'fd')=ccoef_h(fe)*cons0(fe);
+ 430   
+ 431  emission0('so2','e','process',i)=scoef_e('process',i)*output0(i) ;
+ 432  emission0('so2','e','process','fd')=scoef_e('process','fd')*sum(i,cons0(i)
       ) ;
- 434   
- 435  emission0('NOX','e','process',i)=ncoef_e('process',i)*output0(i) ;
- 436  emission0('NOX','e','process','fd')=ncoef_e('process','fd')*sum(i,cons0(i)
+ 433   
+ 434  emission0('NOX','e','process',i)=ncoef_e('process',i)*output0(i) ;
+ 435  emission0('NOX','e','process','fd')=ncoef_e('process','fd')*sum(i,cons0(i)
       ) ;
+ 436   
  437   
- 438   
- 439  display scoef_e,ncoef_e,emission0;
- 440   
- 441  * emission account
- 442  Temission0('co2',i)=sum(fe,emission0("co2","e",fe,i));
- 443  Temission0('co2','fd')=sum(fe,emission0('co2','e',fe,'fd'));
- 444   
- 445  Temission0('so2',i)=emission0('so2','e','process',i);
- 446  Temission0('so2','fd')=emission0('so2','e','process','fd');
- 447   
- 448  Temission0('NOX',i)=emission0('NOX','e','process',i);
- 449  Temission0('NOX','fd')=emission0('NOX','e','process','fd');
- 450   
- 451  display     Temission0;
- 452   
- 453  Temission1('co2')=sum(i,Temission0('co2',i))+Temission0('co2','fd');
- 454  Temission1('so2')=sum(i,Temission0('so2',i))+Temission0('So2','fd');
- 455  Temission1('NOX')=sum(i,Temission0('NOX',i))+Temission0('NOX','fd');
- 456  Temission2('co2')=sum((i,fe),emission0("co2","e",fe,i))+sum(fe,emission0("
+ 438  display scoef_e,ncoef_e,emission0;
+ 439   
+ 440  * emission account
+ 441  Temission0('co2',i)=sum(fe,emission0("co2","e",fe,i));
+ 442  Temission0('co2','fd')=sum(fe,emission0('co2','e',fe,'fd'));
+ 443   
+ 444  Temission0('so2',i)=emission0('so2','e','process',i);
+ 445  Temission0('so2','fd')=emission0('so2','e','process','fd');
+ 446   
+ 447  Temission0('NOX',i)=emission0('NOX','e','process',i);
+ 448  Temission0('NOX','fd')=emission0('NOX','e','process','fd');
+ 449   
+ 450  display     Temission0;
+ 451   
+ 452  Temission1('co2')=sum(i,Temission0('co2',i))+Temission0('co2','fd');
+ 453  Temission1('so2')=sum(i,Temission0('so2',i))+Temission0('So2','fd');
+ 454  Temission1('NOX')=sum(i,Temission0('NOX',i))+Temission0('NOX','fd');
+ 455  Temission2('co2')=sum((i,fe),emission0("co2","e",fe,i))+sum(fe,emission0("
       co2","e",fe,"fd"));
+ 456   
  457   
- 458   
- 459  *== parameter for emission cap
- 460  parameter
- 461  clim          carbon emission allowance
- 462  clim_t        trend of carbon emission allowance
- 463  clim0         benchmark of carbon emission allowance
- 464  clim_s(i)     sectoral carbon emission allowance
- 465  clim_h        household carbon emission allowance
- 466  clim_a        selected sectors carbon emission allowance
- 467  ;
- 468   
- 469  table climit(t,*)     input of emission cap
- 470              a                    b
- 471  2010        1                    1
- 472  2015        0.870031338        0.870031338
- 473  2020        0.76262393        0.76262393
- 474  2025        0.655022701        0.612717632
- 475  2030        0.5626033        0.492277887
- 476  ;
- 477   
- 478  slim                     =0;
- 479  clim                     =0;
- 480  clim_s(i)                =0;
- 481  clim_h                   =0;
- 482  clim_a                   =0;
- 483  clim_t(t) = climit(t,"b");
- 484  clim0=1;
- 485   
- 486  display     climit,clim_t,clim0,Temission1,Temission2;
- 487   
+ 458  *== parameter for emission cap
+ 459  parameter
+ 460  clim          carbon emission allowance
+ 461  clim_t        trend of carbon emission allowance
+ 462  clim0         benchmark of carbon emission allowance
+ 463  clim_s(i)     sectoral carbon emission allowance
+ 464  clim_h        household carbon emission allowance
+ 465  clim_a        selected sectors carbon emission allowance
+ 466  ;
+ 467   
+ 468  table climit(t,*)     input of emission cap
+ 469              a                    b
+ 470  2010        1                    1
+ 471  2015        0.870031338        0.870031338
+ 472  2020        0.76262393        0.76262393
+ 473  2025        0.655022701        0.612717632
+ 474  2030        0.5626033        0.492277887
+ 475  ;
+ 476   
+ 477  slim                     =0;
+ 478  clim                     =0;
+ 479  clim_s(i)                =0;
+ 480  clim_h                   =0;
+ 481  clim_a                   =0;
+ 482  clim_t(t) = climit(t,"b");
+ 483  clim0=1;
+ 484   
+ 485  display     climit,clim_t,clim0,Temission1,Temission2;
+ 486   
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\electricity.gms
- 489  *----------------------------------------------*
- 490  *electricity sector division
- 491  *20151215 µçÁ¦Êý¾ÝÐÞ¸Äºó£¬´æÔÚÎ¢Ð¡Æ«²î£¬ÓëffactorÓÐ¹Ø£¬ÒÔºó´ý²é
- 492  *20161201,¸üÐÂ2012ÄêÊý¾Ý£¬Ê¹ÓÃÐÂµÄ²ð·Ö·½·¨£¬Ô­Êý¾ÝÔÚelectricityÎÄ¼þ¼Ð
- 493  *----------------------------------------------*
- 495   
- 496  Parameter Eprop(*,*) input data of sub-electricity sectors;
- 497  *Parameter elec_t(*,*)  electricity generation trend in 100 million kwh;
- 498  *Parameter mkup_t(*,*)  markup trend;
+ 488  *----------------------------------------------*
+ 489  *electricity sector division
+ 490  *20151215 µçÁ¦Êý¾ÝÐÞ¸Äºó£¬´æÔÚÎ¢Ð¡Æ«²î£¬ÓëffactorÓÐ¹Ø£¬ÒÔºó´ý²é
+ 491  *20161201,¸üÐÂ2012ÄêÊý¾Ý£¬Ê¹ÓÃÐÂµÄ²ð·Ö·½·¨£¬Ô­Êý¾ÝÔÚelectricityÎÄ¼þ¼Ð
+ 492  *----------------------------------------------*
+ 494   
+ 495  Parameter Eprop(*,*) input data of sub-electricity sectors;
+ 496  *Parameter elec_t(*,*)  electricity generation trend in 100 million kwh;
+ 497  *Parameter mkup_t(*,*)  markup trend;
 GDXIN   C:\Users\hero\Desktop\Github\test model - V17\elec.gdx
 --- LOAD  Eprop = 1:Eprop
- 501  *$LOAD elec_t
- 502  *$LOAD mkup_t
- 504   
- 505  *=== transfer unit to billion yuan
- 506  Eprop(i,sub_elec)=Eprop(i,sub_elec)/100000;
- 507  Eprop(f,sub_elec)=Eprop(f,sub_elec)/100000;
- 508  Eprop('tax',sub_elec)=Eprop('tax',sub_elec)/100000;
- 509   
- 510  DISPLAY Eprop;
- 511   
- 512  parameter
- 513           ffshr           fraction of electric sector capital as fixed fact
+ 500  *$LOAD elec_t
+ 501  *$LOAD mkup_t
+ 503   
+ 504  *=== transfer unit to billion yuan
+ 505  Eprop(i,sub_elec)=Eprop(i,sub_elec)/100000;
+ 506  Eprop(f,sub_elec)=Eprop(f,sub_elec)/100000;
+ 507  Eprop('tax',sub_elec)=Eprop('tax',sub_elec)/100000;
+ 508   
+ 509  DISPLAY Eprop;
+ 510   
+ 511  parameter
+ 512           ffshr           fraction of electric sector capital as fixed fact
       or
- 514           lelec0          labor in electricity generation
- 515           kelec0          capital in electricity generation
- 516           ffelec0         fixed factor in electricity generation
- 517  *         ffelec_b        fixed factor in base year
- 518           intelec0        intermediate input to electricity generation
- 519           taxelec0
- 520           outputelec0     output of electricity generation
- 521           Toutputelec0                                    ;
+ 513           lelec0          labor in electricity generation
+ 514           kelec0          capital in electricity generation
+ 515           ffelec0         fixed factor in electricity generation
+ 516  *         ffelec_b        fixed factor in base year
+ 517           intelec0        intermediate input to electricity generation
+ 518           taxelec0
+ 519           outputelec0     output of electricity generation
+ 520           Toutputelec0                                    ;
+ 521   
  522   
  523   
- 524   
- 525  lelec0(sub_elec) =       Eprop("labor",sub_elec);
- 526  kelec0(sub_elec) =       Eprop("capital",sub_elec);
- 527   
- 528  intelec0(i,sub_elec) =   Eprop(i,sub_elec);
- 529  taxelec0(sub_elec)=      Eprop("tax",sub_elec);
- 530   
- 531  *==to be updata
- 532  parameter theta_elec(sub_elec)     imputed fixed factor share of capital  
+ 524  lelec0(sub_elec) =       Eprop("labor",sub_elec);
+ 525  kelec0(sub_elec) =       Eprop("capital",sub_elec);
+ 526   
+ 527  intelec0(i,sub_elec) =   Eprop(i,sub_elec);
+ 528  taxelec0(sub_elec)=      Eprop("tax",sub_elec);
+ 529   
+ 530  *==to be updata
+ 531  parameter theta_elec(sub_elec)     imputed fixed factor share of capital  
           from Sue Wing 2006
- 533   
- 534  table ff_data(*,*) cost structure from Sue Wing
- 535                   hydro      nuclear    Wind       Solar      Biomass
- 536  labor            24         13         17         7          19
- 537  capital          56         60         64         73         59
- 538  ff               19         27         20         20         22
- 539  ;
- 540  theta_elec(sub_elec) =0;
- 541  theta_elec(sub_elec)$ff_data("ff",sub_elec) = ff_data("ff",sub_elec)/(ff_d
+ 532   
+ 533  table ff_data(*,*) cost structure from Sue Wing
+ 534                   hydro      nuclear    Wind       Solar      Biomass
+ 535  labor            24         13         17         7          19
+ 536  capital          56         60         64         73         59
+ 537  ff               19         27         20         20         22
+ 538  ;
+ 539  theta_elec(sub_elec) =0;
+ 540  theta_elec(sub_elec)$ff_data("ff",sub_elec) = ff_data("ff",sub_elec)/(ff_d
       ata("ff",sub_elec)+ff_data("capital",sub_elec));
- 542   
- 543  ffelec0(sub_elec)   =    0;
- 544   
- 545  ffelec0(sub_elec)   = theta_elec(sub_elec)*kelec0(sub_elec);
- 546  kelec0(sub_elec)   =(1-theta_elec(sub_elec))*kelec0(sub_elec);
+ 541   
+ 542  ffelec0(sub_elec)   =    0;
+ 543   
+ 544  ffelec0(sub_elec)   = theta_elec(sub_elec)*kelec0(sub_elec);
+ 545  kelec0(sub_elec)   =(1-theta_elec(sub_elec))*kelec0(sub_elec);
+ 546   
  547   
- 548   
- 549  *ffelec_b(sub_elec)   =   ffelec0(sub_elec);
- 550   
- 551  display taxelec0,ffelec0;
+ 548  *ffelec_b(sub_elec)   =   ffelec0(sub_elec);
+ 549   
+ 550  display taxelec0,ffelec0;
+ 551   
  552   
- 553   
- 554  parameter enesta   substitution elasticity between different sub_elec    f
+ 553  parameter enesta   substitution elasticity between different sub_elec    f
       rom EPPA 6
- 555            emkup           electricity markup
- 556            emkup0          base year electricity markup
- 557            p_ff            proportion of fix-factor
- 558            check1
- 559            check2;
- 560  enesta=1.5;
- 561   
- 562  *== markup factor
- 563  emkup(sub_elec)       =      1;
- 564  *emkup("wind")    =      1.3;
- 565  *emkup("solar")   =      2.5;
- 566  *emkup("Biomass")     =      1.8;
- 567   
- 568  emkup0(sub_elec)      =      emkup(sub_elec);
- 569   
- 570  outputelec0(sub_elec)=   emkup(sub_elec)*(lelec0(sub_elec)+kelec0(sub_elec
+ 554            emkup           electricity markup
+ 555            emkup0          base year electricity markup
+ 556            p_ff            proportion of fix-factor
+ 557            check1
+ 558            check2;
+ 559  enesta=1.5;
+ 560   
+ 561  *== markup factor
+ 562  emkup(sub_elec)       =      1;
+ 563  *emkup("wind")    =      1.3;
+ 564  *emkup("solar")   =      2.5;
+ 565  *emkup("Biomass")     =      1.8;
+ 566   
+ 567  emkup0(sub_elec)      =      emkup(sub_elec);
+ 568   
+ 569  outputelec0(sub_elec)=   emkup(sub_elec)*(lelec0(sub_elec)+kelec0(sub_elec
       )+ffelec0(sub_elec)+sum(i,intelec0(i,sub_elec)))+taxelec0(sub_elec);
- 571   
- 572  *outputelec0(sub_elec)=   emkup(sub_elec)*(lelec0(sub_elec)+kelec0(sub_ele
+ 570   
+ 571  *outputelec0(sub_elec)=   emkup(sub_elec)*(lelec0(sub_elec)+kelec0(sub_ele
       c)+sum(i,intelec0(i,sub_elec)))+taxelec0(sub_elec);
- 573   
- 574  Toutputelec0         =   sum(sub_elec,outputelec0(sub_elec));
- 575   
- 576  taxelec0(sub_elec)$outputelec0(sub_elec)=taxelec0(sub_elec)/outputelec0(su
+ 572   
+ 573  Toutputelec0         =   sum(sub_elec,outputelec0(sub_elec));
+ 574   
+ 575  taxelec0(sub_elec)$outputelec0(sub_elec)=taxelec0(sub_elec)/outputelec0(su
       b_elec);
- 577   
- 578  p_ff(sub_elec)    =      emkup(sub_elec)*ffelec0(sub_elec)/((1-taxelec0(su
+ 576   
+ 577  p_ff(sub_elec)    =      emkup(sub_elec)*ffelec0(sub_elec)/((1-taxelec0(su
       b_elec))*outputelec0(sub_elec));
- 579   
- 580  check1=output0("elec")-sum(sub_elec,outputelec0(sub_elec));
- 581   
- 582  fact('capital')=fact('capital')-sum(sub_elec,ffelec0(sub_elec)*emkup(sub_e
+ 578   
+ 579  check1=output0("elec")-sum(sub_elec,outputelec0(sub_elec));
+ 580   
+ 581  fact('capital')=fact('capital')-sum(sub_elec,ffelec0(sub_elec)*emkup(sub_e
       lec));
- 583   
- 584  *EPPA 6 elecpower Ë®µçºÍºËµçµÄ×ÔÈ»ÒªËØµ¯ÐÔ
- 585  esub(sub_elec,"ff")=0.2;
- 586  esub("nuclear","ff")=0.6*p_ff("nuclear")/(1-p_ff("nuclear"));
- 587  esub("hydro","ff")=0.5*p_ff("hydro")/(1-p_ff("hydro"));
- 588  esub("wind","ff")=0.25;
- 589  *esub(sub_elec,"ff")=0.4;
+ 582   
+ 583  *EPPA 6 elecpower Ë®µçºÍºËµçµÄ×ÔÈ»ÒªËØµ¯ÐÔ
+ 584  esub(sub_elec,"ff")=0.2;
+ 585  esub("nuclear","ff")=0.6*p_ff("nuclear")/(1-p_ff("nuclear"));
+ 586  esub("hydro","ff")=0.5*p_ff("hydro")/(1-p_ff("hydro"));
+ 587  esub("wind","ff")=0.25;
+ 588  *esub(sub_elec,"ff")=0.4;
+ 589   
  590   
- 591   
- 592  display lelec0,kelec0,intelec0,outputelec0,taxelec0,tx0,emission0,p_ff,Tou
+ 591  display lelec0,kelec0,intelec0,outputelec0,taxelec0,tx0,emission0,p_ff,Tou
       tputelec0,check1,esub;
+ 592   
  593   
  594   
  595   
  596   
  597   
  598   
- 599   
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\ist.gms
- 601  *----------------------------------------------*
- 602  *IST sector division
- 603  *----------------------------------------------*
- 605   
- 606  Parameter Isprop(*,*) proportion of sub-IST sectors;
+ 600  *----------------------------------------------*
+ 601  *IST sector division
+ 602  *----------------------------------------------*
+ 604   
+ 605  Parameter Isprop(*,*) proportion of sub-IST sectors;
 GDXIN   C:\Users\hero\Desktop\Github\test model - V17\ist.gdx
 --- LOAD  Isprop = 1:isprop
- 610   
- 611  DISPLAY Isprop;
- 612   
- 613  set      sub_ist /OBC,EF/
- 614   
- 615  alias (sub_ist,sub_istc)
- 616  parameter
- 617           list0          labor in ist generation
- 618           kist0          capital in ist generation
- 619           intist0        intermediate input to ist generation
- 620           taxist0
- 621           outputist0     output of ist generation
- 622           Toutputist0                                             ;
+ 609   
+ 610  DISPLAY Isprop;
+ 611   
+ 612  set      sub_ist /OBC,EF/
+ 613   
+ 614  alias (sub_ist,sub_istc)
+ 615  parameter
+ 616           list0          labor in ist generation
+ 617           kist0          capital in ist generation
+ 618           intist0        intermediate input to ist generation
+ 619           taxist0
+ 620           outputist0     output of ist generation
+ 621           Toutputist0                                             ;
+ 622   
  623   
- 624   
- 625  list0(sub_ist) =       isprop("labor",sub_ist)*fact0("labor","IST")  ;
- 626  kist0(sub_ist) =       isprop("capital",sub_ist)*fact0("capital","IST")  ;
- 627  intist0(i,sub_ist) =   isprop(i,sub_ist)*int0(i,"IST")  ;
- 628  taxist0(sub_ist)=      isprop("tax",sub_ist)*sam("tax","IST");
- 629  outputist0(sub_ist)=   list0(sub_ist)+kist0(sub_ist)+sum(i,intist0(i,sub_i
+ 624  list0(sub_ist) =       isprop("labor",sub_ist)*fact0("labor","IST")  ;
+ 625  kist0(sub_ist) =       isprop("capital",sub_ist)*fact0("capital","IST")  ;
+ 626  intist0(i,sub_ist) =   isprop(i,sub_ist)*int0(i,"IST")  ;
+ 627  taxist0(sub_ist)=      isprop("tax",sub_ist)*sam("tax","IST");
+ 628  outputist0(sub_ist)=   list0(sub_ist)+kist0(sub_ist)+sum(i,intist0(i,sub_i
       st))+taxist0(sub_ist);
- 630  taxist0(sub_ist)$outputist0(sub_ist)=taxist0(sub_ist)/outputist0(sub_ist);
- 631  Toutputist0         =   sum(sub_ist,outputist0(sub_ist));
- 632  emission0("so2","e","process",sub_ist)=isprop("SO2_emission_process",sub_i
+ 629  taxist0(sub_ist)$outputist0(sub_ist)=taxist0(sub_ist)/outputist0(sub_ist);
+ 630  Toutputist0         =   sum(sub_ist,outputist0(sub_ist));
+ 631  emission0("so2","e","process",sub_ist)=isprop("SO2_emission_process",sub_i
       st)*emission0("so2","e","process","IST");
- 633  emission0("so2","e","coal",sub_ist)=isprop("SO2_emission_coal",sub_ist)*em
+ 632  emission0("so2","e","coal",sub_ist)=isprop("SO2_emission_coal",sub_ist)*em
       ission0("so2","e","coal","IST");
- 634  emission0("so2","e","roil",sub_ist)=isprop("SO2_emission_oil",sub_ist)*emi
+ 633  emission0("so2","e","roil",sub_ist)=isprop("SO2_emission_oil",sub_ist)*emi
       ssion0("so2","e","roil","IST");
- 635   
- 636  emission0("so2","g","process",sub_ist)=isprop("SO2_production_process",sub
+ 634   
+ 635  emission0("so2","g","process",sub_ist)=isprop("SO2_production_process",sub
       _ist)*emission0("so2","g","process","IST");
- 637  emission0("so2","g","coal",sub_ist)=isprop("SO2_production_coal",sub_ist)*
+ 636  emission0("so2","g","coal",sub_ist)=isprop("SO2_production_coal",sub_ist)*
       emission0("so2","g","coal","IST");
- 638  emission0("so2","g","roil",sub_ist)=isprop("SO2_production_oil",sub_ist)*e
+ 637  emission0("so2","g","roil",sub_ist)=isprop("SO2_production_oil",sub_ist)*e
       mission0("so2","g","roil","IST");
- 639   
- 640  emission0("so2","a","process",sub_ist)=isprop("SO2_abated_process",sub_ist
+ 638   
+ 639  emission0("so2","a","process",sub_ist)=isprop("SO2_abated_process",sub_ist
       )*emission0("so2","a","process","IST");
- 641  emission0("so2","a","coal",sub_ist)=isprop("SO2_abated_coal",sub_ist)*emis
+ 640  emission0("so2","a","coal",sub_ist)=isprop("SO2_abated_coal",sub_ist)*emis
       sion0("so2","a","coal","IST");
- 642  emission0("so2","a","roil",sub_ist)=isprop("SO2_abated_oil",sub_ist)*emiss
+ 641  emission0("so2","a","roil",sub_ist)=isprop("SO2_abated_oil",sub_ist)*emiss
       ion0("so2","a","roil","IST");
- 643   
- 644  emission0("co2","e","gas",sub_ist)=isprop("cO2_emission_naturegas",sub_ist
+ 642   
+ 643  emission0("co2","e","gas",sub_ist)=isprop("cO2_emission_naturegas",sub_ist
       )*emission0("co2","e","gas","IST");
- 645  emission0("co2","e","coal",sub_ist)=isprop("cO2_emission_coal",sub_ist)*em
+ 644  emission0("co2","e","coal",sub_ist)=isprop("cO2_emission_coal",sub_ist)*em
       ission0("co2","e","coal","IST");
- 646  emission0("co2","e","roil",sub_ist)=isprop("cO2_emission_oil",sub_ist)*emi
+ 645  emission0("co2","e","roil",sub_ist)=isprop("cO2_emission_oil",sub_ist)*emi
       ssion0("co2","e","roil","IST");
- 647   
- 648  display list0,kist0,intist0,outputist0,taxist0,tx0;
+ 646   
+ 647  display list0,kist0,intist0,outputist0,taxist0,tx0;
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\trend.gms
- 650  *----------------------------------------------*
- 651  *Parameters with trend
- 652  *0317 ¼ÓÈëGDPÇ÷ÊÆ£¬ÀÍ¶¯Á¦Ç÷ÊÆ
- 653  *----------------------------------------------*
- 655   
- 656  Parameter PAT(*,*) parameters with trend;
- 657  Parameter RET1(*,*) renewable electricity trend;
- 658  Parameter RET2(*,*) renewable electricity trend;
- 659  Parameter sffelec_b(*,*)      benchmark fixed factor trend;
- 660  Parameter sffelec_bau(*,*)      benchmark fixed factor trend;
+ 649  *----------------------------------------------*
+ 650  *Parameters with trend
+ 651  *0317 ¼ÓÈëGDPÇ÷ÊÆ£¬ÀÍ¶¯Á¦Ç÷ÊÆ
+ 652  *----------------------------------------------*
+ 654   
+ 655  Parameter PAT(*,*) parameters with trend;
+ 656  Parameter RET1(*,*) renewable electricity trend;
+ 657  Parameter RET2(*,*) renewable electricity trend;
+ 658  Parameter sffelec_b(*,*)      benchmark fixed factor trend;
+ 659  Parameter sffelec_bau(*,*)      benchmark fixed factor trend;
 GDXIN   C:\Users\hero\Desktop\Github\test model - V17\trend.gdx
 --- LOAD  PAT = 1:PAT
 --- LOAD  RET1 = 2:RET1
 --- LOAD  RET2 = 3:RET2
 --- LOAD  sffelec_b = 4:sffelec_b
 --- LOAD  sffelec_bau = 5:sffelec_BAU
- 668   
- 669  Parameter rgdp_b(t)      real gdp pathway;
- 670  Parameter rgdp0          real gdp;
- 671  Parameter aeei(*)        auto energy effiency index;
- 672  Parameter gprod_b(t)    benchmark productivity index;
- 673  Parameter gprod0        benchmark productivity index;
- 674  Parameter lgrowth_b(t)      labor growth rate;
- 675   
- 676  Parameter ret0      renewable electricity trend;
- 677  Parameter ret_b(t,*)      benchmark renewable electricity trend;
- 678   
- 679  Parameter sffelec0      benchmark fixed factor trend;
- 680  Parameter sffelec1      benchmark fixed factor trend in BAU;
+ 667   
+ 668  Parameter rgdp_b(t)      real gdp pathway;
+ 669  Parameter rgdp0          real gdp;
+ 670  Parameter aeei(*)        auto energy effiency index;
+ 671  Parameter gprod_b(t)    benchmark productivity index;
+ 672  Parameter gprod0        benchmark productivity index;
+ 673  Parameter lgrowth_b(t)      labor growth rate;
+ 674   
+ 675  Parameter ret0      renewable electricity trend;
+ 676  Parameter ret_b(t,*)      benchmark renewable electricity trend;
+ 677   
+ 678  Parameter sffelec0      benchmark fixed factor trend;
+ 679  Parameter sffelec1      benchmark fixed factor trend in BAU;
+ 680   
  681   
- 682   
- 683  rgdp_b(t)=PAT(t,"rgdp");
- 684  rgdp0=rgdp_b("2010");
- 685  aeei(i)=1;
- 686  aeei("fd")=1;
- 687  gprod_b(t)=PAT(t,"gprod");
- 688  gprod0=gprod_b("2010");
- 689  lgrowth_b(t)=PAT(t,"lgrowth");
- 690   
- 691  sffelec0(sub_elec)=1;
- 692  sffelec1(sub_elec)=1;
+ 682  rgdp_b(t)=PAT(t,"rgdp");
+ 683  rgdp0=rgdp_b("2010");
+ 684  aeei(i)=1;
+ 685  aeei("fd")=1;
+ 686  gprod_b(t)=PAT(t,"gprod");
+ 687  gprod0=gprod_b("2010");
+ 688  lgrowth_b(t)=PAT(t,"lgrowth");
+ 689   
+ 690  sffelec0(sub_elec)=1;
+ 691  sffelec1(sub_elec)=1;
+ 692   
  693   
  694   
- 695   
- 696  *²Î¿¼Çé¾°
- 697  *ret_b(t,sub_elec)=RET2(t,sub_elec);
- 698  *¸ß±ÈÀýÇé¾°
- 699  ret_b(t,sub_elec)=RET1(t,sub_elec);
- 700   
- 701  ret0(sub_elec)=ret_b("2010",sub_elec);
- 702   
- 703  display aeei,PAT,rgdp0,ret0,ret_b;
+ 695  *²Î¿¼Çé¾°
+ 696  *ret_b(t,sub_elec)=RET2(t,sub_elec);
+ 697  *¸ß±ÈÀýÇé¾°
+ 698  ret_b(t,sub_elec)=RET1(t,sub_elec);
+ 699   
+ 700  ret0(sub_elec)=ret_b("2010",sub_elec);
+ 701   
+ 702  display aeei,PAT,rgdp0,ret0,ret_b;
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\labor market.gms
- 705  *----------------------------------------------*
- 706  *larbor market
- 707  *20161204, update: extend the types of labor to 28 by gender by region by 
+ 704  *----------------------------------------------*
+ 705  *larbor market
+ 706  *20161204, update: extend the types of labor to 28 by gender by region by 
       education
- 708  *----------------------------------------------*
- 709   
- 710  set lmo original labor type /L1*L28/
- 711      region /urban,rural/
- 712      gender /male,female/
- 713      education /     ul unlettered
- 714                      es "elementart school"
- 715                      ms "middle school"
- 716                      hs "high school"
- 717                      jc "junior college"
- 718                      rc "regular college"
- 719                      pg "postgraduate"      /
- 720      Level /low,high/
- 721      lm aggregared labor type /Low,high/;
- 722   
- 723  alias (lm,lmm)             ;
- 724  set maplmolm(lmo,lm)   /
- 725  L1        .        Low
- 726  L2        .        Low
- 727  L3        .        Low
- 728  L4        .        Low
- 729  L5        .        High
- 730  L6        .        High
- 731  L7        .        High
- 732  L8        .        Low
- 733  L9        .        Low
- 734  L10        .        Low
- 735  L11        .        Low
- 736  L12        .        High
- 737  L13        .        High
- 738  L14        .        High
- 739  L15        .        Low
- 740  L16        .        Low
- 741  L17        .        Low
- 742  L18        .        Low
- 743  L19        .        High
- 744  L20        .        High
- 745  L21        .        High
- 746  L22        .        Low
- 747  L23        .        Low
- 748  L24        .        Low
- 749  L25        .        Low
- 750  L26        .        High
- 751  L27        .        High
- 752  L28        .        High
- 753   
- 754  /;
- 755   
- 756  * data handling in fold education$region, grasp from output.xlsx
- 758   
- 759  Parameter labor_v0(*,*)  sectoral labor costs value by labor type in 10 th
+ 707  *----------------------------------------------*
+ 708   
+ 709  set lmo original labor type /L1*L28/
+ 710      region /urban,rural/
+ 711      gender /male,female/
+ 712      education /     ul unlettered
+ 713                      es "elementart school"
+ 714                      ms "middle school"
+ 715                      hs "high school"
+ 716                      jc "junior college"
+ 717                      rc "regular college"
+ 718                      pg "postgraduate"      /
+ 719      Level /low,high/
+ 720      lm aggregared labor type /Low,high/;
+ 721   
+ 722  alias (lm,lmm)             ;
+ 723  set maplmolm(lmo,lm)   /
+ 724  L1        .        Low
+ 725  L2        .        Low
+ 726  L3        .        Low
+ 727  L4        .        Low
+ 728  L5        .        High
+ 729  L6        .        High
+ 730  L7        .        High
+ 731  L8        .        Low
+ 732  L9        .        Low
+ 733  L10        .        Low
+ 734  L11        .        Low
+ 735  L12        .        High
+ 736  L13        .        High
+ 737  L14        .        High
+ 738  L15        .        Low
+ 739  L16        .        Low
+ 740  L17        .        Low
+ 741  L18        .        Low
+ 742  L19        .        High
+ 743  L20        .        High
+ 744  L21        .        High
+ 745  L22        .        Low
+ 746  L23        .        Low
+ 747  L24        .        Low
+ 748  L25        .        Low
+ 749  L26        .        High
+ 750  L27        .        High
+ 751  L28        .        High
+ 752   
+ 753  /;
+ 754   
+ 755  * data handling in fold education$region, grasp from output.xlsx
+ 757   
+ 758  Parameter labor_v0(*,*)  sectoral labor costs value by labor type in 10 th
       ousand yuan;
- 760  Parameter labor_q0(*,*)  sectoral labor quantity by labor type;
- 761  Parameter labor_w0(*,*)  sectoral labor wage value by labor type in 10 tho
+ 759  Parameter labor_q0(*,*)  sectoral labor quantity by labor type;
+ 760  Parameter labor_w0(*,*)  sectoral labor wage value by labor type in 10 tho
       usand yuan;
- 762  parameter labordata(*,*);
- 763   
+ 761  parameter labordata(*,*);
+ 762   
 GDXIN   C:\Users\hero\Desktop\Github\test model - V17\labor.gdx
- 765   
+ 764   
 --- LOAD  labor_v0 = 2:labor_v0
 --- LOAD  labor_q0 = 1:labor_q0
 --- LOAD  labordata = 3:labordata
- 769   
- 770  *=== transfer unit to billion yuan
- 771  labor_v0(i,lmo)=labor_v0(i,lmo)/100000;
- 772   
- 773  labor_v0(i,lm) = sum(lmo$maplmolm(lmo,lm),labor_v0(i,lmo)) ;
- 774  labor_q0(i,lm) = sum(lmo$maplmolm(lmo,lm),labor_q0(i,lmo))  ;
+ 768   
+ 769  *=== transfer unit to billion yuan
+ 770  labor_v0(i,lmo)=labor_v0(i,lmo)/100000;
+ 771   
+ 772  labor_v0(i,lm) = sum(lmo$maplmolm(lmo,lm),labor_v0(i,lmo)) ;
+ 773  labor_q0(i,lm) = sum(lmo$maplmolm(lmo,lm),labor_q0(i,lmo))  ;
+ 774   
  775   
- 776   
- 777  labor_w0(i,lm)$labor_q0(i,lm) =labor_v0(i,lm)/labor_q0(i,lm);
- 778  labor_w0(i,lm)$(labor_q0(i,lm) eq 0) = 0.001;
+ 776  labor_w0(i,lm)$labor_q0(i,lm) =labor_v0(i,lm)/labor_q0(i,lm);
+ 777  labor_w0(i,lm)$(labor_q0(i,lm) eq 0) = 0.001;
+ 778   
  779   
- 780   
- 781  *== adjust employment from 2010 to 2012
+ 780  *== adjust employment from 2010 to 2012
+ 781   
  782   
- 783   
- 784  *parameter tlprop(*,*)  the proportion of total labor supply by year;
- 785  parameter bwage(*)    the average wage of labor by type from micro data in
+ 783  *parameter tlprop(*,*)  the proportion of total labor supply by year;
+ 784  parameter bwage(*)    the average wage of labor by type from micro data in
        yuan;
- 786  parameter bur(*)     the benchmark unemployment rate ;
+ 785  parameter bur(*)     the benchmark unemployment rate ;
+ 786   
  787   
- 788   
- 789  bwage(lmo) =   labordata('wage',lmo);
- 790  bwage(lm)  =   sum(lmo$maplmolm(lmo,lm),labordata('wage',lmo)*sum(i,labor_
+ 788  bwage(lmo) =   labordata('wage',lmo);
+ 789  bwage(lm)  =   sum(lmo$maplmolm(lmo,lm),labordata('wage',lmo)*sum(i,labor_
       q0(i,lmo)))/sum(i,labor_q0(i,lm));
- 791   
- 792  bur(lmo)  =   labordata('ul',lmo);
- 793  bur(lm)  =   1-sum(i,labor_q0(i,lm))/sum(lmo$maplmolm(lmo,lm),sum(i,labor_
+ 790   
+ 791  bur(lmo)  =   labordata('ul',lmo);
+ 792  bur(lm)  =   1-sum(i,labor_q0(i,lm))/sum(lmo$maplmolm(lmo,lm),sum(i,labor_
       q0(i,lmo))/(1-bur(lmo)));
+ 793   
  794   
- 795   
- 796  DISPLAY labor_v0,labor_q0,labor_w0,bur,bwage;
- 797   
- 798  *== set relative wage factor
- 799   
- 800  parameter fwage_s(i,lm)  factor of average wage among sectors  ;
- 801  parameter awage_e(lm)  average wage among education  ;
- 802   
- 803  awage_e(lm) = sum(i,labor_w0(i,lm)*labor_q0(i,lm))/sum(i,labor_q0(i,lm));
- 804   
- 805  fwage_s(i,lm) =  labor_w0(i,lm)/awage_e(lm);
+ 795  DISPLAY labor_v0,labor_q0,labor_w0,bur,bwage;
+ 796   
+ 797  *== set relative wage factor
+ 798   
+ 799  parameter fwage_s(i,lm)  factor of average wage among sectors  ;
+ 800  parameter awage_e(lm)  average wage among education  ;
+ 801   
+ 802  awage_e(lm) = sum(i,labor_w0(i,lm)*labor_q0(i,lm))/sum(i,labor_q0(i,lm));
+ 803   
+ 804  fwage_s(i,lm) =  labor_w0(i,lm)/awage_e(lm);
+ 805   
  806   
- 807   
- 808  display fwage_s,awage_e;
+ 807  display fwage_s,awage_e;
+ 808   
  809   
- 810   
- 811  parameter tlabor_q0(lm)   total employment by sub_labor
- 812            tqlabor0       total employment ;
- 813   
- 814  tlabor_q0(lm)=sum(i,labor_q0(i,lm));
- 815  tqlabor0=sum(lm,tlabor_q0(lm));
- 816   
- 817  parameter tlabor_v0(lm)   total employment value by sub_labor
- 818            tvlabor0       total employment value;
- 819   
- 820  tlabor_v0(lm)=sum(i,labor_v0(i,lm));
- 821  tvlabor0=sum(lm,tlabor_v0(lm));
+ 810  parameter tlabor_q0(lm)   total employment by sub_labor
+ 811            tqlabor0       total employment ;
+ 812   
+ 813  tlabor_q0(lm)=sum(i,labor_q0(i,lm));
+ 814  tqlabor0=sum(lm,tlabor_q0(lm));
+ 815   
+ 816  parameter tlabor_v0(lm)   total employment value by sub_labor
+ 817            tvlabor0       total employment value;
+ 818   
+ 819  tlabor_v0(lm)=sum(i,labor_v0(i,lm));
+ 820  tvlabor0=sum(lm,tlabor_v0(lm));
+ 821   
  822   
- 823   
- 824  display labor_q0,tlabor_q0,tqlabor0,labor_v0,tlabor_v0,tvlabor0;
+ 823  display labor_q0,tlabor_q0,tqlabor0,labor_v0,tlabor_v0,tvlabor0;
+ 824   
  825   
- 826   
- 827  parameter laborelec0,laborist0;
- 828  laborelec0(sub_elec,lm)=labor_q0("Elec",lm)*lelec0(sub_elec)/fact0("labor"
+ 826  parameter laborelec0,laborist0;
+ 827  laborelec0(sub_elec,lm)=labor_q0("Elec",lm)*lelec0(sub_elec)/fact0("labor"
       ,"Elec");
- 829  laborist0(sub_ist,lm)=list0(sub_ist)*labor_q0("IST",lm)/sum(lmm,labor_q0("
+ 828  laborist0(sub_ist,lm)=list0(sub_ist)*labor_q0("IST",lm)/sum(lmm,labor_q0("
       IST",lmm));
- 830   
- 831  laborelec0(sub_elec,lm)=labor_v0("Elec",lm)*lelec0(sub_elec)/fact0("labor"
+ 829   
+ 830  laborelec0(sub_elec,lm)=labor_v0("Elec",lm)*lelec0(sub_elec)/fact0("labor"
       ,"Elec");
- 832  laborist0(sub_ist,lm)=list0(sub_ist)*labor_v0("IST",lm)/sum(lmm,labor_q0("
+ 831  laborist0(sub_ist,lm)=list0(sub_ist)*labor_v0("IST",lm)/sum(lmm,labor_q0("
       IST",lmm));
- 833   
- 834  display laborelec0,laborist0;
- 835   
- 836  parameter ur0      the benchmark unemployment rate
- 837            tlabor_s0(lm)   total labor supply by sub_labor
- 838            tqlabor_s0      total labor supply;
- 839   
- 840  ur0(lm)=bur(lm);
+ 832   
+ 833  display laborelec0,laborist0;
+ 834   
+ 835  parameter ur0      the benchmark unemployment rate
+ 836            tlabor_s0(lm)   total labor supply by sub_labor
+ 837            tqlabor_s0      total labor supply;
+ 838   
+ 839  ur0(lm)=bur(lm);
+ 840   
  841   
- 842   
- 843  tlabor_s0(lm)=(tlabor_q0(lm)/(1-ur0(lm)));
- 844  tqlabor_s0=sum(lm,tlabor_s0(lm));
- 845   
- 846  *shock ÀÍ¶¯Á¦¹©¸ø½á¹¹µÄ±ä»¯
- 847  *tlabor_s0(lm)=tqlabor_s0*tlprop("2030",lm);
- 848   
- 849  display ur0,tlabor_s0,tqlabor_s0;
+ 842  tlabor_s0(lm)=(tlabor_q0(lm)/(1-ur0(lm)));
+ 843  tqlabor_s0=sum(lm,tlabor_s0(lm));
+ 844   
+ 845  *shock ÀÍ¶¯Á¦¹©¸ø½á¹¹µÄ±ä»¯
+ 846  *tlabor_s0(lm)=tqlabor_s0*tlprop("2030",lm);
+ 847   
+ 848  display ur0,tlabor_s0,tqlabor_s0;
+ 849   
  850   
- 851   
           ul unlettered /L1,L8,L15,L22/
           es "elementart school" /L2,L9,L16,L23/
           ms "middle school"     /L3,L10,L17,L24/
@@ -667,280 +668,280 @@ GDXIN   C:\Users\hero\Desktop\Github\test model - V17\labor.gdx
           rural    /L8*L14,L22*L28/
           male     /L1*L14/
           femal    /L15*L28/
- 865  ;
- 866   
- 867  *== set for laboe aggregation
- 868  set maple(lmo,education) map from labor to education/
- 869  L1        .        ul
- 870  L2        .        es
- 871  L3        .        ms
- 872  L4        .        hs
- 873  L5        .        jc
- 874  L6        .        rc
- 875  L7        .        pg
- 876  L8        .        ul
- 877  L9        .        es
- 878  L10        .        ms
- 879  L11        .        hs
- 880  L12        .        jc
- 881  L13        .        rc
- 882  L14        .        pg
- 883  L15        .        ul
- 884  L16        .        es
- 885  L17        .        ms
- 886  L18        .        hs
- 887  L19        .        jc
- 888  L20        .        rc
- 889  L21        .        pg
- 890  L22        .        ul
- 891  L23        .        es
- 892  L24        .        ms
- 893  L25        .        hs
- 894  L26        .        jc
- 895  L27        .        rc
- 896  L28        .        pg
- 897  /;
- 898  set maplr(lmo,region) map from labor to region/
- 899  L1        .        Urban
- 900  L2        .        Urban
- 901  L3        .        Urban
- 902  L4        .        Urban
- 903  L5        .        Urban
- 904  L6        .        Urban
- 905  L7        .        Urban
- 906  L8        .        Rural
- 907  L9        .        Rural
- 908  L10        .        Rural
- 909  L11        .        Rural
- 910  L12        .        Rural
- 911  L13        .        Rural
- 912  L14        .        Rural
- 913  L15        .        Urban
- 914  L16        .        Urban
- 915  L17        .        Urban
- 916  L18        .        Urban
- 917  L19        .        Urban
- 918  L20        .        Urban
- 919  L21        .        Urban
- 920  L22        .        Rural
- 921  L23        .        Rural
- 922  L24        .        Rural
- 923  L25        .        Rural
- 924  L26        .        Rural
- 925  L27        .        Rural
- 926  L28        .        Rural
- 927  /;
- 928   
- 929  set maplg(lmo,gender) map from labor to gender/
- 930  L1        .        Male
- 931  L2        .        Male
- 932  L3        .        Male
- 933  L4        .        Male
- 934  L5        .        Male
- 935  L6        .        Male
- 936  L7        .        Male
- 937  L8        .        Male
- 938  L9        .        Male
- 939  L10        .        Male
- 940  L11        .        Male
- 941  L12        .        Male
- 942  L13        .        Male
- 943  L14        .        Male
- 944  L15        .        Female
- 945  L16        .        Female
- 946  L17        .        Female
- 947  L18        .        Female
- 948  L19        .        Female
- 949  L20        .        Female
- 950  L21        .        Female
- 951  L22        .        Female
- 952  L23        .        Female
- 953  L24        .        Female
- 954  L25        .        Female
- 955  L26        .        Female
- 956  L27        .        Female
- 957  L28        .        Female
- 958  /;
- 959   
- 960  set mapll(lmo,level) map from labor to level/
- 961  L1        .        Low
- 962  L2        .        Low
- 963  L3        .        Low
- 964  L4        .        Low
- 965  L5        .        High
- 966  L6        .        High
- 967  L7        .        High
- 968  L8        .        Low
- 969  L9        .        Low
- 970  L10        .        Low
- 971  L11        .        Low
- 972  L12        .        High
- 973  L13        .        High
- 974  L14        .        High
- 975  L15        .        Low
- 976  L16        .        Low
- 977  L17        .        Low
- 978  L18        .        Low
- 979  L19        .        High
- 980  L20        .        High
- 981  L21        .        High
- 982  L22        .        Low
- 983  L23        .        Low
- 984  L24        .        Low
- 985  L25        .        Low
- 986  L26        .        High
- 987  L27        .        High
- 988  L28        .        High
- 989   
- 990  /;
- 991   
- 992  set ll(lm) low level labor type /low/;
- 993  set hl(lm) high level labor type /high/;
- 994   
- 995  *ll(lm)$mapll(lm,'low') = 1;
- 996  *hl(lm)$mapll(lm,'high') = 1;
- 997   
- 998  display ll,hl;
+ 864  ;
+ 865   
+ 866  *== set for laboe aggregation
+ 867  set maple(lmo,education) map from labor to education/
+ 868  L1        .        ul
+ 869  L2        .        es
+ 870  L3        .        ms
+ 871  L4        .        hs
+ 872  L5        .        jc
+ 873  L6        .        rc
+ 874  L7        .        pg
+ 875  L8        .        ul
+ 876  L9        .        es
+ 877  L10        .        ms
+ 878  L11        .        hs
+ 879  L12        .        jc
+ 880  L13        .        rc
+ 881  L14        .        pg
+ 882  L15        .        ul
+ 883  L16        .        es
+ 884  L17        .        ms
+ 885  L18        .        hs
+ 886  L19        .        jc
+ 887  L20        .        rc
+ 888  L21        .        pg
+ 889  L22        .        ul
+ 890  L23        .        es
+ 891  L24        .        ms
+ 892  L25        .        hs
+ 893  L26        .        jc
+ 894  L27        .        rc
+ 895  L28        .        pg
+ 896  /;
+ 897  set maplr(lmo,region) map from labor to region/
+ 898  L1        .        Urban
+ 899  L2        .        Urban
+ 900  L3        .        Urban
+ 901  L4        .        Urban
+ 902  L5        .        Urban
+ 903  L6        .        Urban
+ 904  L7        .        Urban
+ 905  L8        .        Rural
+ 906  L9        .        Rural
+ 907  L10        .        Rural
+ 908  L11        .        Rural
+ 909  L12        .        Rural
+ 910  L13        .        Rural
+ 911  L14        .        Rural
+ 912  L15        .        Urban
+ 913  L16        .        Urban
+ 914  L17        .        Urban
+ 915  L18        .        Urban
+ 916  L19        .        Urban
+ 917  L20        .        Urban
+ 918  L21        .        Urban
+ 919  L22        .        Rural
+ 920  L23        .        Rural
+ 921  L24        .        Rural
+ 922  L25        .        Rural
+ 923  L26        .        Rural
+ 924  L27        .        Rural
+ 925  L28        .        Rural
+ 926  /;
+ 927   
+ 928  set maplg(lmo,gender) map from labor to gender/
+ 929  L1        .        Male
+ 930  L2        .        Male
+ 931  L3        .        Male
+ 932  L4        .        Male
+ 933  L5        .        Male
+ 934  L6        .        Male
+ 935  L7        .        Male
+ 936  L8        .        Male
+ 937  L9        .        Male
+ 938  L10        .        Male
+ 939  L11        .        Male
+ 940  L12        .        Male
+ 941  L13        .        Male
+ 942  L14        .        Male
+ 943  L15        .        Female
+ 944  L16        .        Female
+ 945  L17        .        Female
+ 946  L18        .        Female
+ 947  L19        .        Female
+ 948  L20        .        Female
+ 949  L21        .        Female
+ 950  L22        .        Female
+ 951  L23        .        Female
+ 952  L24        .        Female
+ 953  L25        .        Female
+ 954  L26        .        Female
+ 955  L27        .        Female
+ 956  L28        .        Female
+ 957  /;
+ 958   
+ 959  set mapll(lmo,level) map from labor to level/
+ 960  L1        .        Low
+ 961  L2        .        Low
+ 962  L3        .        Low
+ 963  L4        .        Low
+ 964  L5        .        High
+ 965  L6        .        High
+ 966  L7        .        High
+ 967  L8        .        Low
+ 968  L9        .        Low
+ 969  L10        .        Low
+ 970  L11        .        Low
+ 971  L12        .        High
+ 972  L13        .        High
+ 973  L14        .        High
+ 974  L15        .        Low
+ 975  L16        .        Low
+ 976  L17        .        Low
+ 977  L18        .        Low
+ 978  L19        .        High
+ 979  L20        .        High
+ 980  L21        .        High
+ 981  L22        .        Low
+ 982  L23        .        Low
+ 983  L24        .        Low
+ 984  L25        .        Low
+ 985  L26        .        High
+ 986  L27        .        High
+ 987  L28        .        High
+ 988   
+ 989  /;
+ 990   
+ 991  set ll(lm) low level labor type /low/;
+ 992  set hl(lm) high level labor type /high/;
+ 993   
+ 994  *ll(lm)$mapll(lm,'low') = 1;
+ 995  *hl(lm)$mapll(lm,'high') = 1;
+ 996   
+ 997  display ll,hl;
+ 998   
  999   
 1000   
 1001   
-1002   
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\backstop.gms
-1004  *----------------------------------------------*
-1005  *backstop technology     2015Äê12ÔÂ3ÈÕ
-1006  *----------------------------------------------*
-1007  set bt /ngcc,ngcap,igcap/;
-1008  parameter active(bt);
-1009   
-1010  active(bt)=0;
-1011  active("ngcap")=0;
-1012  active("igcap")=0;
-1013  table bsin(bt,*,*)   backstop input structure
-1014   
-1015                          usa     can     mex     jpn     anz     eur     ro
+1003  *----------------------------------------------*
+1004  *backstop technology     2015Äê12ÔÂ3ÈÕ
+1005  *----------------------------------------------*
+1006  set bt /ngcc,ngcap,igcap/;
+1007  parameter active(bt);
+1008   
+1009  active(bt)=0;
+1010  active("ngcap")=0;
+1011  active("igcap")=0;
+1012  table bsin(bt,*,*)   backstop input structure
+1013   
+1014                          usa     can     mex     jpn     anz     eur     ro
       e     rus     asi     chn     ind     bra     afr     mes     lam     rea 
           kor     idz
-1016  ngcc    .       gas     0.5695  0.5695  0.5695  0.5695  0.5695  0.5695  0.
+1015  ngcc    .       gas     0.5695  0.5695  0.5695  0.5695  0.5695  0.5695  0.
       5695  0.5695  0.5695  0.5695  0.5695  0.5695  0.5695  0.5695  0.5695  0.56
       95  0.5695  0.5695
-1017  ngcc    .       k       0.1611  0.1611  0.1611  0.1611  0.1611  0.1611  0.
+1016  ngcc    .       k       0.1611  0.1611  0.1611  0.1611  0.1611  0.1611  0.
       1611  0.1611  0.1611  0.1611  0.1611  0.1611  0.1611  0.1611  0.1611  0.16
       11  0.1611  0.1611
-1018  ngcc    .       l       0.0396  0.0396  0.0396  0.0396  0.0396  0.0396  0.
+1017  ngcc    .       l       0.0396  0.0396  0.0396  0.0396  0.0396  0.0396  0.
       0396  0.0396  0.0396  0.0396  0.0396  0.0396  0.0396  0.0396  0.0396  0.03
       96  0.0396  0.0396
-1019  ngcc    .       ktd     0.1465  0.1465  0.1465  0.1465  0.1465  0.1465  0.
+1018  ngcc    .       ktd     0.1465  0.1465  0.1465  0.1465  0.1465  0.1465  0.
       1465  0.1465  0.1465  0.1465  0.1465  0.1465  0.1465  0.1465  0.1465  0.14
       65  0.1465  0.1465
-1020  ngcc    .       ltd     0.0733  0.0733  0.0733  0.0733  0.0733  0.0733  0.
+1019  ngcc    .       ltd     0.0733  0.0733  0.0733  0.0733  0.0733  0.0733  0.
       0733  0.0733  0.0733  0.0733  0.0733  0.0733  0.0733  0.0733  0.0733  0.07
       33  0.0733  0.0733
-1021  ngcc    .       ffa     0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.
+1020  ngcc    .       ffa     0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.
       0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.01
       00  0.0100  0.0100
-1022   
-1023  ngcap   .       gas     0.4936  0.4936  0.4936  0.4936  0.4936  0.4936  0.
+1021   
+1022  ngcap   .       gas     0.4936  0.4936  0.4936  0.4936  0.4936  0.4936  0.
       4936  0.4936  0.4936  0.4936  0.4936  0.4936  0.4936  0.4936  0.4936  0.49
       36  0.4936  0.4936
-1024  ngcap   .       k       0.1180  0.1180  0.1180  0.1180  0.1180  0.1180  0.
+1023  ngcap   .       k       0.1180  0.1180  0.1180  0.1180  0.1180  0.1180  0.
       1180  0.1180  0.1180  0.1180  0.1180  0.1180  0.1180  0.1180  0.1180  0.11
       80  0.1180  0.1180
-1025  ngcap   .       l       0.0290  0.0290  0.0290  0.0290  0.0290  0.0290  0.
+1024  ngcap   .       l       0.0290  0.0290  0.0290  0.0290  0.0290  0.0290  0.
       0290  0.0290  0.0290  0.0290  0.0290  0.0290  0.0290  0.0290  0.0290  0.02
       90  0.0290  0.0290
-1026  ngcap   .       kseq    0.1670  0.1670  0.1670  0.1670  0.1670  0.1670  0.
+1025  ngcap   .       kseq    0.1670  0.1670  0.1670  0.1670  0.1670  0.1670  0.
       1670  0.1670  0.1670  0.1670  0.1670  0.1670  0.1670  0.1670  0.1670  0.16
       70  0.1670  0.1670
-1027  ngcap   .       lseq    0.0213  0.0213  0.0213  0.0213  0.0213  0.0213  0.
+1026  ngcap   .       lseq    0.0213  0.0213  0.0213  0.0213  0.0213  0.0213  0.
       0213  0.0213  0.0213  0.0213  0.0213  0.0213  0.0213  0.0213  0.0213  0.02
       13  0.0213  0.0213
-1028  ngcap   .       ktd     0.1074  0.1074  0.1074  0.1074  0.1074  0.1074  0.
+1027  ngcap   .       ktd     0.1074  0.1074  0.1074  0.1074  0.1074  0.1074  0.
       1074  0.1074  0.1074  0.1074  0.1074  0.1074  0.1074  0.1074  0.1074  0.10
       74  0.1074  0.1074
-1029  ngcap   .       ltd     0.0537  0.0537  0.0537  0.0537  0.0537  0.0537  0.
+1028  ngcap   .       ltd     0.0537  0.0537  0.0537  0.0537  0.0537  0.0537  0.
       0537  0.0537  0.0537  0.0537  0.0537  0.0537  0.0537  0.0537  0.0537  0.05
       37  0.0537  0.0537
-1030  ngcap   .       ffa     0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.
+1029  ngcap   .       ffa     0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.
       0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.01
       00  0.0100  0.0100
-1031  ngcap   .       frseq   0.9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.
+1030  ngcap   .       frseq   0.9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.
       9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.90
       00  0.9000  0.9000
-1032   
-1033  igcap   .       coal    0.1962  0.1962  0.1962  0.1962  0.1962  0.1962  0.
+1031   
+1032  igcap   .       coal    0.1962  0.1962  0.1962  0.1962  0.1962  0.1962  0.
       1962  0.1962  0.1962  0.1962  0.1962  0.1962  0.1962  0.1962  0.1962  0.19
       62  0.1962  0.1962
-1034  igcap   .       k       0.2303  0.2303  0.2303  0.2303  0.2303  0.2303  0.
+1033  igcap   .       k       0.2303  0.2303  0.2303  0.2303  0.2303  0.2303  0.
       2303  0.2303  0.2303  0.2303  0.2303  0.2303  0.2303  0.2303  0.2303  0.23
       03  0.2303  0.2303
-1035  igcap   .       l       0.0515  0.0515  0.0515  0.0515  0.0515  0.0515  0.
+1034  igcap   .       l       0.0515  0.0515  0.0515  0.0515  0.0515  0.0515  0.
       0515  0.0515  0.0515  0.0515  0.0515  0.0515  0.0515  0.0515  0.0515  0.05
       15  0.0515  0.0515
-1036  igcap   .       lseq    0.0381  0.0381  0.0381  0.0381  0.0381  0.0381  0.
+1035  igcap   .       lseq    0.0381  0.0381  0.0381  0.0381  0.0381  0.0381  0.
       0381  0.0381  0.0381  0.0381  0.0381  0.0381  0.0381  0.0381  0.0381  0.03
       81  0.0381  0.0381
-1037  igcap   .       kseq    0.3237  0.3237  0.3237  0.3237  0.3237  0.3237  0.
+1036  igcap   .       kseq    0.3237  0.3237  0.3237  0.3237  0.3237  0.3237  0.
       3237  0.3237  0.3237  0.3237  0.3237  0.3237  0.3237  0.3237  0.3237  0.32
       37  0.3237  0.3237
-1038  igcap   .       ktd     0.1001  0.1001  0.1001  0.1001  0.1001  0.1001  0.
+1037  igcap   .       ktd     0.1001  0.1001  0.1001  0.1001  0.1001  0.1001  0.
       1001  0.1001  0.1001  0.1001  0.1001  0.1001  0.1001  0.1001  0.1001  0.10
       01  0.1001  0.1001
-1039  igcap   .       ltd     0.0500  0.0500  0.0500  0.0500  0.0500  0.0500  0.
+1038  igcap   .       ltd     0.0500  0.0500  0.0500  0.0500  0.0500  0.0500  0.
       0500  0.0500  0.0500  0.0500  0.0500  0.0500  0.0500  0.0500  0.0500  0.05
       00  0.0500  0.0500
-1040  igcap   .       ffa     0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.
+1039  igcap   .       ffa     0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.
       0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.0100  0.01
       00  0.0100  0.0100
-1041  igcap   .       frseq   0.9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.
+1040  igcap   .       frseq   0.9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.
       9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.9000  0.90
       00  0.9000  0.9000
-1042  ;
-1043   
-1044  table  bmkup(bt,*)  backstop markup factor
-1045   
-1046             usa    can     mex     jpn     anz    eur    roe     rus     as
+1041  ;
+1042   
+1043  table  bmkup(bt,*)  backstop markup factor
+1044   
+1045             usa    can     mex     jpn     anz    eur    roe     rus     as
       i     chn     ind     bra     afr     mes     lam     rea     kor     idz
-1047  ngcc     1.058  1.058   1.058   1.058   1.058   1.058   1.058   1.058   1.
+1046  ngcc     1.058  1.058   1.058   1.058   1.058   1.058   1.058   1.058   1.
       058   1.058   1.058   1.058   1.058   1.058   1.058   1.058   1.058   1.05
       8
-1048  ngcap    1.445  1.445   1.445   1.445   1.445   1.445   1.445   1.445   1.
+1047  ngcap    1.445  1.445   1.445   1.445   1.445   1.445   1.445   1.445   1.
       445   1.445   1.445   1.445   1.445   1.445   1.445   1.445   1.445   1.44
       5
-1049  igcap    1.550  1.550   1.550   1.550   1.550   1.550   1.550   1.550   1.
+1048  igcap    1.550  1.550   1.550   1.550   1.550   1.550   1.550   1.550   1.
       550   1.550   1.550   1.550   1.550   1.550   1.550   1.550   1.550   1.55
       0
-1050   
-1051  ;
-1052   
-1053  table bsf(*,*)  backstop fixed factor substitution elasticity
-1054   
-1055            USA   CAN     MEX     JPN     ANZ     EUR     ROE     RUS     AS
+1049   
+1050  ;
+1051   
+1052  table bsf(*,*)  backstop fixed factor substitution elasticity
+1053   
+1054            USA   CAN     MEX     JPN     ANZ     EUR     ROE     RUS     AS
       I     CHN     IND     BRA     AFR     MES     LAM     REA     KOR     IDZ
-1056  ngcc     0.25   0.25    0.25    0.25    0.25    0.25    0.25    0.25    0.
+1055  ngcc     0.25   0.25    0.25    0.25    0.25    0.25    0.25    0.25    0.
       25    0.20    0.25    0.25    0.25    0.25    0.25    0.25    0.25    0.25
-1057  ngcap    0.20   0.20    0.20    0.20    0.20    0.20    0.20    0.20    0.
+1056  ngcap    0.20   0.20    0.20    0.20    0.20    0.20    0.20    0.20    0.
       20    0.15    0.20    0.20    0.20    0.20    0.20    0.20    0.20    0.20
-1058  igcap    0.20   0.20    0.20    0.20    0.20    0.20    0.20    0.20    0.
+1057  igcap    0.20   0.20    0.20    0.20    0.20    0.20    0.20    0.20    0.
       20    0.20    0.20    0.20    0.20    0.20    0.20    0.20    0.20    0.20
-1059   
-1060  ;
-1061   
+1058   
+1059  ;
+1060   
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\core.gms
-1063  *----------------------------------------------*
-1064  *1206, to build the basic model for employment analysis
-1065  *----------------------------------------------*
-1066  parameter      A                      /1/         ;
-1067   
-1068  parameter simu_s;
-1069  *simu_s=1,GDP endogenous,simu_s=0,GDP exdogenous
-1070  simu_s=1;
-1071   
-1072  * phi = cfe/ffe;
-1073  parameter          phi        percentage target of permits energy;
-1074  parameter          pflag        flag for electricity permits             /
+1062  *----------------------------------------------*
+1063  *1206, to build the basic model for employment analysis
+1064  *----------------------------------------------*
+1065  parameter      A                      /1/         ;
+1066   
+1067  parameter simu_s;
+1068  *simu_s=1,GDP endogenous,simu_s=0,GDP exdogenous
+1069  simu_s=1;
+1070   
+1071  * phi = cfe/ffe;
+1072  parameter          phi        percentage target of permits energy;
+1073  parameter          pflag        flag for electricity permits             /
       0/         ;
+1074   
 1075   
-1076   
       $Model:China3E
        
       $Sectors:
@@ -1808,64 +1809,60 @@ INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\225a\gamsgeh.dat
       YELEC       ACTIV           7   68   79   93  105  253  257  258  261  263
                                 267  270  271
        
-2003   
-2006  CHINA3E.INTEGER1=1;
+2002   
+2005  CHINA3E.INTEGER1=1;
 EXIT C:\GAMS\win64\24.4\mpsgeset
-2009   
-2010  *carbon has zero price in the benchmark
-2011   
-2012  *initialize constraints
-2013   
-2014  sff.l(x)$ffact0(x)  =1;
-2015  t_re.l(sub_elec) = taxelec0(sub_elec);
-2016  t_re.lo(sub_elec)$ret0(sub_elec)=-inf;
-2017  pu.fx=1;
-2018   
-2019  *== switch for umemployment
-2020  *ur0(lm)=0;
-2021   
-2022  *== policy shock for static model ========================================
+2008   
+2009  *carbon has zero price in the benchmark
+2010   
+2011  *initialize constraints
+2012   
+2013  sff.l(x)$ffact0(x)  =1;
+2014  t_re.l(sub_elec) = taxelec0(sub_elec);
+2015  t_re.lo(sub_elec)$ret0(sub_elec)=-inf;
+2016  pu.fx=1;
+2017   
+2018  *== switch for umemployment
+2019  *ur0(lm)=0;
+2020   
+2021  *== policy shock for static model ========================================
       ======
-2023  ur.l(lm)=ur0(lm);
-2024   
-2025  *== switch for emission cap
-2026  clim_h=0;
-2027   
-2028  *== national emission cap
-2029  clim=0;
-2030  *clim0 = 0.9;
-2031   
-2032  *== sectoral emission cap
-2033  clim_s(i)=0;
-2034  *clim_s("construction")=0.5*Temission0('co2',"construction");
-2035  *clim_s("transport")=1*Temission0('co2',"transport");
-2036  *clim_s("EII")=0.5*Temission0('co2',"EII");
-2037  *clim_s("elec")=0.5*Temission0('co2',"elec");
-2038  *clim=0.5*Temission1('co2');
-2039   
-2040  *== multisectoral emission cap
-2041  clim_a=0;
-2042  *clim0 = 0.5;
-2043   
-2044  *== switch for renewable quota
-2045  pflag=1;
-2046  phi=0.7;
-2047   
-2048  China3E.iterlim =100000;
-2049   
+2022  ur.l(lm)=ur0(lm);
+2023   
+2024  *== switch for emission cap
+2025  clim_h=0;
+2026   
+2027  *== national emission cap
+2028  clim=0;
+2029  *clim0 = 0.9;
+2030   
+2031  *== sectoral emission cap
+2032  clim_s(i)=0;
+2033  *clim_s("construction")=0.5*Temission0('co2',"construction");
+2034  *clim_s("transport")=1*Temission0('co2',"transport");
+2035  *clim_s("EII")=0.5*Temission0('co2',"EII");
+2036  *clim_s("elec")=0.5*Temission0('co2',"elec");
+2037  *clim=0.5*Temission1('co2');
+2038   
+2039  *== multisectoral emission cap
+2040  clim_a=0;
+2041  *clim0 = 0.5;
+2042   
+2043  *== switch for renewable quota
+2044  pflag=0;
+2045  phi=0.7;
+2046   
+2047  China3E.iterlim =100000;
+2048   
 INCLUDE    C:\Users\hero\Desktop\Github\test model - V17\China3E.gen
-2973   
-2974  solve China3E using mcp;
-2975   
-2976  display China3E.modelstat, China3E.solvestat,ur.l,clim;
+2972   
+2973  solve China3E using mcp;
+2974   
+2975  display China3E.modelstat, China3E.solvestat,ur.l,clim;
+2976   
 2977   
-2978   
-2979   
-2980  *$include core_1205
-2981   
-2982  *$include core_CETlabor
 STOP C:\Users\hero\Desktop\Github\test model - V17\run.gms
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 15:44:43 Page 3
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 16:34:58 Page 3
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
 Include File Summary
 
@@ -1874,69 +1871,69 @@ Include File Summary
 
      1        1 INPUT          0       0  C:\Users\hero\Desktop\Github\test mode
                                           l - V17\run.gms
-     2        1 INCLUDE        1       1  .C:\Users\hero\Desktop\Github\test mod
+     2        2 INCLUDE        1       2  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\sets.gms
-     3      112 CALL           2     111  .GDXXRW.EXE data.xlsx par=sam rng=A1
-     4      117 GDXIN          2     116  .C:\Users\hero\Desktop\Github\test mod
+     3      111 CALL           2     109  .GDXXRW.EXE data.xlsx par=sam rng=A1
+     4      116 GDXIN          2     114  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\data.gdx
-     5      256 INCLUDE        1       3  .C:\Users\hero\Desktop\Github\test mod
+     5      255 INCLUDE        1       4  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\subsititution elasticities.g
                                            ms
-     6      326 INCLUDE        1       4  .C:\Users\hero\Desktop\Github\test mod
+     6      325 INCLUDE        1       5  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\emission data.gms
-     7      488 INCLUDE        1       6  .C:\Users\hero\Desktop\Github\test mod
+     7      487 INCLUDE        1       7  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\electricity.gms
-     8      494 CALL           7       6  .GDXXRW.EXE elec.xlsx par=Eprop rng=A1
+     8      493 CALL           7       6  .GDXXRW.EXE elec.xlsx par=Eprop rng=A1
                                            :J34
-     9      499 GDXIN          7      11  .C:\Users\hero\Desktop\Github\test mod
+     9      498 GDXIN          7      11  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\elec.gdx
-    10      600 INCLUDE        1       7  .C:\Users\hero\Desktop\Github\test mod
+    10      599 INCLUDE        1       8  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\ist.gms
-    11      604 CALL          10       4  .GDXXRW.EXE ist.xlsx par=isprop rng=A1
+    11      603 CALL          10       4  .GDXXRW.EXE ist.xlsx par=isprop rng=A1
                                            :C29
-    12      607 GDXIN         10       7  .C:\Users\hero\Desktop\Github\test mod
+    12      606 GDXIN         10       7  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\ist.gdx
-    13      649 INCLUDE        1       8  .C:\Users\hero\Desktop\Github\test mod
+    13      648 INCLUDE        1       9  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\trend.gms
-    14      654 CALL          13       5  .GDXXRW.EXE trend.xlsx par=PAT rng=A1:
+    14      653 CALL          13       5  .GDXXRW.EXE trend.xlsx par=PAT rng=A1:
                                            D18   par=RET1 rng=A26:I35   par=RET2
                                            rng=A37:I46   par=sffelec_b rng=A47:I
                                            57  par=sffelec_BAU rng=A58:I68
-    15      661 GDXIN         13      12  .C:\Users\hero\Desktop\Github\test mod
+    15      660 GDXIN         13      12  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\trend.gdx
-    16      704 INCLUDE        1       9  .C:\Users\hero\Desktop\Github\test mod
+    16      703 INCLUDE        1      10  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\labor market.gms
-    17      757 CALL          16      53  .GDXXRW.EXE labor.xlsx par=labor_q0 rn
+    17      756 CALL          16      53  .GDXXRW.EXE labor.xlsx par=labor_q0 rn
                                            g=A1:AC19  par=labor_v0 rng=A21:AC39 
                                            par=labordata  rng=A41:AC43
-    18      764 GDXIN         16      60  .C:\Users\hero\Desktop\Github\test mod
+    18      763 GDXIN         16      60  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\labor.gdx
-    19     1003 INCLUDE        1      11  .C:\Users\hero\Desktop\Github\test mod
+    19     1002 INCLUDE        1      12  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\backstop.gms
-    20     1062 INCLUDE        1      13  .C:\Users\hero\Desktop\Github\test mod
+    20     1061 INCLUDE        1      14  .C:\Users\hero\Desktop\Github\test mod
                                            el - V17\core.gms
-    21     1352 SYSINCLUDE    20     290  ..C:\GAMS\win64\24.4\mpsgeset
-    22     1371 CALL          21      19  ..gmsge_nx "C:\Users\hero\Desktop\Gith
+    21     1351 SYSINCLUDE    20     290  ..C:\GAMS\win64\24.4\mpsgeset
+    22     1370 CALL          21      19  ..gmsge_nx "C:\Users\hero\Desktop\Gith
                                             ub\test model - V17\225a\gamscge.dat
                                             "
-    23     1372 INCLUDE       21      20  ...C:\Users\hero\Desktop\Github\test m
+    23     1371 INCLUDE       21      20  ...C:\Users\hero\Desktop\Github\test m
                                              odel - V17\225a\gamsgeh.dat
-    24     2008 EXIT          21      22  ..C:\GAMS\win64\24.4\mpsgeset
-    25     2050 INCLUDE       20     332  ..C:\Users\hero\Desktop\Github\test mo
+    24     2007 EXIT          21      22  ..C:\GAMS\win64\24.4\mpsgeset
+    25     2049 INCLUDE       20     332  ..C:\Users\hero\Desktop\Github\test mo
                                             del - V17\China3E.gen
-    26     2972 EXIT          25     922  ..C:\Users\hero\Desktop\Github\test mo
+    26     2971 EXIT          25     922  ..C:\Users\hero\Desktop\Github\test mo
                                             del - V17\China3E.gen
-    27     2983 STOP           1      18  C:\Users\hero\Desktop\Github\test mode
+    27     2978 STOP           1      15  C:\Users\hero\Desktop\Github\test mode
                                           l - V17\run.gms
 
 
-COMPILATION TIME     =        9.360 SECONDS      3 MB  24.4.6 r52609 WEX-WEI
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 15:44:43 Page 4
+COMPILATION TIME     =        7.750 SECONDS      3 MB  24.4.6 r52609 WEX-WEI
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 16:34:58 Page 4
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
 E x e c u t i o n
 
 
-----    127 PARAMETER SAM  
+----    126 PARAMETER SAM  
 
                             Elec        Coal      Oilgas        Roil         Gas
 
@@ -2063,13 +2060,13 @@ Tran                     219.547     413.787     101.612
 Serv                    2401.753    1888.094     727.740
 
 
-----    194 PARAMETER ffact0  benchmark fixed factor supply
+----    193 PARAMETER ffact0  benchmark fixed factor supply
 
 Coal   266.241,    Oilgas 189.848,    Gas     24.412,    Agri    63.228
 mine    19.401
 
 
-----    194 PARAMETER fact0  factor inputs to industry sectors
+----    193 PARAMETER fact0  factor inputs to industry sectors
 
                Elec        Coal      Oilgas        Roil         Gas        Agri
 
@@ -2087,7 +2084,7 @@ Labor       125.598    1660.937    5704.354      53.748     941.156    9924.735
 capital     222.433    2031.482    3924.385      60.887     981.619    9019.550
 
 
-----    194 PARAMETER int0  intermediate inputs
+----    193 PARAMETER int0  intermediate inputs
 
               Elec        Coal      Oilgas        Roil         Gas        Agri
 
@@ -2153,7 +2150,7 @@ Tran        33.166     568.272    1177.636      14.874     491.255     663.194
 Serv       150.026    1732.842    5105.545      74.264    1019.671    8888.004
 
 
-----    227 PARAMETER inv0  sectoral investment in physical capital
+----    226 PARAMETER inv0  sectoral investment in physical capital
 
 Coal      25.580,    Oilgas    33.330,    Roil      47.997,    Gas        6.306
 Agri     677.352,    Food     183.729,    CM         2.292,    IST        3.115
@@ -2161,13 +2158,13 @@ NFM        5.322,    EII      317.230,    OM     20927.428,    Air        2.953
 Tran     219.547,    Serv    2401.753
 
 
-----    227 PARAMETER xinv0  exogenous(negative) sectoral investment in physical
+----    226 PARAMETER xinv0  exogenous(negative) sectoral investment in physical
                              capital
 
 mine  -1.392,    Paper -1.030,    Chem  -2.162
 
 
-----    227 PARAMETER cons0  consumption of conmmodities
+----    226 PARAMETER cons0  consumption of conmmodities
 
 Elec    283.688,    Coal     16.146,    Roil    231.648,    Gas     138.200
 Agri   2141.336,    Food   3827.996,    Paper    15.883,    CM       22.829
@@ -2175,12 +2172,12 @@ EII     670.846,    OM     2994.386,    Air      52.393,    Tran    757.566
 Serv  16177.286
 
 
-----    227 PARAMETER xcons0  exogenous(negative) consumption of commodities
+----    226 PARAMETER xcons0  exogenous(negative) consumption of commodities
 
                       ( ALL       0.000 )
 
 
-----    227 PARAMETER nx0  net commodity exports
+----    226 PARAMETER nx0  net commodity exports
 
 Elec         5.532,    Coal      -166.150,    Oilgas   -1406.912
 Roil      -174.884,    Gas    -1.49075E-6,    Agri      -434.385
@@ -2190,7 +2187,7 @@ NFM       -528.440,    EII        485.596,    OM        3373.079
 Air        -70.346,    Tran       312.174,    Serv      1160.354
 
 
-----    227 PARAMETER output0  sectoral gross output
+----    226 PARAMETER output0  sectoral gross output
 
 Elec    4850.170,    Coal    2748.764,    Oilgas  1224.619,    Roil    3489.168
 Gas      311.871,    Agri    8952.767,    mine    1880.435,    Food    8853.384
@@ -2199,12 +2196,12 @@ NFM     2338.407,    EII    22445.983,    OM     50728.619,    Air      509.799
 Tran    5040.606,    Serv   39413.895
 
 
-----    227 PARAMETER xexp0  exogenous(negative) benchmark commodity exports
+----    226 PARAMETER xexp0  exogenous(negative) benchmark commodity exports
 
                       ( ALL       0.000 )
 
 
-----    227 PARAMETER exp0  benchmark commodity exports
+----    226 PARAMETER exp0  benchmark commodity exports
 
 Elec      7.739,    Coal     13.740,    Oilgas   18.697,    Roil    112.556
 Agri     78.706,    mine     18.716,    Food    287.161,    Paper    58.902
@@ -2213,12 +2210,12 @@ EII    1681.607,    OM     8536.290,    Air     152.163,    Tran    413.787
 Serv   1888.094
 
 
-----    227 PARAMETER fact  aggregate factor supplies
+----    226 PARAMETER fact  aggregate factor supplies
 
 Labor   26413.409,    capital 19342.855
 
 
-----    232 PARAMETER tax0  net tax payments to industry sectors
+----    231 PARAMETER tax0  net tax payments to industry sectors
 
 Elec    204.990,    Coal    255.739,    Oilgas  225.787,    Roil    382.899
 Gas       7.005,    Agri   -289.566,    mine    160.983,    Food    623.680
@@ -2227,7 +2224,7 @@ NFM      82.405,    EII     763.672,    OM     1600.156,    Air       7.127
 Tran     58.443,    Serv   3014.368
 
 
-----    236 PARAMETER tx0  tax rate on industry output
+----    235 PARAMETER tx0  tax rate on industry output
 
 Elec    0.042,    Coal    0.093,    Oilgas  0.184,    Roil    0.110
 Gas     0.022,    Agri   -0.032,    mine    0.086,    Food    0.070
@@ -2236,7 +2233,7 @@ NFM     0.035,    EII     0.034,    OM      0.032,    Air     0.014
 Tran    0.012,    Serv    0.076
 
 
-----    251 PARAMETER a0  
+----    250 PARAMETER a0  
 
 Elec    4852.376,    Coal    2928.655,    Oilgas  2650.227,    Roil    3776.608
 Gas      311.871,    Agri    9465.858,    mine    2759.305,    Food    9196.722
@@ -2245,7 +2242,7 @@ NFM     2914.328,    EII    23641.995,    OM     55891.830,    Air      732.309
 Tran    5142.219,    Serv   40141.635
 
 
-----    251 PARAMETER output0  sectoral gross output
+----    250 PARAMETER output0  sectoral gross output
 
 Elec    4850.170,    Coal    2748.764,    Oilgas  1224.619,    Roil    3489.168
 Gas      311.871,    Agri    8952.767,    mine    1880.435,    Food    8853.384
@@ -2254,12 +2251,12 @@ NFM     2338.407,    EII    22445.983,    OM     50728.619,    Air      509.799
 Tran    5040.606,    Serv   39413.895
 
 
-----    251 PARAMETER imp0  benchmark commodity imports
+----    250 PARAMETER imp0  benchmark commodity imports
 
                       ( ALL       0.000 )
 
 
-----    251 PARAMETER ximp0  exogenous(negative) benchmark commodity imports
+----    250 PARAMETER ximp0  exogenous(negative) benchmark commodity imports
 
 Elec        -2.207,    Coal      -179.891,    Oilgas   -1425.608
 Roil      -287.440,    Gas    -1.49075E-6,    Agri      -513.091
@@ -2269,7 +2266,7 @@ NFM       -575.921,    EII      -1196.011,    OM       -5163.211
 Air       -222.509,    Tran      -101.612,    Serv      -727.740
 
 
-----    251 PARAMETER nx0  net commodity exports
+----    250 PARAMETER nx0  net commodity exports
 
 Elec         5.532,    Coal      -166.150,    Oilgas   -1406.912
 Roil      -174.884,    Gas    -1.49075E-6,    Agri      -434.385
@@ -2279,7 +2276,7 @@ NFM       -528.440,    EII        485.596,    OM        3373.079
 Air        -70.346,    Tran       312.174,    Serv      1160.354
 
 
-----    251 PARAMETER inv0  sectoral investment in physical capital
+----    250 PARAMETER inv0  sectoral investment in physical capital
 
 Coal      25.580,    Oilgas    33.330,    Roil      47.997,    Gas        6.306
 Agri     677.352,    Food     183.729,    CM         2.292,    IST        3.115
@@ -2287,7 +2284,7 @@ NFM        5.322,    EII      317.230,    OM     20927.428,    Air        2.953
 Tran     219.547,    Serv    2401.753
 
 
-----    251 PARAMETER cons0  consumption of conmmodities
+----    250 PARAMETER cons0  consumption of conmmodities
 
 Elec    283.688,    Coal     16.146,    Roil    231.648,    Gas     138.200
 Agri   2141.336,    Food   3827.996,    Paper    15.883,    CM       22.829
@@ -2295,43 +2292,43 @@ EII     670.846,    OM     2994.386,    Air      52.393,    Tran    757.566
 Serv  16177.286
 
 
-----    251 PARAMETER xinv0  exogenous(negative) sectoral investment in physical
+----    250 PARAMETER xinv0  exogenous(negative) sectoral investment in physical
                              capital
 
 mine  -1.392,    Paper -1.030,    Chem  -2.162
 
 
-----    251 PARAMETER xcons0  exogenous(negative) consumption of commodities
+----    250 PARAMETER xcons0  exogenous(negative) consumption of commodities
 
                       ( ALL       0.000 )
 
 
-----    408 PARAMETER epslon  coefficient of carbon contents (100M tons per EJ)
+----    407 PARAMETER epslon  coefficient of carbon contents (100M tons per EJ)
 
 Coal 0.247,    Roil 0.199,    Gas  0.137
 
 
-----    408 PARAMETER cj  adjust factor for epslon to match IEA baseline
+----    407 PARAMETER cj  adjust factor for epslon to match IEA baseline
 
 Coal 1.346,    Roil 0.905,    Gas  1.066
 
 
-----    408 PARAMETER eet1  energy consumption in Íò¶Ö±ê×¼Ãº      µÈÐ§ÃººÄ
+----    407 PARAMETER eet1  energy consumption in Íò¶Ö±ê×¼Ãº      µÈÐ§ÃººÄ
 
 Coal 200327.100,    Roil  55774.870,    Gas   16441.210
 
 
-----    408 PARAMETER eet2  energy consumption in Íò¶Ö±ê×¼Ãº      ÈÈµ±Á¿
+----    407 PARAMETER eet2  energy consumption in Íò¶Ö±ê×¼Ãº      ÈÈµ±Á¿
 
 Coal 200327.100,    Roil  55774.870,    Gas   16441.210
 
 
-----    408 PARAMETER eej  energy consumption in EJ
+----    407 PARAMETER eej  energy consumption in EJ
 
 Coal 58.711,    Roil 16.346,    Gas   4.819
 
 
-----    408 PARAMETER eeg_s  energy goods consumption in billion yuan  except en
+----    407 PARAMETER eeg_s  energy goods consumption in billion yuan  except en
                              ergy as feedstock input by sector
 
             Elec        Coal      Oilgas        Roil         Gas        Agri
@@ -2359,36 +2356,36 @@ Roil     231.648
 Gas      138.200
 
 
-----    408 PARAMETER eeg  energy goods consumption in billion yuan  except ener
+----    407 PARAMETER eeg  energy goods consumption in billion yuan  except ener
                            gy as feedstock input
 
 Coal 2550.945,    Roil 3477.587,    Gas   305.566
 
 
-----    408 PARAMETER co2f  co2 emission by fuel in 100 million tons(ÒÚ¶Ö)
+----    407 PARAMETER co2f  co2 emission by fuel in 100 million tons(ÒÚ¶Ö)
 
 Coal 71.539,    Roil 10.789,    Gas   2.581
 
 
-----    408 PARAMETER ecoef  energy coefficient (Íò¶Ö±ê×¼Ãº per billion yuan)   
+----    407 PARAMETER ecoef  energy coefficient (Íò¶Ö±ê×¼Ãº per billion yuan)   
                              energy from quantity of value to physical
 
 Coal 78.531,    Roil 16.038,    Gas  53.806
 
 
-----    408 PARAMETER ccoef_P  carbon coefficient of production(billion T per Bi
+----    407 PARAMETER ccoef_P  carbon coefficient of production(billion T per Bi
                                llion yuan)
 
 Coal 0.028,    Roil 0.003,    Gas  0.008
 
 
-----    408 PARAMETER ccoef_h  carbon coefficient of consumption(billion T per B
+----    407 PARAMETER ccoef_h  carbon coefficient of consumption(billion T per B
                                illion yuan)
 
 Coal 0.028,    Roil 0.003,    Gas  0.008
 
 
-----    439 PARAMETER scoef_e  SO2 emission million ton per billion yuan
+----    438 PARAMETER scoef_e  SO2 emission million ton per billion yuan
 
                Elec        Coal      Oilgas        Roil        Agri        Food
 
@@ -2403,7 +2400,7 @@ process 6.391862E-4 8.168132E-4       0.002       0.002 7.850802E-4 2.565627E-5
 process 1.612079E-5 2.402801E-5 1.628262E-4 8.514043E-5
 
 
-----    439 PARAMETER ncoef_e  NOX emission million ton per billion yuan
+----    438 PARAMETER ncoef_e  NOX emission million ton per billion yuan
 
                Elec        Coal      Oilgas        Roil        Agri        Food
 
@@ -2418,7 +2415,7 @@ process 2.039154E-4 2.332633E-4       0.002 7.502386E-4 1.216303E-4 7.082105E-6
 process 4.074068E-6 2.326455E-4 8.104586E-4 4.480512E-5
 
 
-----    439 PARAMETER emission0  sectoral emission by source
+----    438 PARAMETER emission0  sectoral emission by source
 
 INDEX 1 = CO2
 
@@ -2483,7 +2480,7 @@ e.process       0.284       0.159       0.207       0.119       4.085
 e.process       1.225
 
 
-----    451 PARAMETER Temission0  sectoral emission
+----    450 PARAMETER Temission0  sectoral emission
 
            Elec        Coal      Oilgas        Roil         Gas        Agri
 
@@ -2510,7 +2507,7 @@ SO2       2.327
 NOX       1.225
 
 
-----    486 PARAMETER climit  input of emission cap
+----    485 PARAMETER climit  input of emission cap
 
                a           b
 
@@ -2521,25 +2518,25 @@ NOX       1.225
 2030       0.563       0.492
 
 
-----    486 PARAMETER clim_t  trend of carbon emission allowance
+----    485 PARAMETER clim_t  trend of carbon emission allowance
 
 2010 1.000,    2015 0.870,    2020 0.763,    2025 0.613,    2030 0.492
 
 
-----    486 PARAMETER clim0                =        1.000  benchmark of carbon e
+----    485 PARAMETER clim0                =        1.000  benchmark of carbon e
                                                            mission allowance
 
-----    486 PARAMETER Temission1  Total emission
+----    485 PARAMETER Temission1  Total emission
 
 CO2 94.828,    SO2 28.868,    NOX 22.113
 
 
-----    486 PARAMETER Temission2  
+----    485 PARAMETER Temission2  
 
 CO2 94.828
 
 
-----    510 PARAMETER Eprop  input data of sub-electricity sectors
+----    509 PARAMETER Eprop  input data of sub-electricity sectors
 
                               Coal         Gas         T_D         Oil
 
@@ -2616,34 +2613,34 @@ capital                     22.220
 tax                         -9.875
 
 
-----    551 PARAMETER taxelec0  
+----    550 PARAMETER taxelec0  
 
 Coal    139.184,    Gas       4.096,    T_D      49.031,    Oil       0.203
 Nuclear   3.687,    Hydro    32.095,    Wind    -11.586,    Solar    -1.845
 Biomass  -9.875
 
 
-----    551 PARAMETER ffelec0  fixed factor in electricity generation
+----    550 PARAMETER ffelec0  fixed factor in electricity generation
 
 Nuclear  8.061,    Hydro   43.827,    Wind    18.320,    Solar    1.237
 Biomass  6.035
 
 
-----    592 PARAMETER lelec0  labor in electricity generation
+----    591 PARAMETER lelec0  labor in electricity generation
 
 Coal     62.255,    Gas       2.213,    T_D     158.465,    Oil       5.803
 Nuclear  28.632,    Hydro    52.358,    Wind     32.373,    Solar     0.806
 Biomass  17.382
 
 
-----    592 PARAMETER kelec0  capital in electricity generation
+----    591 PARAMETER kelec0  capital in electricity generation
 
 Coal    218.350,    Gas       4.421,    T_D     157.659,    Oil       5.830
 Nuclear  17.912,    Hydro   129.174,    Wind     58.625,    Solar     4.514
 Biomass  16.185
 
 
-----    592 PARAMETER intelec0  intermediate input to electricity generation
+----    591 PARAMETER intelec0  intermediate input to electricity generation
 
               Coal         Gas         T_D         Oil     Nuclear       Hydro
 
@@ -2683,21 +2680,21 @@ Tran         4.480       0.111       2.406
 Serv        28.198       0.702      15.140
 
 
-----    592 PARAMETER outputelec0  output of electricity generation
+----    591 PARAMETER outputelec0  output of electricity generation
 
 Coal    2371.393,    Gas       90.127,    T_D     1067.566,    Oil      225.435
 Nuclear  160.631,    Hydro    639.637,    Wind     203.714,    Solar      7.454
 Biomass   84.212
 
 
-----    592 PARAMETER taxelec0  
+----    591 PARAMETER taxelec0  
 
 Coal          0.059,    Gas           0.045,    T_D           0.046
 Oil     8.985458E-4,    Nuclear       0.023,    Hydro         0.050
 Wind         -0.057,    Solar        -0.247,    Biomass      -0.117
 
 
-----    592 PARAMETER tx0  tax rate on industry output
+----    591 PARAMETER tx0  tax rate on industry output
 
 Elec    0.042,    Coal    0.093,    Oilgas  0.184,    Roil    0.110
 Gas     0.022,    Agri   -0.032,    mine    0.086,    Food    0.070
@@ -2706,7 +2703,7 @@ NFM     0.035,    EII     0.034,    OM      0.032,    Air     0.014
 Tran    0.012,    Serv    0.076
 
 
-----    592 PARAMETER emission0  sectoral emission by source
+----    591 PARAMETER emission0  sectoral emission by source
 
 INDEX 1 = CO2
 
@@ -2771,16 +2768,16 @@ e.process       0.284       0.159       0.207       0.119       4.085
 e.process       1.225
 
 
-----    592 PARAMETER p_ff  proportion of fix-factor
+----    591 PARAMETER p_ff  proportion of fix-factor
 
 Nuclear 0.051,    Hydro   0.072,    Wind    0.085,    Solar   0.133
 Biomass 0.064
 
 
-----    592 PARAMETER Toutputelec0         =     4850.170  
+----    591 PARAMETER Toutputelec0         =     4850.170  
             PARAMETER check1               =  2.45564E-11  
 
-----    592 PARAMETER esub  
+----    591 PARAMETER esub  
 
                  kl          ff
 
@@ -2811,7 +2808,7 @@ Solar                     0.200
 Biomass                   0.200
 
 
-----    611 PARAMETER Isprop  proportion of sub-IST sectors
+----    610 PARAMETER Isprop  proportion of sub-IST sectors
 
                                OBC          EF
 
@@ -2845,17 +2842,17 @@ Transport                    0.902       0.098
 Services                     0.902       0.098
 
 
-----    648 PARAMETER list0  labor in ist generation
+----    647 PARAMETER list0  labor in ist generation
 
 OBC 94.517,    EF   4.975
 
 
-----    648 PARAMETER kist0  capital in ist generation
+----    647 PARAMETER kist0  capital in ist generation
 
 OBC 145.507,    EF   15.809
 
 
-----    648 PARAMETER intist0  intermediate input to ist generation
+----    647 PARAMETER intist0  intermediate input to ist generation
 
                OBC          EF
 
@@ -2868,17 +2865,17 @@ EII        118.844      12.912
 OM         193.375      21.010
 
 
-----    648 PARAMETER outputist0  output of ist generation
+----    647 PARAMETER outputist0  output of ist generation
 
 OBC 770.896,    EF   78.461
 
 
-----    648 PARAMETER taxist0  
+----    647 PARAMETER taxist0  
 
 OBC 0.059,    EF  0.063
 
 
-----    648 PARAMETER tx0  tax rate on industry output
+----    647 PARAMETER tx0  tax rate on industry output
 
 Elec    0.042,    Coal    0.093,    Oilgas  0.184,    Roil    0.110
 Gas     0.022,    Agri   -0.032,    mine    0.086,    Food    0.070
@@ -2887,7 +2884,7 @@ NFM     0.035,    EII     0.034,    OM      0.032,    Air     0.014
 Tran    0.012,    Serv    0.076
 
 
-----    703 PARAMETER aeei  auto energy effiency index
+----    702 PARAMETER aeei  auto energy effiency index
 
 Elec   1.000,    Coal   1.000,    Oilgas 1.000,    Roil   1.000,    Gas    1.000
 Agri   1.000,    mine   1.000,    Food   1.000,    Paper  1.000,    Chem   1.000
@@ -2895,7 +2892,7 @@ CM     1.000,    IST    1.000,    NFM    1.000,    EII    1.000,    OM     1.000
 Air    1.000,    Tran   1.000,    Serv   1.000,    fd     1.000
 
 
-----    703 PARAMETER PAT  parameters with trend
+----    702 PARAMETER PAT  parameters with trend
 
             rgdp       gprod     lgrowth
 
@@ -2918,15 +2915,15 @@ Air    1.000,    Tran   1.000,    Serv   1.000,    fd     1.000
 2030  124332.444       2.184      -0.022
 
 
-----    703 PARAMETER rgdp0                =    40364.898  real gdp
+----    702 PARAMETER rgdp0                =    40364.898  real gdp
 
-----    703 PARAMETER ret0  renewable electricity trend
+----    702 PARAMETER ret0  renewable electricity trend
 
 Nuclear 1.000,    Hydro   1.000,    Wind    1.000,    Solar   1.000
 Biomass 1.000
 
 
-----    703 PARAMETER ret_b  benchmark renewable electricity trend
+----    702 PARAMETER ret_b  benchmark renewable electricity trend
 
          Nuclear       Hydro        Wind       Solar     Biomass
 
@@ -2937,7 +2934,7 @@ Biomass 1.000
 2030      14.743       2.417      37.321    4034.069      25.689
 
 
-----    796 PARAMETER labor_v0  sectoral labor costs value by labor type in 10 t
+----    795 PARAMETER labor_v0  sectoral labor costs value by labor type in 10 t
                                 housand yuan
 
                 L1          L2          L3          L4          L5          L6
@@ -3046,7 +3043,7 @@ Tran         2.008       0.696       0.189       0.004     796.541     144.614
 Serv        64.186      52.984      21.014       0.575    4689.199    5235.536
 
 
-----    796 PARAMETER labor_q0  sectoral labor quantity by labor type
+----    795 PARAMETER labor_q0  sectoral labor quantity by labor type
 
                 L1          L2          L3          L4          L5          L6
 
@@ -3154,7 +3151,7 @@ Tran     72715.537   19706.341    4465.241     105.177 2.211195E+7 2197994.598
 Serv   2054307.137 1000481.644  317519.730    9800.582 1.294519E+8 5.391519E+7
 
 
-----    796 PARAMETER labor_w0  sectoral labor wage value by labor type in 10 th
+----    795 PARAMETER labor_w0  sectoral labor wage value by labor type in 10 th
                                 ousand yuan
 
                low        high
@@ -3179,7 +3176,7 @@ Tran   3.602311E-5 6.579376E-5
 Serv   3.622349E-5 9.710690E-5
 
 
-----    796 PARAMETER bur  the benchmark unemployment rate
+----    795 PARAMETER bur  the benchmark unemployment rate
 
 L1   0.021,    L2   0.026,    L3   0.038,    L4   0.060,    L5   0.052
 L6   0.036,    L7   0.017,    L8   0.005,    L9   0.005,    L10  0.011
@@ -3189,7 +3186,7 @@ L21  0.027,    L22  0.005,    L23  0.006,    L24  0.015,    L25  0.040
 L26  0.079,    L27  0.076,    L28  0.057,    low  0.027,    high 0.049
 
 
-----    796 PARAMETER bwage  the average wage of labor by type from micro data i
+----    795 PARAMETER bwage  the average wage of labor by type from micro data i
                              n yuan
 
 L1   23431.379,    L2   26274.546,    L3   34097.632,    L4   39975.884
@@ -3202,7 +3199,7 @@ L25  23483.482,    L26  29295.122,    L27  33715.473,    L28  28733.333
 low  25911.172,    high 47012.676
 
 
-----    808 PARAMETER fwage_s  factor of average wage among sectors
+----    807 PARAMETER fwage_s  factor of average wage among sectors
 
                low        high
 
@@ -3226,12 +3223,12 @@ Tran         1.222       0.677
 Serv         1.228       0.999
 
 
-----    808 PARAMETER awage_e  average wage among education
+----    807 PARAMETER awage_e  average wage among education
 
 low  2.948695E-5,    high 9.723830E-5
 
 
-----    824 PARAMETER labor_q0  sectoral labor quantity by labor type
+----    823 PARAMETER labor_q0  sectoral labor quantity by labor type
 
                 L1          L2          L3          L4          L5          L6
 
@@ -3339,14 +3336,14 @@ Tran     72715.537   19706.341    4465.241     105.177 2.211195E+7 2197994.598
 Serv   2054307.137 1000481.644  317519.730    9800.582 1.294519E+8 5.391519E+7
 
 
-----    824 PARAMETER tlabor_q0  total employment by sub_labor
+----    823 PARAMETER tlabor_q0  total employment by sub_labor
 
 low  6.444062E+8,    high 7.622343E+7
 
 
-----    824 PARAMETER tqlabor0             =  7.206297E+8  total employment
+----    823 PARAMETER tqlabor0             =  7.206297E+8  total employment
 
-----    824 PARAMETER labor_v0  sectoral labor costs value by labor type in 10 t
+----    823 PARAMETER labor_v0  sectoral labor costs value by labor type in 10 t
                                 housand yuan
 
                 L1          L2          L3          L4          L5          L6
@@ -3455,15 +3452,15 @@ Tran         2.008       0.696       0.189       0.004     796.541     144.614
 Serv        64.186      52.984      21.014       0.575    4689.199    5235.536
 
 
-----    824 PARAMETER tlabor_v0  total employment value by sub_labor
+----    823 PARAMETER tlabor_v0  total employment value by sub_labor
 
 low  19001.573,    high  7411.837
 
 
-----    824 PARAMETER tvlabor0             =    26413.409  total employment valu
+----    823 PARAMETER tvlabor0             =    26413.409  total employment valu
                                                            e
 
-----    834 PARAMETER laborelec0  
+----    833 PARAMETER laborelec0  
 
                 low        high
 
@@ -3478,7 +3475,7 @@ Solar         0.443       0.363
 Biomass       9.549       7.834
 
 
-----    834 PARAMETER laborist0  
+----    833 PARAMETER laborist0  
 
             low        high
 
@@ -3486,37 +3483,37 @@ OBC       0.004       0.001
 EF  1.971294E-4 6.743209E-5
 
 
-----    849 PARAMETER ur0  the benchmark unemployment rate
+----    848 PARAMETER ur0  the benchmark unemployment rate
 
 low  0.027,    high 0.049
 
 
-----    849 PARAMETER tlabor_s0  total labor supply by sub_labor
+----    848 PARAMETER tlabor_s0  total labor supply by sub_labor
 
 low  6.625550E+8,    high 8.018469E+7
 
 
-----    849 PARAMETER tqlabor_s0           =  7.427397E+8  total labor supply
+----    848 PARAMETER tqlabor_s0           =  7.427397E+8  total labor supply
 
-----    998 SET ll  low level labor type
+----    997 SET ll  low level labor type
 
 low
 
 
-----    998 SET hl  high level labor type
+----    997 SET hl  high level labor type
 
 high
 
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 15:44:43 Page 5
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 16:34:58 Page 5
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
-Model Statistics    SOLVE CHINA3E Using MCP From line 2974
+Model Statistics    SOLVE CHINA3E Using MCP From line 2973
 
 
 MODEL STATISTICS
 
 BLOCKS OF EQUATIONS          12     SINGLE EQUATIONS           20
-BLOCKS OF VARIABLES          46     SINGLE VARIABLES          839
-NON ZERO ELEMENTS           907     NON LINEAR N-Z             32
+BLOCKS OF VARIABLES          45     SINGLE VARIABLES          838
+NON ZERO ELEMENTS           906     NON LINEAR N-Z             32
 DERIVATIVE POOL              20     CONSTANT POOL              22
 CODE LENGTH                 112
 
@@ -3524,28 +3521,28 @@ CODE LENGTH                 112
 GENERATION TIME      =        0.016 SECONDS      4 MB  24.4.6 r52609 WEX-WEI
 
 
-EXECUTION TIME       =        0.031 SECONDS      4 MB  24.4.6 r52609 WEX-WEI
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 15:44:43 Page 6
+EXECUTION TIME       =        0.047 SECONDS      4 MB  24.4.6 r52609 WEX-WEI
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 16:34:58 Page 6
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
-Solution Report     SOLVE CHINA3E Using MCP From line 2974
+Solution Report     SOLVE CHINA3E Using MCP From line 2973
 
 
                S O L V E      S U M M A R Y
 
      MODEL   CHINA3E             
      TYPE    MCP                 
-     SOLVER  PATH                FROM LINE  2974
+     SOLVER  PATH                FROM LINE  2973
 
 **** SOLVER STATUS     1 Normal Completion         
-**** MODEL STATUS      5 Locally Infeasible        
+**** MODEL STATUS      1 Optimal                   
 
- RESOURCE USAGE, LIMIT          2.859      1000.000
- ITERATION COUNT, LIMIT       273        100000
+ RESOURCE USAGE, LIMIT          0.172      1000.000
+ ITERATION COUNT, LIMIT         1        100000
  EVALUATION ERRORS              0             0
 
 
 --- Executing MCP subsolver PATH
-131 row/cols, 3511 non-zeros, 20.46% dense.
+130 row/cols, 3494 non-zeros, 20.67% dense.
 
 Path 4.7.02 (Fri Jun 26 15:39:32 2015)
 Written by Todd Munson, Steven Dirkse, and Michael Ferris
@@ -3563,18 +3560,18 @@ Maximum Column Norm . . . . . .  1.0802e+005 var: (PCONS)
 Minimum Column Norm . . . . . .  1.0000e+000 var: (RGDP)
 
 FINAL STATISTICS
-Inf-Norm of Complementarity . .  3.6677e+002 eqn: (RGDP)
-Inf-Norm of Normal Map. . . . .  3.7239e+001 eqn: (Y.Elec)
-Inf-Norm of Minimum Map . . . .  1.3479e+000 eqn: (PELEC.Coal)
-Inf-Norm of Fischer Function. .  1.1358e+000 eqn: (PELEC.Hydro)
-Inf-Norm of Grad Fischer Fcn. .  4.9873e+003 eqn: (Y.Elec)
-Two-Norm of Grad Fischer Fcn. .  6.4849e+003
+Inf-Norm of Complementarity . .  3.2082e-010 eqn: (PY.Serv)
+Inf-Norm of Normal Map. . . . .  3.2082e-010 eqn: (PY.Serv)
+Inf-Norm of Minimum Map . . . .  3.2082e-010 eqn: (PY.Serv)
+Inf-Norm of Fischer Function. .  3.2082e-010 eqn: (PY.Serv)
+Inf-Norm of Grad Fischer Fcn. .  9.9560e-006 eqn: (Y.Serv)
+Two-Norm of Grad Fischer Fcn. .  1.2173e-005
 
 FINAL POINT STATISTICS
-Maximum of X. . . . . . . . . .  5.3328e+004 var: (RGDP)
-Maximum of F. . . . . . . . . .  3.7239e+001 eqn: (Y.Elec)
-Maximum of Grad F . . . . . . .  3.5005e+004 eqn: (PELEC.Hydro)
-                                            var: (PELEC.Hydro)
+Maximum of X. . . . . . . . . .  5.3680e+004 var: (RGDP)
+Maximum of F. . . . . . . . . .  3.2082e-010 eqn: (PY.Serv)
+Maximum of Grad F . . . . . . .  3.4100e+004 eqn: (PY.OM)
+                                            var: (Y.OM)
 
 
                        LOWER     LEVEL     UPPER    MARGINAL
@@ -3587,28 +3584,28 @@ Maximum of Grad F . . . . . . .  3.5005e+004 eqn: (PELEC.Hydro)
 
           LOWER     LEVEL     UPPER    MARGINAL
 
-Coal        .    -2.579E-7      .        0.785      
-Oilgas      .         .         .        0.925      
-Gas         .         .         .        0.987      
-Agri        .    1.2327E-7      .        0.995      
-mine        .    -1.305E-8      .        0.988      
+Coal        .         .         .        1.000      
+Oilgas      .         .         .        1.000      
+Gas         .         .         .        1.000      
+Agri        .         .         .        1.000      
+mine        .         .         .        1.000      
 
 ---- EQU EQ_002  Complementary equation(s) for SFFELEC
 
            LOWER     LEVEL     UPPER    MARGINAL
 
-Nuclear      .    8.0079E-5      .        2.237 INFES
-Hydro        .    5.6408E-5      .        1.150 INFES
-Wind         .    -8.959E-5      .        3.766 INFES
-Solar        .    -4.506E-5      .        3.117 INFES
-Biomass      .    5.1948E-5      .        2.119 INFES
+Nuclear      .         .         .        1.000      
+Hydro        .         .         .        1.000      
+Wind         .         .         .        1.000      
+Solar        .         .         .        1.000      
+Biomass      .         .         .        1.000      
 
 ---- EQU EQ_003  Complementary equation(s) for UR
 
         LOWER     LEVEL     UPPER    MARGINAL
 
-low       .    -1.578E-5      .        0.031 INFES
-high      .    -1.317E-5      .        0.048 INFES
+low       .         .         .        0.027      
+high      .         .         .        0.049      
 
 ---- EQU EQ_004  Complementary equation(s) for T_RE
 
@@ -3620,7 +3617,7 @@ Biomass    -0.117    -0.117    -0.117    -0.117
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- EQU EQ_005          .        0.007      .    53328.385 INFES
+---- EQU EQ_005          .         .         .    53680.018      
 ---- EQU EQ_006                  (EMPTY)
 ---- EQU EQ_007         1.000     1.000     1.000     1.000      
 
@@ -3637,8 +3634,8 @@ Biomass    -0.117    -0.117    -0.117    -0.117
 
         LOWER     LEVEL     UPPER    MARGINAL
 
-low       .         .         .        0.031      
-high      .         .         .        0.048      
+low       .         .         .        0.027      
+high      .         .         .        0.049      
 
                 NONE
 
@@ -3652,30 +3649,30 @@ high      .         .         .        0.048
 
           LOWER     LEVEL     UPPER    MARGINAL
 
-Elec        .        0.880     +INF     37.239      
-Coal        .        0.779     +INF  -8.038E-5      
-Oilgas      .        0.894     +INF     -0.008      
-Roil        .        0.958     +INF  -2.029E-5      
-Gas         .        0.988     +INF  -8.980E-6      
-Agri        .        0.995     +INF     -0.014      
-mine        .        0.980     +INF     -0.021      
-Food        .        0.995     +INF     -0.011      
-Paper       .        0.996     +INF     -0.005      
-Chem        .        0.991     +INF     -0.035      
-CM          .        0.995     +INF     -0.016      
-IST         .        0.992     +INF     -0.009      
-NFM         .        0.992     +INF     -0.021      
-EII         .        0.992     +INF     -0.098      
-OM          .        0.996     +INF     -0.100      
-Air         .        0.996     +INF  -4.295E-4      
-Tran        .        0.994     +INF     -0.010      
-Serv        .        0.995     +INF     -0.054      
+Elec        .        1.000     +INF       .         
+Coal        .        1.000     +INF       .         
+Oilgas      .        1.000     +INF       .         
+Roil        .        1.000     +INF       .         
+Gas         .        1.000     +INF       .         
+Agri        .        1.000     +INF       .         
+mine        .        1.000     +INF       .         
+Food        .        1.000     +INF       .         
+Paper       .        1.000     +INF       .         
+Chem        .        1.000     +INF       .         
+CM          .        1.000     +INF       .         
+IST         .        1.000     +INF       .         
+NFM         .        1.000     +INF       .         
+EII         .        1.000     +INF       .         
+OM          .        1.000     +INF       .         
+Air         .        1.000     +INF       .         
+Tran        .        1.000     +INF       .         
+Serv        .        1.000     +INF       .         
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR CONSUM          .        0.993     +INF     -0.033      
----- VAR INVEST          .        0.992     +INF  -9.075E-4      
----- VAR WELF            .        0.993     +INF     -0.003      
+---- VAR CONSUM          .        1.000     +INF       .         
+---- VAR INVEST          .        1.000     +INF       .         
+---- VAR WELF            .        1.000     +INF       .         
 
   CONSUM  activity level for aggregate consumption
   INVEST  activity level for aggregate physical capital investment
@@ -3685,111 +3682,111 @@ Serv        .        0.995     +INF     -0.054
 
            LOWER     LEVEL     UPPER    MARGINAL
 
-Coal         .        0.368     +INF     -0.001      
-Gas          .        0.373     +INF  -3.660E-5      
-T_D          .        0.880     +INF       .         
-Oil          .        0.389     +INF  -1.345E-4      
-Nuclear      .        2.338     +INF  -3.696E-4      
-Hydro        .        1.202     +INF     -0.005      
-Wind         .        4.518     +INF  -6.402E-4      
-Solar        .        3.512     +INF  -1.578E-5      
-Biomass      .        2.732     +INF  -4.359E-4      
+Coal         .        1.000     +INF       .         
+Gas          .        1.000     +INF       .         
+T_D          .        1.000     +INF       .         
+Oil          .        1.000     +INF       .         
+Nuclear      .        1.000     +INF       .         
+Hydro        .        1.000     +INF       .         
+Wind         .        1.000     +INF       .         
+Solar        .        1.000     +INF       .         
+Biomass      .        1.000     +INF       .         
 
 ---- VAR L_A  Activity level for labor allocation
 
         LOWER     LEVEL     UPPER    MARGINAL
 
-low       .        0.996     +INF     -0.009      
-high      .        1.002     +INF     -0.006      
+low       .        1.000     +INF       .         
+high      .        1.000     +INF       .         
 
 ---- VAR PY  domestic price inex for goods
 
           LOWER     LEVEL     UPPER    MARGINAL
 
-Elec        .        1.126     +INF     -0.552      
-Coal        .        0.923     +INF      0.026      
-Oilgas      .        0.980     +INF  -3.285E-5      
-Roil        .        0.985     +INF      0.039      
-Gas         .        0.984     +INF      0.003      
-Agri        .        0.992     +INF  8.1448E-4      
-mine        .        1.008     +INF  -1.897E-4      
-Food        .        0.996     +INF      0.001      
-Paper       .        1.003     +INF  -1.290E-5      
-Chem        .        1.009     +INF  -3.238E-5      
-CM          .        1.006     +INF  -4.870E-5      
-IST         .        0.997     +INF  -5.921E-6      
-NFM         .        1.014     +INF  -1.537E-5      
-EII         .        1.002     +INF  -7.651E-4      
-OM          .        1.002     +INF     -0.002      
-Air         .        0.995     +INF  6.0748E-6      
-Tran        .        0.996     +INF  8.7432E-5      
-Serv        .        0.999     +INF      0.003      
+Elec        .        1.000     +INF       .         
+Coal        .        1.000     +INF       .         
+Oilgas      .        1.000     +INF       .         
+Roil        .        1.000     +INF       .         
+Gas         .        1.000     +INF       .         
+Agri        .        1.000     +INF       .         
+mine        .        1.000     +INF       .         
+Food        .        1.000     +INF       .         
+Paper       .        1.000     +INF       .         
+Chem        .        1.000     +INF       .         
+CM          .        1.000     +INF       .         
+IST         .        1.000     +INF       .         
+NFM         .        1.000     +INF       .         
+EII         .        1.000     +INF       .         
+OM          .        1.000     +INF       .         
+Air         .        1.000     +INF       .         
+Tran        .        1.000     +INF       .         
+Serv        .        1.000     +INF       .         
 
 ---- VAR PELEC  domestic price inex for subelec
 
            LOWER     LEVEL     UPPER    MARGINAL
 
-Coal         .        1.348     +INF      2.220      
-Gas          .        1.337     +INF      0.088      
-T_D          .        1.075     +INF       .         
-Oil          .        1.299     +INF      0.231      
-Nuclear      .        1.147     +INF     17.398      
-Hydro        .        1.155     +INF     35.346      
-Wind         .        1.046     +INF      2.333      
-Solar        .        1.073     +INF      0.070      
-Biomass      .        1.145     +INF     10.863      
+Coal         .        1.000     +INF       .         
+Gas          .        1.000     +INF       .         
+T_D          .        1.000     +INF       .         
+Oil          .        1.000     +INF       .         
+Nuclear      .        1.000     +INF       .         
+Hydro        .        1.000     +INF       .         
+Wind         .        1.000     +INF       .         
+Solar        .        1.000     +INF       .         
+Biomass      .        1.000     +INF       .         
 
 ---- VAR PLS  domestic price index for labor demand
 
         LOWER     LEVEL     UPPER    MARGINAL
 
-low       .        0.986     +INF       .         
-high      .        1.003     +INF       .         
+low       .        1.000     +INF       .         
+high      .        1.000     +INF       .         
 
 ---- VAR PL  domestic price index for labor demand
 
                LOWER     LEVEL     UPPER    MARGINAL
 
-Elec  .low       .        1.263     +INF  -1.523E-4      
-Elec  .high      .        1.277     +INF  4.9727E-5      
-Coal  .low       .        0.795     +INF  -1.765E-4      
-Coal  .high      .        0.804     +INF  -5.622E-5      
-Oilgas.low       .        0.912     +INF  5.6425E-4      
-Oilgas.high      .        0.923     +INF  4.4618E-4      
-Roil  .low       .        0.962     +INF  4.7003E-6      
-Roil  .high      .        0.973     +INF  -2.486E-6      
-Gas   .low       .        0.983     +INF  6.9463E-6      
-Gas   .high      .        0.994     +INF  2.3501E-6      
-Agri  .low       .        0.986     +INF      0.002      
-Agri  .high      .        0.997     +INF  2.8443E-5      
-mine  .low       .        0.983     +INF      0.004      
-mine  .high      .        0.994     +INF  6.2396E-4      
-Food  .low       .        0.990     +INF      0.001      
-Food  .high      .        1.001     +INF  2.7874E-4      
-Paper .low       .        0.993     +INF  8.9681E-4      
-Paper .high      .        1.004     +INF  1.1959E-4      
-Chem  .low       .        0.991     +INF      0.002      
-Chem  .high      .        1.003     +INF  7.8884E-4      
-CM    .low       .        0.992     +INF      0.002      
-CM    .high      .        1.004     +INF  3.3707E-4      
-IST   .low       .        0.983     +INF  7.2298E-4      
-IST   .high      .        0.994     +INF  2.3459E-4      
-NFM   .low       .        0.995     +INF      0.002      
-NFM   .high      .        1.007     +INF  7.2452E-4      
-EII   .low       .        0.988     +INF      0.012      
-EII   .high      .        0.999     +INF      0.002      
-OM    .low       .        0.991     +INF      0.016      
-OM    .high      .        1.002     +INF      0.003      
-Air   .low       .        0.986     +INF  8.1452E-6      
-Air   .high      .        0.997     +INF  9.4775E-6      
-Tran  .low       .        0.987     +INF  8.4829E-4      
-Tran  .high      .        0.999     +INF  1.2035E-4      
-Serv  .low       .        0.988     +INF      0.003      
-Serv  .high      .        0.999     +INF      0.002      
+Elec  .low       .        1.000     +INF       .         
+Elec  .high      .        1.000     +INF       .         
+Coal  .low       .        1.000     +INF       .         
+Coal  .high      .        1.000     +INF       .         
+Oilgas.low       .        1.000     +INF       .         
+Oilgas.high      .        1.000     +INF       .         
+Roil  .low       .        1.000     +INF       .         
+Roil  .high      .        1.000     +INF       .         
+Gas   .low       .        1.000     +INF       .         
+Gas   .high      .        1.000     +INF       .         
+Agri  .low       .        1.000     +INF       .         
+Agri  .high      .        1.000     +INF       .         
+mine  .low       .        1.000     +INF       .         
+mine  .high      .        1.000     +INF       .         
+Food  .low       .        1.000     +INF       .         
+Food  .high      .        1.000     +INF       .         
+Paper .low       .        1.000     +INF       .         
+Paper .high      .        1.000     +INF       .         
+Chem  .low       .        1.000     +INF       .         
+Chem  .high      .        1.000     +INF       .         
+CM    .low       .        1.000     +INF       .         
+CM    .high      .        1.000     +INF       .         
+IST   .low       .        1.000     +INF       .         
+IST   .high      .        1.000     +INF       .         
+NFM   .low       .        1.000     +INF       .         
+NFM   .high      .        1.000     +INF       .         
+EII   .low       .        1.000     +INF       .         
+EII   .high      .        1.000     +INF       .         
+OM    .low       .        1.000     +INF       .         
+OM    .high      .        1.000     +INF       .         
+Air   .low       .        1.000     +INF       .         
+Air   .high      .        1.000     +INF       .         
+Tran  .low       .        1.000     +INF       .         
+Tran  .high      .        1.000     +INF       .         
+Serv  .low       .        1.000     +INF       .         
+Serv  .high      .        1.000     +INF       .         
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR PK              .        1.000     +INF      0.028      
+---- VAR PK              .        1.000     +INF       .         
 
   PK  domestic price index for captial
 
@@ -3797,62 +3794,60 @@ Serv  .high      .        0.999     +INF      0.002
 
           LOWER     LEVEL     UPPER    MARGINAL
 
-Coal        .        0.886     +INF  5.1450E-5      
-Oilgas      .        0.925     +INF  9.7241E-4      
-Gas         .        0.987     +INF  2.6361E-6      
-Agri        .        0.991     +INF  5.6145E-5      
-mine        .        0.994     +INF  1.9482E-4      
+Coal        .        1.000     +INF       .         
+Oilgas      .        1.000     +INF       .         
+Gas         .        1.000     +INF       .         
+Agri        .        1.000     +INF       .         
+mine        .        1.000     +INF       .         
 
 ---- VAR PFFELEC  domestic price index for fixed factors in electric sector
 
            LOWER     LEVEL     UPPER    MARGINAL
 
-Nuclear      .        5.002     +INF  1.5163E-6      
-Hydro        .        4.036     +INF  -7.740E-4      
-Wind         .        2.420     +INF      0.001      
-Solar        .        2.134     +INF  2.0011E-5      
-Biomass      .        4.489     +INF  3.5646E-7      
+Nuclear      .        1.000     +INF       .         
+Hydro        .        1.000     +INF       .         
+Wind         .        1.000     +INF       .         
+Solar        .        1.000     +INF       .         
+Biomass      .        1.000     +INF       .         
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR PCONS           .        0.999     +INF      0.006      
----- VAR PINV            .        1.001     +INF     -0.009      
----- VAR PU             1.000     1.000     1.000  -110.976      
----- VAR PERS            .        0.129     +INF       .         
----- VAR RA              .    51906.905     +INF       .         
+---- VAR PCONS           .        1.000     +INF       .         
+---- VAR PINV            .        1.000     +INF       .         
+---- VAR PU             1.000     1.000     1.000 -3.64E-11      
+---- VAR RA              .    52184.137     +INF       .         
 
   PCONS  price index for aggregate consumption
   PINV  price index for aggregate physical capital investment
   PU  price index for utility
-  PERS  Price for permits of electricity generation
   RA  income level for representative agent
 
 ---- VAR SFF  side constraint modelling supply of fixed factor
 
           LOWER     LEVEL     UPPER    MARGINAL
 
-Coal        .        0.785     +INF  -2.579E-7      
-Oilgas      .        0.925     +INF       .         
-Gas         .        0.987     +INF       .         
-Agri        .        0.995     +INF  1.2327E-7      
-mine        .        0.988     +INF  -1.305E-8      
+Coal        .        1.000     +INF       .         
+Oilgas      .        1.000     +INF       .         
+Gas         .        1.000     +INF       .         
+Agri        .        1.000     +INF       .         
+mine        .        1.000     +INF       .         
 
 ---- VAR SFFELEC  side constraint modelling supply of fixed factors
 
            LOWER     LEVEL     UPPER    MARGINAL
 
-Nuclear      .        2.237     +INF  8.0079E-5      
-Hydro        .        1.150     +INF  5.6408E-5      
-Wind         .        3.766     +INF  -8.959E-5      
-Solar        .        3.117     +INF  -4.506E-5      
-Biomass      .        2.119     +INF  5.1948E-5      
+Nuclear      .        1.000     +INF       .         
+Hydro        .        1.000     +INF       .         
+Wind         .        1.000     +INF       .         
+Solar        .        1.000     +INF       .         
+Biomass      .        1.000     +INF       .         
 
 ---- VAR UR  unemployment rate
 
         LOWER     LEVEL     UPPER    MARGINAL
 
-low       .        0.031     +INF  -1.578E-5      
-high      .        0.048     +INF  -1.317E-5      
+low       .        0.027     +INF       .         
+high      .        0.049     +INF       .         
 
 ---- VAR T_RE  FIT for renewable energy
 
@@ -3864,7 +3859,7 @@ Biomass     -INF     -0.117     +INF       .
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR RGDP            .    53328.385     +INF      0.007      
+---- VAR RGDP            .    53680.018     +INF       .         
 ---- VAR GPROD           .        1.000     +INF       .         
 
   RGDP  real gdp
@@ -3874,430 +3869,430 @@ Biomass     -INF     -0.117     +INF       .
 
         LOWER     LEVEL     UPPER    MARGINAL
 
-low       .        0.031     +INF       .         
-high      .        0.048     +INF       .         
+low       .        0.027     +INF       .         
+high      .        0.049     +INF       .         
 
 ---- VAR QDOUT  
 
           LOWER     LEVEL     UPPER    MARGINAL
 
-Elec        .     4269.364     +INF       .         
-Coal        .     2140.042     +INF       .         
-Oilgas      .     1095.090     +INF       .         
-Roil        .     3343.145     +INF       .         
-Gas         .      308.073     +INF       .         
-Agri        .     8905.145     +INF       .         
-mine        .     1842.620     +INF       .         
-Food        .     8806.719     +INF       .         
-Paper       .     1234.508     +INF       .         
-Chem        .     2778.015     +INF       .         
-CM          .     1672.236     +INF       .         
-IST         .     1588.067     +INF       .         
-NFM         .     2319.660     +INF       .         
-EII         .    22267.627     +INF       .         
-OM          .    50522.444     +INF       .         
-Air         .      507.576     +INF       .         
-Tran        .     5009.311     +INF       .         
-Serv        .    39228.279     +INF       .         
+Elec        .     4850.170     +INF       .         
+Coal        .     2748.765     +INF       .         
+Oilgas      .     1224.619     +INF       .         
+Roil        .     3489.168     +INF       .         
+Gas         .      311.871     +INF       .         
+Agri        .     8952.767     +INF       .         
+mine        .     1880.435     +INF       .         
+Food        .     8853.384     +INF       .         
+Paper       .     1239.293     +INF       .         
+Chem        .     2802.081     +INF       .         
+CM          .     1681.406     +INF       .         
+IST         .     1601.223     +INF       .         
+NFM         .     2338.407     +INF       .         
+EII         .    22445.984     +INF       .         
+OM          .    50728.620     +INF       .         
+Air         .      509.799     +INF       .         
+Tran        .     5040.606     +INF       .         
+Serv        .    39413.895     +INF       .         
 
 ---- VAR QC  
 
           LOWER     LEVEL     UPPER    MARGINAL
 
-Elec        .      270.350     +INF       .         
-Coal        .       16.663     +INF       .         
+Elec        .      283.688     +INF       .         
+Coal        .       16.146     +INF       .         
 Oilgas      .         .        +INF       EPS       
-Roil        .      232.877     +INF       .         
-Gas         .      138.987     +INF       .         
-Agri        .     2131.484     +INF       .         
+Roil        .      231.648     +INF       .         
+Gas         .      138.200     +INF       .         
+Agri        .     2141.336     +INF       .         
 mine        .         .        +INF       EPS       
-Food        .     3805.804     +INF       .         
-Paper       .       15.760     +INF       .         
+Food        .     3827.997     +INF       .         
+Paper       .       15.883     +INF       .         
 Chem        .         .        +INF       EPS       
-CM          .       22.630     +INF       .         
+CM          .       22.829     +INF       .         
 IST         .         .        +INF       EPS       
 NFM         .         .        +INF       EPS       
-EII         .      665.800     +INF       .         
-OM          .     2972.099     +INF       .         
-Air         .       52.107     +INF       .         
-Tran        .      753.145     +INF       .         
-Serv        .    16070.332     +INF       .         
+EII         .      670.846     +INF       .         
+OM          .     2994.386     +INF       .         
+Air         .       52.393     +INF       .         
+Tran        .      757.566     +INF       .         
+Serv        .    16177.286     +INF       .         
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR GROSSCONS       .    27147.249     +INF       .         
+---- VAR GROSSCONS       .    27330.203     +INF       .         
 
 ---- VAR QINVK  
 
           LOWER     LEVEL     UPPER    MARGINAL
 
 Elec        .         .        +INF       EPS       
-Coal        .       25.891     +INF       .         
-Oilgas      .       33.230     +INF       .         
-Roil        .       47.790     +INF       .         
-Gas         .        6.280     +INF       .         
-Agri        .      673.234     +INF       .         
+Coal        .       25.580     +INF       .         
+Oilgas      .       33.330     +INF       .         
+Roil        .       47.997     +INF       .         
+Gas         .        6.306     +INF       .         
+Agri        .      677.352     +INF       .         
 mine        .         .        +INF       EPS       
-Food        .      182.429     +INF       .         
+Food        .      183.729     +INF       .         
 Paper       .         .        +INF       EPS       
 Chem        .         .        +INF       EPS       
-CM          .        2.270     +INF       .         
-IST         .        3.092     +INF       .         
-NFM         .        5.262     +INF       .         
-EII         .      314.530     +INF       .         
-OM          .    20750.670     +INF       .         
-Air         .        2.933     +INF       .         
-Tran        .      217.986     +INF       .         
-Serv        .     2383.130     +INF       .         
+CM          .        2.292     +INF       .         
+IST         .        3.115     +INF       .         
+NFM         .        5.322     +INF       .         
+EII         .      317.230     +INF       .         
+OM          .    20927.428     +INF       .         
+Air         .        2.953     +INF       .         
+Tran        .      219.547     +INF       .         
+Serv        .     2401.753     +INF       .         
 
                        LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR GROSSINVK       .    24648.692     +INF       .         
----- VAR UTIL            .    51795.929     +INF       .         
+---- VAR GROSSINVK       .    24853.934     +INF       .         
+---- VAR UTIL            .    52184.137     +INF       .         
 
 ---- VAR QIN  
 
                  LOWER     LEVEL     UPPER    MARGINAL
 
 Elec  .Elec        .         .        +INF       EPS       
-Elec  .Coal        .       79.322     +INF       .         
-Elec  .Oilgas      .       46.110     +INF       .         
-Elec  .Roil        .       48.765     +INF       .         
-Elec  .Gas         .        6.688     +INF       .         
-Elec  .Agri        .       82.786     +INF       .         
-Elec  .mine        .      153.063     +INF       .         
-Elec  .Food        .       67.761     +INF       .         
-Elec  .Paper       .       37.501     +INF       .         
-Elec  .Chem        .      290.535     +INF       .         
-Elec  .CM          .      124.395     +INF       .         
-Elec  .IST         .       61.285     +INF       .         
-Elec  .NFM         .      180.686     +INF       .         
-Elec  .EII         .      639.005     +INF       .         
-Elec  .OM          .      621.861     +INF       .         
-Elec  .Air         .        1.558     +INF       .         
-Elec  .Tran        .       50.602     +INF       .         
-Elec  .Serv        .      291.498     +INF       .         
+Elec  .Coal        .      101.982     +INF       .         
+Elec  .Oilgas      .       55.174     +INF       .         
+Elec  .Roil        .       50.895     +INF       .         
+Elec  .Gas         .        6.770     +INF       .         
+Elec  .Agri        .       88.388     +INF       .         
+Elec  .mine        .      163.818     +INF       .         
+Elec  .Food        .       71.762     +INF       .         
+Elec  .Paper       .       39.660     +INF       .         
+Elec  .Chem        .      307.995     +INF       .         
+Elec  .CM          .      131.837     +INF       .         
+Elec  .IST         .       66.154     +INF       .         
+Elec  .NFM         .      189.740     +INF       .         
+Elec  .EII         .      682.997     +INF       .         
+Elec  .OM          .      657.322     +INF       .         
+Elec  .Air         .        1.669     +INF       .         
+Elec  .Tran        .       54.194     +INF       .         
+Elec  .Serv        .      309.862     +INF       .         
 Coal  .Elec        .         .        +INF       EPS       
-Coal  .Coal        .      450.890     +INF       .         
-Coal  .Oilgas      .        2.986     +INF       .         
-Coal  .Roil        .       13.137     +INF       .         
-Coal  .Gas         .       21.325     +INF       .         
-Coal  .Agri        .        0.573     +INF       .         
-Coal  .mine        .       17.076     +INF       .         
-Coal  .Food        .       19.254     +INF       .         
-Coal  .Paper       .       25.755     +INF       .         
-Coal  .Chem        .      183.167     +INF       .         
-Coal  .CM          .      104.901     +INF       .         
-Coal  .IST         .      190.954     +INF       .         
-Coal  .NFM         .       39.303     +INF       .         
-Coal  .EII         .      770.824     +INF       .         
-Coal  .OM          .       73.351     +INF       .         
-Coal  .Air         .        0.290     +INF       .         
-Coal  .Tran        .        5.583     +INF       .         
-Coal  .Serv        .       17.187     +INF       .         
+Coal  .Coal        .      579.694     +INF       .         
+Coal  .Oilgas      .        3.138     +INF       .         
+Coal  .Roil        .       13.711     +INF       .         
+Coal  .Gas         .       21.587     +INF       .         
+Coal  .Agri        .        0.536     +INF       .         
+Coal  .mine        .       16.085     +INF       .         
+Coal  .Food        .       18.196     +INF       .         
+Coal  .Paper       .       24.556     +INF       .         
+Coal  .Chem        .      172.434     +INF       .         
+Coal  .CM          .       99.442     +INF       .         
+Coal  .IST         .      186.436     +INF       .         
+Coal  .NFM         .       36.592     +INF       .         
+Coal  .EII         .      734.768     +INF       .         
+Coal  .OM          .       68.347     +INF       .         
+Coal  .Air         .        0.272     +INF       .         
+Coal  .Tran        .        5.239     +INF       .         
+Coal  .Serv        .       16.022     +INF       .         
 Oilgas.Elec        .         .        +INF       EPS       
-Oilgas.Coal        .        5.906     +INF       .         
-Oilgas.Oilgas      .        8.968     +INF       .         
-Oilgas.Roil        .     2138.581     +INF       .         
-Oilgas.Gas         .      139.691     +INF       .         
+Oilgas.Coal        .        7.594     +INF       .         
+Oilgas.Oilgas      .       10.108     +INF       .         
+Oilgas.Roil        .     2231.990     +INF       .         
+Oilgas.Gas         .      141.405     +INF       .         
 Oilgas.Agri        .         .        +INF       EPS       
-Oilgas.mine        .        1.745     +INF       .         
+Oilgas.mine        .        1.781     +INF       .         
 Oilgas.Food        .         .        +INF       EPS       
 Oilgas.Paper       .         .        +INF       EPS       
-Oilgas.Chem        .      105.138     +INF       .         
-Oilgas.CM          .        2.892     +INF       .         
-Oilgas.IST         .        0.579     +INF       .         
-Oilgas.NFM         .        1.788     +INF       .         
-Oilgas.EII         .       40.560     +INF       .         
-Oilgas.OM          .        5.013     +INF       .         
+Oilgas.Chem        .      106.049     +INF       .         
+Oilgas.CM          .        2.908     +INF       .         
+Oilgas.IST         .        0.584     +INF       .         
+Oilgas.NFM         .        1.802     +INF       .         
+Oilgas.EII         .       40.885     +INF       .         
+Oilgas.OM          .        5.034     +INF       .         
 Oilgas.Air         .         .        +INF       EPS       
 Oilgas.Tran        .         .        +INF       EPS       
 Oilgas.Serv        .         .        +INF       EPS       
 Roil  .Elec        .         .        +INF       EPS       
-Roil  .Coal        .       13.021     +INF       .         
-Roil  .Oilgas      .       34.638     +INF       .         
-Roil  .Roil        .      259.772     +INF       .         
-Roil  .Gas         .        3.197     +INF       .         
-Roil  .Agri        .      144.984     +INF       .         
-Roil  .mine        .       97.295     +INF       .         
-Roil  .Food        .       13.661     +INF       .         
-Roil  .Paper       .        3.294     +INF       .         
-Roil  .Chem        .      231.280     +INF       .         
-Roil  .CM          .       56.566     +INF       .         
-Roil  .IST         .        4.522     +INF       .         
-Roil  .NFM         .       63.885     +INF       .         
-Roil  .EII         .      595.421     +INF       .         
-Roil  .OM          .      286.596     +INF       .         
-Roil  .Air         .      129.896     +INF       .         
-Roil  .Tran        .      759.926     +INF       .         
-Roil  .Serv        .      464.481     +INF       .         
+Roil  .Coal        .       16.740     +INF       .         
+Roil  .Oilgas      .       38.863     +INF       .         
+Roil  .Roil        .      271.118     +INF       .         
+Roil  .Gas         .        3.236     +INF       .         
+Roil  .Agri        .      144.807     +INF       .         
+Roil  .mine        .       97.853     +INF       .         
+Roil  .Food        .       13.785     +INF       .         
+Roil  .Paper       .        3.353     +INF       .         
+Roil  .Chem        .      232.473     +INF       .         
+Roil  .CM          .       57.254     +INF       .         
+Roil  .IST         .        4.714     +INF       .         
+Roil  .NFM         .       63.507     +INF       .         
+Roil  .EII         .      606.009     +INF       .         
+Roil  .OM          .      285.131     +INF       .         
+Roil  .Air         .      130.116     +INF       .         
+Roil  .Tran        .      761.467     +INF       .         
+Roil  .Serv        .      462.325     +INF       .         
 Gas   .Elec        .         .        +INF       EPS       
-Gas   .Coal        .        0.264     +INF       .         
-Gas   .Oilgas      .        0.126     +INF       .         
-Gas   .Roil        .        3.187     +INF       .         
-Gas   .Gas         .       32.202     +INF       .         
+Gas   .Coal        .        0.340     +INF       .         
+Gas   .Oilgas      .        0.141     +INF       .         
+Gas   .Roil        .        3.326     +INF       .         
+Gas   .Gas         .       32.598     +INF       .         
 Gas   .Agri        .        0.078     +INF       .         
 Gas   .mine        .        0.029     +INF       .         
-Gas   .Food        .        0.310     +INF       .         
-Gas   .Paper       .        0.138     +INF       .         
-Gas   .Chem        .       11.098     +INF       .         
+Gas   .Food        .        0.313     +INF       .         
+Gas   .Paper       .        0.140     +INF       .         
+Gas   .Chem        .       11.145     +INF       .         
 Gas   .CM          .        0.016     +INF       .         
-Gas   .IST         .        0.049     +INF       .         
-Gas   .NFM         .        0.084     +INF       .         
-Gas   .EII         .        7.454     +INF       .         
-Gas   .OM          .        6.906     +INF       .         
+Gas   .IST         .        0.051     +INF       .         
+Gas   .NFM         .        0.083     +INF       .         
+Gas   .EII         .        7.579     +INF       .         
+Gas   .OM          .        6.864     +INF       .         
 Gas   .Air         .        0.096     +INF       .         
-Gas   .Tran        .       67.698     +INF       .         
-Gas   .Serv        .       30.674     +INF       .         
+Gas   .Tran        .       67.770     +INF       .         
+Gas   .Serv        .       30.502     +INF       .         
 Agri  .Elec        .         .        +INF       EPS       
-Agri  .Coal        .        1.226     +INF       .         
-Agri  .Oilgas      .        0.035     +INF       .         
-Agri  .Roil        .        0.128     +INF       .         
+Agri  .Coal        .        1.576     +INF       .         
+Agri  .Oilgas      .        0.040     +INF       .         
+Agri  .Roil        .        0.133     +INF       .         
 Agri  .Gas         .        0.006     +INF       .         
-Agri  .Agri        .     1233.092     +INF       .         
-Agri  .mine        .        0.887     +INF       .         
-Agri  .Food        .     3194.055     +INF       .         
-Agri  .Paper       .       99.178     +INF       .         
-Agri  .Chem        .       29.475     +INF       .         
-Agri  .CM          .        0.319     +INF       .         
-Agri  .IST         .        0.227     +INF       .         
-Agri  .NFM         .        0.130     +INF       .         
-Agri  .EII         .      414.407     +INF       .         
-Agri  .OM          .     1096.409     +INF       .         
+Agri  .Agri        .     1239.692     +INF       .         
+Agri  .mine        .        0.906     +INF       .         
+Agri  .Food        .     3210.980     +INF       .         
+Agri  .Paper       .       99.562     +INF       .         
+Agri  .Chem        .       29.731     +INF       .         
+Agri  .CM          .        0.321     +INF       .         
+Agri  .IST         .        0.228     +INF       .         
+Agri  .NFM         .        0.131     +INF       .         
+Agri  .EII         .      417.726     +INF       .         
+Agri  .OM          .     1100.883     +INF       .         
 Agri  .Air         .        0.053     +INF       .         
-Agri  .Tran        .        0.508     +INF       .         
-Agri  .Serv        .      463.305     +INF       .         
+Agri  .Tran        .        0.511     +INF       .         
+Agri  .Serv        .      465.497     +INF       .         
 mine  .Elec        .         .        +INF       EPS       
-mine  .Coal        .        5.834     +INF       .         
-mine  .Oilgas      .      112.442     +INF       .         
-mine  .Roil        .        0.845     +INF       .         
-mine  .Gas         .        0.806     +INF       .         
+mine  .Coal        .        7.500     +INF       .         
+mine  .Oilgas      .      126.743     +INF       .         
+mine  .Roil        .        0.882     +INF       .         
+mine  .Gas         .        0.815     +INF       .         
 mine  .Agri        .        0.054     +INF       .         
-mine  .mine        .      187.630     +INF       .         
-mine  .Food        .        3.648     +INF       .         
-mine  .Paper       .        0.169     +INF       .         
-mine  .Chem        .      116.304     +INF       .         
-mine  .CM          .      144.795     +INF       .         
-mine  .IST         .      338.992     +INF       .         
-mine  .NFM         .      492.289     +INF       .         
-mine  .EII         .     1196.986     +INF       .         
-mine  .OM          .       99.630     +INF       .         
+mine  .mine        .      191.499     +INF       .         
+mine  .Food        .        3.667     +INF       .         
+mine  .Paper       .        0.170     +INF       .         
+mine  .Chem        .      117.311     +INF       .         
+mine  .CM          .      145.589     +INF       .         
+mine  .IST         .      341.800     +INF       .         
+mine  .NFM         .      496.267     +INF       .         
+mine  .EII         .     1206.573     +INF       .         
+mine  .OM          .      100.037     +INF       .         
 mine  .Air         .         .        +INF       EPS       
-mine  .Tran        .        0.097     +INF       .         
-mine  .Serv        .        1.190     +INF       .         
+mine  .Tran        .        0.098     +INF       .         
+mine  .Serv        .        1.196     +INF       .         
 Food  .Elec        .         .        +INF       EPS       
-Food  .Coal        .        6.959     +INF       .         
-Food  .Oilgas      .        4.563     +INF       .         
-Food  .Roil        .       21.063     +INF       .         
-Food  .Gas         .        1.009     +INF       .         
-Food  .Agri        .      949.892     +INF       .         
-Food  .mine        .       10.677     +INF       .         
-Food  .Food        .     2022.899     +INF       .         
-Food  .Paper       .        5.532     +INF       .         
-Food  .Chem        .       34.574     +INF       .         
-Food  .CM          .        7.831     +INF       .         
-Food  .IST         .        6.548     +INF       .         
-Food  .NFM         .        9.466     +INF       .         
-Food  .EII         .      302.646     +INF       .         
-Food  .OM          .      295.939     +INF       .         
-Food  .Air         .       19.556     +INF       .         
-Food  .Tran        .       37.663     +INF       .         
-Food  .Serv        .     1115.846     +INF       .         
+Food  .Coal        .        8.946     +INF       .         
+Food  .Oilgas      .        5.143     +INF       .         
+Food  .Roil        .       21.983     +INF       .         
+Food  .Gas         .        1.022     +INF       .         
+Food  .Agri        .      954.977     +INF       .         
+Food  .mine        .       10.897     +INF       .         
+Food  .Food        .     2033.618     +INF       .         
+Food  .Paper       .        5.554     +INF       .         
+Food  .Chem        .       34.874     +INF       .         
+Food  .CM          .        7.874     +INF       .         
+Food  .IST         .        6.603     +INF       .         
+Food  .NFM         .        9.543     +INF       .         
+Food  .EII         .      305.070     +INF       .         
+Food  .OM          .      297.147     +INF       .         
+Food  .Air         .       19.641     +INF       .         
+Food  .Tran        .       37.898     +INF       .         
+Food  .Serv        .     1121.125     +INF       .         
 Paper .Elec        .         .        +INF       EPS       
-Paper .Coal        .        0.403     +INF       .         
-Paper .Oilgas      .        0.127     +INF       .         
-Paper .Roil        .        0.644     +INF       .         
+Paper .Coal        .        0.518     +INF       .         
+Paper .Oilgas      .        0.143     +INF       .         
+Paper .Roil        .        0.672     +INF       .         
 Paper .Gas         .        0.017     +INF       .         
-Paper .Agri        .        0.328     +INF       .         
-Paper .mine        .        0.456     +INF       .         
-Paper .Food        .       83.483     +INF       .         
-Paper .Paper       .      369.527     +INF       .         
-Paper .Chem        .        4.194     +INF       .         
-Paper .CM          .       38.965     +INF       .         
-Paper .IST         .        0.181     +INF       .         
-Paper .NFM         .        0.955     +INF       .         
-Paper .EII         .       83.547     +INF       .         
-Paper .OM          .      419.384     +INF       .         
+Paper .Agri        .        0.330     +INF       .         
+Paper .mine        .        0.465     +INF       .         
+Paper .Food        .       83.926     +INF       .         
+Paper .Paper       .      370.960     +INF       .         
+Paper .Chem        .        4.231     +INF       .         
+Paper .CM          .       39.179     +INF       .         
+Paper .IST         .        0.183     +INF       .         
+Paper .NFM         .        0.963     +INF       .         
+Paper .EII         .       84.216     +INF       .         
+Paper .OM          .      421.095     +INF       .         
 Paper .Air         .        0.099     +INF       .         
-Paper .Tran        .        3.095     +INF       .         
-Paper .Serv        .      241.155     +INF       .         
+Paper .Tran        .        3.115     +INF       .         
+Paper .Serv        .      242.296     +INF       .         
 Chem  .Elec        .         .        +INF       EPS       
-Chem  .Coal        .        1.991     +INF       .         
-Chem  .Oilgas      .       12.342     +INF       .         
-Chem  .Roil        .       38.399     +INF       .         
-Chem  .Gas         .        0.408     +INF       .         
-Chem  .Agri        .      516.508     +INF       .         
-Chem  .mine        .       23.079     +INF       .         
-Chem  .Food        .        9.787     +INF       .         
-Chem  .Paper       .       64.762     +INF       .         
-Chem  .Chem        .      658.432     +INF       .         
-Chem  .CM          .       63.703     +INF       .         
-Chem  .IST         .        0.963     +INF       .         
-Chem  .NFM         .       91.164     +INF       .         
-Chem  .EII         .     1250.074     +INF       .         
-Chem  .OM          .      195.288     +INF       .         
+Chem  .Coal        .        2.559     +INF       .         
+Chem  .Oilgas      .       13.911     +INF       .         
+Chem  .Roil        .       40.077     +INF       .         
+Chem  .Gas         .        0.413     +INF       .         
+Chem  .Agri        .      519.272     +INF       .         
+Chem  .mine        .       23.555     +INF       .         
+Chem  .Food        .        9.839     +INF       .         
+Chem  .Paper       .       65.013     +INF       .         
+Chem  .Chem        .      664.136     +INF       .         
+Chem  .CM          .       64.052     +INF       .         
+Chem  .IST         .        0.971     +INF       .         
+Chem  .NFM         .       91.901     +INF       .         
+Chem  .EII         .     1260.086     +INF       .         
+Chem  .OM          .      196.085     +INF       .         
 Chem  .Air         .         .        +INF       EPS       
-Chem  .Tran        .        0.493     +INF       .         
-Chem  .Serv        .       25.286     +INF       .         
+Chem  .Tran        .        0.496     +INF       .         
+Chem  .Serv        .       25.405     +INF       .         
 CM    .Elec        .         .        +INF       EPS       
-CM    .Coal        .        3.493     +INF       .         
-CM    .Oilgas      .        0.301     +INF       .         
-CM    .Roil        .        1.857     +INF       .         
+CM    .Coal        .        4.491     +INF       .         
+CM    .Oilgas      .        0.339     +INF       .         
+CM    .Roil        .        1.938     +INF       .         
 CM    .Gas         .        0.006     +INF       .         
-CM    .Agri        .        0.601     +INF       .         
-CM    .mine        .       10.406     +INF       .         
-CM    .Food        .       36.828     +INF       .         
-CM    .Paper       .        0.369     +INF       .         
-CM    .Chem        .        6.038     +INF       .         
-CM    .CM          .      169.982     +INF       .         
-CM    .IST         .        1.606     +INF       .         
-CM    .NFM         .        1.285     +INF       .         
-CM    .EII         .      350.401     +INF       .         
-CM    .OM          .      993.317     +INF       .         
-CM    .Air         .    1.5441E-5     +INF       .         
-CM    .Tran        .        0.347     +INF       .         
-CM    .Serv        .       10.115     +INF       .         
+CM    .Agri        .        0.605     +INF       .         
+CM    .mine        .       10.620     +INF       .         
+CM    .Food        .       37.023     +INF       .         
+CM    .Paper       .        0.371     +INF       .         
+CM    .Chem        .        6.090     +INF       .         
+CM    .CM          .      170.914     +INF       .         
+CM    .IST         .        1.619     +INF       .         
+CM    .NFM         .        1.296     +INF       .         
+CM    .EII         .      353.207     +INF       .         
+CM    .OM          .      997.370     +INF       .         
+CM    .Air         .    1.5509E-5     +INF       .         
+CM    .Tran        .        0.349     +INF       .         
+CM    .Serv        .       10.163     +INF       .         
 IST   .Elec        .         .        +INF       EPS       
-IST   .Coal        .        5.425     +INF       .         
-IST   .Oilgas      .        1.195     +INF       .         
+IST   .Coal        .        6.975     +INF       .         
+IST   .Oilgas      .        1.347     +INF       .         
 IST   .Roil        .         .        +INF       EPS       
-IST   .Gas         .        0.237     +INF       .         
+IST   .Gas         .        0.240     +INF       .         
 IST   .Agri        .         .        +INF       EPS       
-IST   .mine        .        4.763     +INF       .         
+IST   .mine        .        4.861     +INF       .         
 IST   .Food        .         .        +INF       EPS       
 IST   .Paper       .         .        +INF       EPS       
-IST   .Chem        .        0.697     +INF       .         
-IST   .CM          .        2.431     +INF       .         
-IST   .IST         .      186.516     +INF       .         
-IST   .NFM         .        3.125     +INF       .         
-IST   .EII         .     1075.232     +INF       .         
-IST   .OM          .      292.383     +INF       .         
+IST   .Chem        .        0.703     +INF       .         
+IST   .CM          .        2.445     +INF       .         
+IST   .IST         .      188.061     +INF       .         
+IST   .NFM         .        3.151     +INF       .         
+IST   .EII         .     1083.844     +INF       .         
+IST   .OM          .      293.576     +INF       .         
 IST   .Air         .         .        +INF       EPS       
-IST   .Tran        .        0.403     +INF       .         
-IST   .Serv        .        2.386     +INF       .         
+IST   .Tran        .        0.406     +INF       .         
+IST   .Serv        .        2.397     +INF       .         
 NFM   .Elec        .         .        +INF       EPS       
-NFM   .Coal        .        0.417     +INF       .         
-NFM   .Oilgas      .        0.007     +INF       .         
-NFM   .Roil        .        0.081     +INF       .         
-NFM   .Gas         .        0.057     +INF       .         
+NFM   .Coal        .        0.536     +INF       .         
+NFM   .Oilgas      .        0.008     +INF       .         
+NFM   .Roil        .        0.085     +INF       .         
+NFM   .Gas         .        0.058     +INF       .         
 NFM   .Agri        .        0.007     +INF       .         
-NFM   .mine        .        4.461     +INF       .         
-NFM   .Food        .        0.055     +INF       .         
-NFM   .Paper       .        0.511     +INF       .         
-NFM   .Chem        .        9.431     +INF       .         
-NFM   .CM          .        0.960     +INF       .         
-NFM   .IST         .       14.675     +INF       .         
-NFM   .NFM         .      462.367     +INF       .         
-NFM   .EII         .     1278.601     +INF       .         
-NFM   .OM          .     1064.218     +INF       .         
+NFM   .mine        .        4.553     +INF       .         
+NFM   .Food        .        0.056     +INF       .         
+NFM   .Paper       .        0.513     +INF       .         
+NFM   .Chem        .        9.513     +INF       .         
+NFM   .CM          .        0.965     +INF       .         
+NFM   .IST         .       14.797     +INF       .         
+NFM   .NFM         .      466.104     +INF       .         
+NFM   .EII         .     1288.842     +INF       .         
+NFM   .OM          .     1068.561     +INF       .         
 NFM   .Air         .         .        +INF       EPS       
 NFM   .Tran        .        0.034     +INF       .         
-NFM   .Serv        .        6.617     +INF       .         
+NFM   .Serv        .        6.649     +INF       .         
 EII   .Elec        .         .        +INF       EPS       
-EII   .Coal        .      166.436     +INF       .         
-EII   .Oilgas      .       60.779     +INF       .         
-EII   .Roil        .       56.356     +INF       .         
-EII   .Gas         .        1.626     +INF       .         
-EII   .Agri        .      233.145     +INF       .         
-EII   .mine        .      164.243     +INF       .         
-EII   .Food        .      192.986     +INF       .         
-EII   .Paper       .      102.383     +INF       .         
-EII   .Chem        .      252.859     +INF       .         
-EII   .CM          .      214.377     +INF       .         
-EII   .IST         .      130.674     +INF       .         
-EII   .NFM         .      135.244     +INF       .         
-EII   .EII         .     6480.293     +INF       .         
-EII   .OM          .    10941.581     +INF       .         
-EII   .Air         .        1.194     +INF       .         
-EII   .Tran        .       91.771     +INF       .         
-EII   .Serv        .     1563.888     +INF       .         
+EII   .Coal        .      213.982     +INF       .         
+EII   .Oilgas      .       68.510     +INF       .         
+EII   .Roil        .       58.818     +INF       .         
+EII   .Gas         .        1.646     +INF       .         
+EII   .Agri        .      234.393     +INF       .         
+EII   .mine        .      167.630     +INF       .         
+EII   .Food        .      194.009     +INF       .         
+EII   .Paper       .      102.780     +INF       .         
+EII   .Chem        .      255.050     +INF       .         
+EII   .CM          .      215.552     +INF       .         
+EII   .IST         .      131.756     +INF       .         
+EII   .NFM         .      136.337     +INF       .         
+EII   .EII         .     6532.198     +INF       .         
+EII   .OM          .    10986.232     +INF       .         
+EII   .Air         .        1.199     +INF       .         
+EII   .Tran        .       92.344     +INF       .         
+EII   .Serv        .     1571.288     +INF       .         
 OM    .Elec        .         .        +INF       EPS       
-OM    .Coal        .      146.082     +INF       .         
-OM    .Oilgas      .       68.723     +INF       .         
-OM    .Roil        .       45.913     +INF       .         
-OM    .Gas         .        3.262     +INF       .         
-OM    .Agri        .       82.555     +INF       .         
-OM    .mine        .      161.758     +INF       .         
-OM    .Food        .       93.538     +INF       .         
-OM    .Paper       .      115.887     +INF       .         
-OM    .Chem        .       82.778     +INF       .         
-OM    .CM          .      117.243     +INF       .         
-OM    .IST         .      212.623     +INF       .         
-OM    .NFM         .      224.551     +INF       .         
-OM    .EII         .     1048.411     +INF       .         
-OM    .OM          .    16560.667     +INF       .         
-OM    .Air         .       76.238     +INF       .         
-OM    .Tran        .      499.235     +INF       .         
-OM    .Serv        .     3343.106     +INF       .         
+OM    .Coal        .      187.812     +INF       .         
+OM    .Oilgas      .       77.463     +INF       .         
+OM    .Roil        .       47.918     +INF       .         
+OM    .Gas         .        3.302     +INF       .         
+OM    .Agri        .       82.997     +INF       .         
+OM    .mine        .      165.093     +INF       .         
+OM    .Food        .       94.034     +INF       .         
+OM    .Paper       .      116.336     +INF       .         
+OM    .Chem        .       83.495     +INF       .         
+OM    .CM          .      117.885     +INF       .         
+OM    .IST         .      214.385     +INF       .         
+OM    .NFM         .      226.365     +INF       .         
+OM    .EII         .     1056.808     +INF       .         
+OM    .OM          .    16628.250     +INF       .         
+OM    .Air         .       76.572     +INF       .         
+OM    .Tran        .      502.354     +INF       .         
+OM    .Serv        .     3358.924     +INF       .         
 Air   .Elec        .         .        +INF       EPS       
-Air   .Coal        .        1.208     +INF       .         
-Air   .Oilgas      .        0.409     +INF       .         
-Air   .Roil        .        0.662     +INF       .         
-Air   .Gas         .        0.191     +INF       .         
-Air   .Agri        .        1.839     +INF       .         
-Air   .mine        .        1.678     +INF       .         
-Air   .Food        .        5.482     +INF       .         
-Air   .Paper       .        1.079     +INF       .         
-Air   .Chem        .        1.584     +INF       .         
-Air   .CM          .        1.584     +INF       .         
-Air   .IST         .        0.725     +INF       .         
-Air   .NFM         .        0.989     +INF       .         
-Air   .EII         .       27.746     +INF       .         
-Air   .OM          .      104.186     +INF       .         
-Air   .Air         .       68.881     +INF       .         
-Air   .Tran        .       22.049     +INF       .         
-Air   .Serv        .      279.070     +INF       .         
+Air   .Coal        .        1.553     +INF       .         
+Air   .Oilgas      .        0.461     +INF       .         
+Air   .Roil        .        0.691     +INF       .         
+Air   .Gas         .        0.193     +INF       .         
+Air   .Agri        .        1.849     +INF       .         
+Air   .mine        .        1.712     +INF       .         
+Air   .Food        .        5.511     +INF       .         
+Air   .Paper       .        1.083     +INF       .         
+Air   .Chem        .        1.597     +INF       .         
+Air   .CM          .        1.592     +INF       .         
+Air   .IST         .        0.731     +INF       .         
+Air   .NFM         .        0.997     +INF       .         
+Air   .EII         .       27.968     +INF       .         
+Air   .OM          .      104.612     +INF       .         
+Air   .Air         .       69.182     +INF       .         
+Air   .Tran        .       22.187     +INF       .         
+Air   .Serv        .      280.390     +INF       .         
 Tran  .Elec        .         .        +INF       EPS       
-Tran  .Coal        .       48.602     +INF       .         
-Tran  .Oilgas      .        7.278     +INF       .         
-Tran  .Roil        .       48.001     +INF       .         
-Tran  .Gas         .        8.644     +INF       .         
-Tran  .Agri        .       88.334     +INF       .         
-Tran  .mine        .       62.196     +INF       .         
-Tran  .Food        .      251.214     +INF       .         
-Tran  .Paper       .       38.206     +INF       .         
-Tran  .Chem        .       74.596     +INF       .         
-Tran  .CM          .       54.495     +INF       .         
-Tran  .IST         .       39.137     +INF       .         
-Tran  .NFM         .       32.900     +INF       .         
-Tran  .EII         .      563.757     +INF       .         
-Tran  .OM          .     1172.849     +INF       .         
-Tran  .Air         .       14.809     +INF       .         
-Tran  .Tran        .      488.205     +INF       .         
-Tran  .Serv        .      660.071     +INF       .         
+Tran  .Coal        .       62.486     +INF       .         
+Tran  .Oilgas      .        8.204     +INF       .         
+Tran  .Roil        .       50.098     +INF       .         
+Tran  .Gas         .        8.750     +INF       .         
+Tran  .Agri        .       88.807     +INF       .         
+Tran  .mine        .       63.478     +INF       .         
+Tran  .Food        .      252.545     +INF       .         
+Tran  .Paper       .       38.354     +INF       .         
+Tran  .Chem        .       75.242     +INF       .         
+Tran  .CM          .       54.794     +INF       .         
+Tran  .IST         .       39.462     +INF       .         
+Tran  .NFM         .       33.166     +INF       .         
+Tran  .EII         .      568.272     +INF       .         
+Tran  .OM          .     1177.636     +INF       .         
+Tran  .Air         .       14.874     +INF       .         
+Tran  .Tran        .      491.255     +INF       .         
+Tran  .Serv        .      663.194     +INF       .         
 Serv  .Elec        .         .        +INF       EPS       
-Serv  .Coal        .      207.757     +INF       .         
-Serv  .Oilgas      .       58.238     +INF       .         
-Serv  .Roil        .      112.623     +INF       .         
-Serv  .Gas         .       21.876     +INF       .         
-Serv  .Agri        .      358.177     +INF       .         
-Serv  .mine        .      185.200     +INF       .         
-Serv  .Food        .      750.198     +INF       .         
-Serv  .Paper       .      100.545     +INF       .         
-Serv  .Chem        .      184.452     +INF       .         
-Serv  .CM          .      148.532     +INF       .         
-Serv  .IST         .       90.734     +INF       .         
-Serv  .NFM         .      148.823     +INF       .         
-Serv  .EII         .     1719.072     +INF       .         
-Serv  .OM          .     5084.794     +INF       .         
-Serv  .Air         .       73.940     +INF       .         
-Serv  .Tran        .     1013.340     +INF       .         
-Serv  .Serv        .     8846.147     +INF       .         
+Serv  .Coal        .      267.106     +INF       .         
+Serv  .Oilgas      .       65.645     +INF       .         
+Serv  .Roil        .      117.542     +INF       .         
+Serv  .Gas         .       22.145     +INF       .         
+Serv  .Agri        .      360.094     +INF       .         
+Serv  .mine        .      189.019     +INF       .         
+Serv  .Food        .      754.173     +INF       .         
+Serv  .Paper       .      100.935     +INF       .         
+Serv  .Chem        .      186.049     +INF       .         
+Serv  .CM          .      149.347     +INF       .         
+Serv  .IST         .       91.485     +INF       .         
+Serv  .NFM         .      150.026     +INF       .         
+Serv  .EII         .     1732.842     +INF       .         
+Serv  .OM          .     5105.545     +INF       .         
+Serv  .Air         .       74.264     +INF       .         
+Serv  .Tran        .     1019.671     +INF       .         
+Serv  .Serv        .     8888.005     +INF       .         
 
 ---- VAR QIN_ELE  
 
                   LOWER     LEVEL     UPPER    MARGINAL
 
-Elec  .Coal         .      342.281     +INF       .         
-Elec  .Gas          .        7.274     +INF       .         
-Elec  .T_D          .      234.968     +INF       .         
-Elec  .Oil          .        2.905     +INF       .         
-Elec  .Nuclear      .       92.265     +INF       .         
-Elec  .Hydro        .      322.887     +INF       .         
-Elec  .Wind         .      160.261     +INF       .         
-Elec  .Solar        .        3.485     +INF       .         
-Elec  .Biomass      .       44.285     +INF       .         
-Coal  .Coal         .      327.056     +INF       .         
+Elec  .Coal         .      929.430     +INF       .         
+Elec  .Gas          .       19.519     +INF       .         
+Elec  .T_D          .      266.933     +INF       .         
+Elec  .Oil          .        7.459     +INF       .         
+Elec  .Nuclear      .       39.251     +INF       .         
+Elec  .Hydro        .      266.818     +INF       .         
+Elec  .Wind         .       34.652     +INF       .         
+Elec  .Solar        .        0.968     +INF       .         
+Elec  .Biomass      .       15.699     +INF       .         
+Coal  .Coal         .      876.134     +INF       .         
 Coal  .Gas          .         .        +INF       EPS       
 Coal  .T_D          .         .        +INF       EPS       
 Coal  .Oil          .         .        +INF       EPS       
@@ -4307,7 +4302,7 @@ Coal  .Wind         .         .        +INF       EPS
 Coal  .Solar        .         .        +INF       EPS       
 Coal  .Biomass      .         .        +INF       EPS       
 Oilgas.Coal         .         .        +INF       EPS       
-Oilgas.Gas          .       17.911     +INF       .         
+Oilgas.Gas          .       48.061     +INF       .         
 Oilgas.T_D          .         .        +INF       EPS       
 Oilgas.Oil          .         .        +INF       EPS       
 Oilgas.Nuclear      .         .        +INF       EPS       
@@ -4318,14 +4313,14 @@ Oilgas.Biomass      .         .        +INF       EPS
 Roil  .Coal         .         .        +INF       EPS       
 Roil  .Gas          .         .        +INF       EPS       
 Roil  .T_D          .         .        +INF       EPS       
-Roil  .Oil          .       74.889     +INF       .         
+Roil  .Oil          .      191.657     +INF       .         
 Roil  .Nuclear      .         .        +INF       EPS       
 Roil  .Hydro        .         .        +INF       EPS       
 Roil  .Wind         .         .        +INF       EPS       
 Roil  .Solar        .         .        +INF       EPS       
 Roil  .Biomass      .         .        +INF       EPS       
 Gas   .Coal         .         .        +INF       EPS       
-Gas   .Gas          .        2.394     +INF       .         
+Gas   .Gas          .        6.294     +INF       .         
 Gas   .T_D          .         .        +INF       EPS       
 Gas   .Oil          .         .        +INF       EPS       
 Gas   .Nuclear      .         .        +INF       EPS       
@@ -4341,138 +4336,138 @@ Agri  .Nuclear      .         .        +INF       EPS
 Agri  .Hydro        .         .        +INF       EPS       
 Agri  .Wind         .         .        +INF       EPS       
 Agri  .Solar        .         .        +INF       EPS       
-Agri  .Biomass      .        1.372     +INF       .         
-mine  .Coal         .        0.113     +INF       .         
-mine  .Gas          .        0.004     +INF       .         
-mine  .T_D          .        0.688     +INF       .         
-mine  .Oil          .        0.011     +INF       .         
-mine  .Nuclear      .        0.332     +INF       .         
-mine  .Hydro        .        0.312     +INF       .         
-mine  .Wind         .        0.738     +INF       .         
-mine  .Solar        .        0.014     +INF       .         
-mine  .Biomass      .        0.242     +INF       .         
-Food  .Coal         .        1.013     +INF       .         
-Food  .Gas          .        0.036     +INF       .         
-Food  .T_D          .        6.164     +INF       .         
-Food  .Oil          .        0.100     +INF       .         
-Food  .Nuclear      .        2.974     +INF       .         
-Food  .Hydro        .        2.800     +INF       .         
-Food  .Wind         .        6.616     +INF       .         
-Food  .Solar        .        0.128     +INF       .         
-Food  .Biomass      .        2.167     +INF       .         
-Paper .Coal         .        0.197     +INF       .         
-Paper .Gas          .        0.007     +INF       .         
-Paper .T_D          .        1.200     +INF       .         
-Paper .Oil          .        0.019     +INF       .         
-Paper .Nuclear      .        0.579     +INF       .         
-Paper .Hydro        .        0.545     +INF       .         
-Paper .Wind         .        1.288     +INF       .         
-Paper .Solar        .        0.025     +INF       .         
-Paper .Biomass      .        0.422     +INF       .         
-Chem  .Coal         .        0.172     +INF       .         
-Chem  .Gas          .        0.006     +INF       .         
-Chem  .T_D          .        1.044     +INF       .         
-Chem  .Oil          .        0.017     +INF       .         
-Chem  .Nuclear      .        0.504     +INF       .         
-Chem  .Hydro        .        0.474     +INF       .         
-Chem  .Wind         .        1.120     +INF       .         
-Chem  .Solar        .        0.022     +INF       .         
-Chem  .Biomass      .        0.367     +INF       .         
-CM    .Coal         .        0.084     +INF       .         
-CM    .Gas          .        0.003     +INF       .         
-CM    .T_D          .        0.508     +INF       .         
-CM    .Oil          .        0.008     +INF       .         
-CM    .Nuclear      .        0.245     +INF       .         
-CM    .Hydro        .        0.231     +INF       .         
-CM    .Wind         .        0.545     +INF       .         
-CM    .Solar        .        0.011     +INF       .         
-CM    .Biomass      .        0.179     +INF       .         
-IST   .Coal         .        0.013     +INF       .         
-IST   .Gas          .    4.6683E-4     +INF       .         
-IST   .T_D          .        0.079     +INF       .         
-IST   .Oil          .        0.001     +INF       .         
-IST   .Nuclear      .        0.038     +INF       .         
-IST   .Hydro        .        0.036     +INF       .         
-IST   .Wind         .        0.085     +INF       .         
-IST   .Solar        .        0.002     +INF       .         
-IST   .Biomass      .        0.028     +INF       .         
-NFM   .Coal         .        0.016     +INF       .         
-NFM   .Gas          .    5.6138E-4     +INF       .         
-NFM   .T_D          .        0.095     +INF       .         
-NFM   .Oil          .        0.002     +INF       .         
-NFM   .Nuclear      .        0.046     +INF       .         
-NFM   .Hydro        .        0.043     +INF       .         
-NFM   .Wind         .        0.102     +INF       .         
-NFM   .Solar        .        0.002     +INF       .         
-NFM   .Biomass      .        0.033     +INF       .         
-EII   .Coal         .        0.546     +INF       .         
-EII   .Gas          .        0.020     +INF       .         
-EII   .T_D          .        3.325     +INF       .         
-EII   .Oil          .        0.054     +INF       .         
-EII   .Nuclear      .        1.604     +INF       .         
-EII   .Hydro        .        1.510     +INF       .         
-EII   .Wind         .        3.569     +INF       .         
-EII   .Solar        .        0.069     +INF       .         
-EII   .Biomass      .        1.169     +INF       .         
-OM    .Coal         .       25.055     +INF       .         
-OM    .Gas          .        0.901     +INF       .         
-OM    .T_D          .      152.437     +INF       .         
-OM    .Oil          .        2.470     +INF       .         
-OM    .Nuclear      .       73.552     +INF       .         
-OM    .Hydro        .       69.242     +INF       .         
-OM    .Wind         .      163.619     +INF       .         
-OM    .Solar        .        3.168     +INF       .         
-OM    .Biomass      .       53.585     +INF       .         
-Air   .Coal         .        0.165     +INF       .         
+Agri  .Biomass      .        0.486     +INF       .         
+mine  .Coal         .        0.307     +INF       .         
+mine  .Gas          .        0.011     +INF       .         
+mine  .T_D          .        0.782     +INF       .         
+mine  .Oil          .        0.029     +INF       .         
+mine  .Nuclear      .        0.141     +INF       .         
+mine  .Hydro        .        0.258     +INF       .         
+mine  .Wind         .        0.160     +INF       .         
+mine  .Solar        .        0.004     +INF       .         
+mine  .Biomass      .        0.086     +INF       .         
+Food  .Coal         .        2.751     +INF       .         
+Food  .Gas          .        0.098     +INF       .         
+Food  .T_D          .        7.003     +INF       .         
+Food  .Oil          .        0.256     +INF       .         
+Food  .Nuclear      .        1.265     +INF       .         
+Food  .Hydro        .        2.314     +INF       .         
+Food  .Wind         .        1.431     +INF       .         
+Food  .Solar        .        0.036     +INF       .         
+Food  .Biomass      .        0.768     +INF       .         
+Paper .Coal         .        0.536     +INF       .         
+Paper .Gas          .        0.019     +INF       .         
+Paper .T_D          .        1.364     +INF       .         
+Paper .Oil          .        0.050     +INF       .         
+Paper .Nuclear      .        0.246     +INF       .         
+Paper .Hydro        .        0.451     +INF       .         
+Paper .Wind         .        0.279     +INF       .         
+Paper .Solar        .        0.007     +INF       .         
+Paper .Biomass      .        0.150     +INF       .         
+Chem  .Coal         .        0.466     +INF       .         
+Chem  .Gas          .        0.017     +INF       .         
+Chem  .T_D          .        1.186     +INF       .         
+Chem  .Oil          .        0.043     +INF       .         
+Chem  .Nuclear      .        0.214     +INF       .         
+Chem  .Hydro        .        0.392     +INF       .         
+Chem  .Wind         .        0.242     +INF       .         
+Chem  .Solar        .        0.006     +INF       .         
+Chem  .Biomass      .        0.130     +INF       .         
+CM    .Coal         .        0.227     +INF       .         
+CM    .Gas          .        0.008     +INF       .         
+CM    .T_D          .        0.577     +INF       .         
+CM    .Oil          .        0.021     +INF       .         
+CM    .Nuclear      .        0.104     +INF       .         
+CM    .Hydro        .        0.191     +INF       .         
+CM    .Wind         .        0.118     +INF       .         
+CM    .Solar        .        0.003     +INF       .         
+CM    .Biomass      .        0.063     +INF       .         
+IST   .Coal         .        0.035     +INF       .         
+IST   .Gas          .        0.001     +INF       .         
+IST   .T_D          .        0.090     +INF       .         
+IST   .Oil          .        0.003     +INF       .         
+IST   .Nuclear      .        0.016     +INF       .         
+IST   .Hydro        .        0.030     +INF       .         
+IST   .Wind         .        0.018     +INF       .         
+IST   .Solar        .    4.5600E-4     +INF       .         
+IST   .Biomass      .        0.010     +INF       .         
+NFM   .Coal         .        0.042     +INF       .         
+NFM   .Gas          .        0.002     +INF       .         
+NFM   .T_D          .        0.108     +INF       .         
+NFM   .Oil          .        0.004     +INF       .         
+NFM   .Nuclear      .        0.019     +INF       .         
+NFM   .Hydro        .        0.036     +INF       .         
+NFM   .Wind         .        0.022     +INF       .         
+NFM   .Solar        .    5.4834E-4     +INF       .         
+NFM   .Biomass      .        0.012     +INF       .         
+EII   .Coal         .        1.484     +INF       .         
+EII   .Gas          .        0.053     +INF       .         
+EII   .T_D          .        3.777     +INF       .         
+EII   .Oil          .        0.138     +INF       .         
+EII   .Nuclear      .        0.682     +INF       .         
+EII   .Hydro        .        1.248     +INF       .         
+EII   .Wind         .        0.772     +INF       .         
+EII   .Solar        .        0.019     +INF       .         
+EII   .Biomass      .        0.414     +INF       .         
+OM    .Coal         .       68.034     +INF       .         
+OM    .Gas          .        2.419     +INF       .         
+OM    .T_D          .      173.175     +INF       .         
+OM    .Oil          .        6.342     +INF       .         
+OM    .Nuclear      .       31.290     +INF       .         
+OM    .Hydro        .       57.218     +INF       .         
+OM    .Wind         .       35.378     +INF       .         
+OM    .Solar        .        0.880     +INF       .         
+OM    .Biomass      .       18.996     +INF       .         
+Air   .Coal         .        0.449     +INF       .         
 Air   .Gas          .         .        +INF       EPS       
-Air   .T_D          .        0.962     +INF       .         
+Air   .T_D          .        1.093     +INF       .         
 Air   .Oil          .         .        +INF       EPS       
-Air   .Nuclear      .        0.485     +INF       .         
-Air   .Hydro        .        0.456     +INF       .         
-Air   .Wind         .        1.079     +INF       .         
-Air   .Solar        .        0.021     +INF       .         
-Air   .Biomass      .        0.353     +INF       .         
-Tran  .Coal         .        6.438     +INF       .         
-Tran  .Gas          .        0.361     +INF       .         
-Tran  .T_D          .       18.932     +INF       .         
-Tran  .Oil          .        0.989     +INF       .         
-Tran  .Nuclear      .        9.315     +INF       .         
-Tran  .Hydro        .        8.769     +INF       .         
-Tran  .Wind         .       20.721     +INF       .         
-Tran  .Solar        .        0.401     +INF       .         
-Tran  .Biomass      .        6.786     +INF       .         
-Serv  .Coal         .       19.970     +INF       .         
-Serv  .Gas          .        0.718     +INF       .         
-Serv  .T_D          .      197.896     +INF       .         
-Serv  .Oil          .        1.969     +INF       .         
-Serv  .Nuclear      .       58.624     +INF       .         
-Serv  .Hydro        .       55.189     +INF       .         
-Serv  .Wind         .      130.411     +INF       .         
-Serv  .Solar        .        2.525     +INF       .         
-Serv  .Biomass      .       42.709     +INF       .         
+Air   .Nuclear      .        0.206     +INF       .         
+Air   .Hydro        .        0.377     +INF       .         
+Air   .Wind         .        0.233     +INF       .         
+Air   .Solar        .        0.006     +INF       .         
+Air   .Biomass      .        0.125     +INF       .         
+Tran  .Coal         .       17.483     +INF       .         
+Tran  .Gas          .        0.968     +INF       .         
+Tran  .T_D          .       21.508     +INF       .         
+Tran  .Oil          .        2.539     +INF       .         
+Tran  .Nuclear      .        3.963     +INF       .         
+Tran  .Hydro        .        7.246     +INF       .         
+Tran  .Wind         .        4.480     +INF       .         
+Tran  .Solar        .        0.111     +INF       .         
+Tran  .Biomass      .        2.406     +INF       .         
+Serv  .Coal         .       54.226     +INF       .         
+Serv  .Gas          .        1.928     +INF       .         
+Serv  .T_D          .      224.817     +INF       .         
+Serv  .Oil          .        5.055     +INF       .         
+Serv  .Nuclear      .       24.940     +INF       .         
+Serv  .Hydro        .       45.605     +INF       .         
+Serv  .Wind         .       28.198     +INF       .         
+Serv  .Solar        .        0.702     +INF       .         
+Serv  .Biomass      .       15.140     +INF       .         
 
 ---- VAR QKIN  
 
           LOWER     LEVEL     UPPER    MARGINAL
 
 Elec        .         .        +INF       EPS       
-Coal        .       83.735     +INF       .         
-Oilgas      .      159.543     +INF       .         
-Roil        .      105.063     +INF       .         
-Gas         .       16.666     +INF       .         
-Agri        .      160.572     +INF       .         
-mine        .      253.550     +INF       .         
-Food        .      800.028     +INF       .         
-Paper       .      113.253     +INF       .         
-Chem        .      299.647     +INF       .         
-CM          .      176.716     +INF       .         
-IST         .      158.821     +INF       .         
-NFM         .      223.257     +INF       .         
-EII         .     2013.286     +INF       .         
-OM          .     3909.346     +INF       .         
-Air         .       60.378     +INF       .         
-Tran        .      972.176     +INF       .         
-Serv        .     8965.897     +INF       .         
+Coal        .      125.290     +INF       .         
+Oilgas      .      182.403     +INF       .         
+Roil        .      110.808     +INF       .         
+Gas         .       16.964     +INF       .         
+Agri        .      162.587     +INF       .         
+mine        .      257.755     +INF       .         
+Food        .      804.455     +INF       .         
+Paper       .      113.417     +INF       .         
+Chem        .      300.296     +INF       .         
+CM          .      177.058     +INF       .         
+IST         .      161.316     +INF       .         
+NFM         .      222.433     +INF       .         
+EII         .     2031.482     +INF       .         
+OM          .     3924.385     +INF       .         
+Air         .       60.887     +INF       .         
+Tran        .      981.619     +INF       .         
+Serv        .     9019.550     +INF       .         
 
 ---- VAR QLIN  
 
@@ -4480,111 +4475,111 @@ Serv        .     8965.897     +INF       .
 
 Elec  .low       .         .        +INF       EPS       
 Elec  .high      .         .        +INF       EPS       
-Coal  .low       .      426.974     +INF       .         
-Coal  .high      .       77.708     +INF       .         
-Oilgas.low       .       75.514     +INF       .         
-Oilgas.high      .       63.779     +INF       .         
-Roil  .low       .       42.646     +INF       .         
-Roil  .high      .       38.567     +INF       .         
-Gas   .low       .       11.932     +INF       .         
-Gas   .high      .        7.210     +INF       .         
-Agri  .low       .     5166.556     +INF       .         
-Agri  .high      .      110.512     +INF       .         
-mine  .low       .      280.317     +INF       .         
-mine  .high      .       45.746     +INF       .         
-Food  .low       .      523.202     +INF       .         
-Food  .high      .      118.215     +INF       .         
-Paper .low       .       96.108     +INF       .         
-Paper .high      .       13.519     +INF       .         
-Chem  .low       .       90.062     +INF       .         
-Chem  .high      .       36.559     +INF       .         
-CM    .low       .      133.421     +INF       .         
-CM    .high      .       21.027     +INF       .         
-IST   .low       .       73.600     +INF       .         
-IST   .high      .       25.176     +INF       .         
-NFM   .low       .       94.982     +INF       .         
-NFM   .high      .       31.229     +INF       .         
-EII   .low       .     1354.114     +INF       .         
-EII   .high      .      302.201     +INF       .         
-OM    .low       .     4793.454     +INF       .         
-OM    .high      .      913.948     +INF       .         
-Air   .low       .       16.703     +INF       .         
-Air   .high      .       36.801     +INF       .         
-Tran  .low       .      794.092     +INF       .         
-Tran  .high      .      144.170     +INF       .         
-Serv  .low       .     4678.161     +INF       .         
-Serv  .high      .     5223.213     +INF       .         
+Coal  .low       .      532.237     +INF       .         
+Coal  .high      .       96.866     +INF       .         
+Oilgas.low       .       81.969     +INF       .         
+Oilgas.high      .       69.231     +INF       .         
+Roil  .low       .       43.891     +INF       .         
+Roil  .high      .       39.694     +INF       .         
+Gas   .low       .       12.020     +INF       .         
+Gas   .high      .        7.263     +INF       .         
+Agri  .low       .     5188.647     +INF       .         
+Agri  .high      .      110.985     +INF       .         
+mine  .low       .      282.361     +INF       .         
+mine  .high      .       46.080     +INF       .         
+Food  .low       .      523.525     +INF       .         
+Food  .high      .      118.288     +INF       .         
+Paper .low       .       95.899     +INF       .         
+Paper .high      .       13.489     +INF       .         
+Chem  .low       .       89.969     +INF       .         
+Chem  .high      .       36.521     +INF       .         
+CM    .low       .      133.177     +INF       .         
+CM    .high      .       20.988     +INF       .         
+IST   .low       .       74.133     +INF       .         
+IST   .high      .       25.359     +INF       .         
+NFM   .low       .       94.521     +INF       .         
+NFM   .high      .       31.078     +INF       .         
+EII   .low       .     1357.893     +INF       .         
+EII   .high      .      303.044     +INF       .         
+OM    .low       .     4790.894     +INF       .         
+OM    .high      .      913.460     +INF       .         
+Air   .low       .       16.779     +INF       .         
+Air   .high      .       36.969     +INF       .         
+Tran  .low       .      796.541     +INF       .         
+Tran  .high      .      144.614     +INF       .         
+Serv  .low       .     4689.199     +INF       .         
+Serv  .high      .     5235.537     +INF       .         
 
 ---- VAR QLIN_ELE  
 
                 LOWER     LEVEL     UPPER    MARGINAL
 
-Coal   .low       .       10.833     +INF       .         
-Coal   .high      .        8.887     +INF       .         
-Gas    .low       .        0.405     +INF       .         
-Gas    .high      .        0.332     +INF       .         
-T_D    .low       .       76.625     +INF       .         
-T_D    .high      .       62.864     +INF       .         
-Oil    .low       .        1.100     +INF       .         
-Oil    .high      .        0.902     +INF       .         
-Nuclear.low       .       34.361     +INF       .         
-Nuclear.high      .       28.190     +INF       .         
-Hydro  .low       .       30.366     +INF       .         
-Hydro  .high      .       24.913     +INF       .         
-Wind   .low       .       72.702     +INF       .         
-Wind   .high      .       59.645     +INF       .         
-Solar  .low       .        1.353     +INF       .         
-Solar  .high      .        1.110     +INF       .         
-Biomass.low       .       24.569     +INF       .         
-Biomass.high      .       20.156     +INF       .         
+Coal   .low       .       34.199     +INF       .         
+Coal   .high      .       28.057     +INF       .         
+Gas    .low       .        1.216     +INF       .         
+Gas    .high      .        0.997     +INF       .         
+T_D    .low       .       87.049     +INF       .         
+T_D    .high      .       71.416     +INF       .         
+Oil    .low       .        3.188     +INF       .         
+Oil    .high      .        2.615     +INF       .         
+Nuclear.low       .       15.729     +INF       .         
+Nuclear.high      .       12.904     +INF       .         
+Hydro  .low       .       28.762     +INF       .         
+Hydro  .high      .       23.596     +INF       .         
+Wind   .low       .       17.783     +INF       .         
+Wind   .high      .       14.590     +INF       .         
+Solar  .low       .        0.443     +INF       .         
+Solar  .high      .        0.363     +INF       .         
+Biomass.low       .        9.549     +INF       .         
+Biomass.high      .        7.834     +INF       .         
 
 ---- VAR QKIN_ELE  
 
            LOWER     LEVEL     UPPER    MARGINAL
 
-Coal         .       79.795     +INF       .         
-Gas          .        1.698     +INF       .         
-T_D          .      138.779     +INF       .         
-Oil          .        2.320     +INF       .         
-Nuclear      .       47.463     +INF       .         
-Hydro        .      165.417     +INF       .         
-Wind         .      290.697     +INF       .         
-Solar        .       16.736     +INF       .         
-Biomass      .       50.510     +INF       .         
+Coal         .      218.350     +INF       .         
+Gas          .        4.421     +INF       .         
+T_D          .      157.659     +INF       .         
+Oil          .        5.830     +INF       .         
+Nuclear      .       17.912     +INF       .         
+Hydro        .      129.174     +INF       .         
+Wind         .       58.625     +INF       .         
+Solar        .        4.514     +INF       .         
+Biomass      .       16.185     +INF       .         
 
 ---- VAR QFFIN  
 
           LOWER     LEVEL     UPPER    MARGINAL
 
-Coal        .      208.969     +INF       .         
-Oilgas      .      175.687     +INF       .         
-Gas         .       24.100     +INF       .         
-Agri        .       62.939     +INF       .         
-mine        .       19.172     +INF       .         
+Coal        .      266.241     +INF       .         
+Oilgas      .      189.848     +INF       .         
+Gas         .       24.412     +INF       .         
+Agri        .       63.228     +INF       .         
+mine        .       19.401     +INF       .         
 
 ---- VAR QFFELEC  
 
            LOWER     LEVEL     UPPER    MARGINAL
 
-Nuclear      .       18.029     +INF       .         
-Hydro        .       50.392     +INF       .         
-Wind         .       68.986     +INF       .         
-Solar        .        3.855     +INF       .         
-Biomass      .       12.787     +INF       .         
+Nuclear      .        8.061     +INF       .         
+Hydro        .       43.827     +INF       .         
+Wind         .       18.320     +INF       .         
+Solar        .        1.237     +INF       .         
+Biomass      .        6.035     +INF       .         
 
 ---- VAR QELEC  
 
            LOWER     LEVEL     UPPER    MARGINAL
 
-Coal         .      873.312     +INF       .         
-Gas          .       33.588     +INF       .         
-T_D          .      939.726     +INF       .         
-Oil          .       87.801     +INF       .         
-Nuclear      .      375.556     +INF       .         
-Hydro        .      768.798     +INF       .         
-Wind         .      920.407     +INF       .         
-Solar        .       26.176     +INF       .         
-Biomass      .      230.030     +INF       .         
+Coal         .     2371.393     +INF       .         
+Gas          .       90.127     +INF       .         
+T_D          .     1067.566     +INF       .         
+Oil          .      225.435     +INF       .         
+Nuclear      .      160.631     +INF       .         
+Hydro        .      639.637     +INF       .         
+Wind         .      203.714     +INF       .         
+Solar        .        7.454     +INF       .         
+Biomass      .       84.212     +INF       .         
 
 ---- VAR ECO2  
 
@@ -4654,10 +4649,10 @@ Biomass      .         .        +INF       EPS
 
            LOWER     LEVEL     UPPER    MARGINAL
 
-Coal         .     2037.729     +INF       .         
-Gas          .       78.371     +INF       .         
+Coal         .         .        +INF       EPS       
+Gas          .         .        +INF       EPS       
 T_D          .         .        +INF       EPS       
-Oil          .      204.868     +INF       .         
+Oil          .         .        +INF       EPS       
 Nuclear      .         .        +INF       EPS       
 Hydro        .         .        +INF       EPS       
 Wind         .         .        +INF       EPS       
@@ -4672,35 +4667,32 @@ Coal         .         .        +INF       EPS
 Gas          .         .        +INF       EPS       
 T_D          .         .        +INF       EPS       
 Oil          .         .        +INF       EPS       
-Nuclear      .      375.556     +INF       .         
-Hydro        .      768.798     +INF       .         
-Wind         .      920.407     +INF       .         
-Solar        .       26.176     +INF       .         
-Biomass      .      230.030     +INF       .         
+Nuclear      .         .        +INF       EPS       
+Hydro        .         .        +INF       EPS       
+Wind         .         .        +INF       EPS       
+Solar        .         .        +INF       EPS       
+Biomass      .         .        +INF       EPS       
 
 
 **** REPORT SUMMARY :        0     NONOPT
-                             8 INFEASIBLE (INFES)
-                    SUM      0.007
-                    MAX      0.007
-                    MEAN 9.0371E-4
+                             0 INFEASIBLE
                              0  UNBOUNDED
                              0  REDEFINED
                              0     ERRORS
-GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 15:44:43 Page 7
+GAMS 24.4.6  r52609 Released Jun 26, 2015 WEX-WEI x86 64bit/MS Windows 12/06/16 16:34:58 Page 7
 a dynamic CGE model of China economy-environment-energy policy analysis based on 2012 data
 E x e c u t i o n
 
 
-----   2976 MODEL CHINA3E.ModelStat        =        5.000  
+----   2975 MODEL CHINA3E.ModelStat        =        1.000  
             MODEL CHINA3E.SolveStat        =        1.000  
 
-----   2976 VARIABLE UR.L  unemployment rate
+----   2975 VARIABLE UR.L  unemployment rate
 
-low  0.031,    high 0.048
+low  0.027,    high 0.049
 
 
-----   2976 PARAMETER clim                 =        0.000  carbon emission allow
+----   2975 PARAMETER clim                 =        0.000  carbon emission allow
                                                            ance
 
 **** REPORT FILE SUMMARY
@@ -4708,7 +4700,7 @@ low  0.031,    high 0.048
 MPS C:\Users\hero\Desktop\Github\test model - V17\225a\gamscge.dat
 
 
-EXECUTION TIME       =        0.063 SECONDS      3 MB  24.4.6 r52609 WEX-WEI
+EXECUTION TIME       =        0.000 SECONDS      3 MB  24.4.6 r52609 WEX-WEI
 
 
 USER: Yaqian Mu                                      G150107:0436AO-WIN
