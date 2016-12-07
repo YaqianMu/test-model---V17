@@ -15,12 +15,12 @@ parameter sigma
 esub("coal","kl")=0.80;
 esub("gas","kl")=0.82;
 esub("roil","kl")=0.74;
-esub("elecutil","kl")=0.81;
+esub("elec","kl")=0.81;
 
 esub(i,"ff")=0.6;
 esub("gas","ff")=0.5;
 esub("coal","ff")=0.7;
-esub("electuil","ff")=0.4;
+esub("elec","ff")=0.4;
 
 esub_inv   =0.25 ;
 
@@ -38,15 +38,15 @@ sigma("ene_p") = 1;
 eta("coal") =2.0;
 eta("oilgas")=1.0;
 eta("agri")=0.5;
-eta("mining")=2.0;
+eta("mine")=2.0;
 eta("gas")=1.0 ;
-eta("elecutil")= 0.5;
+eta("elec")= 0.5;
 
-eta("biomass_elec")= 0.5 ;
-eta("hydro_elec")= 0.1;
-eta("wind_elec")= 1.5 ;
-eta("solar_elec")= 1.5 ;
-eta("nuclear_elec")= 1 ;
+eta("biomass")= 0.5 ;
+eta("hydro")= 0.1;
+eta("wind")= 1.5 ;
+eta("solar")= 1.5 ;
+eta("nuclear")= 1 ;
 
 
 

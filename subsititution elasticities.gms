@@ -42,11 +42,11 @@ eta("mine")=2.0;
 eta("gas")=1.0 ;
 eta("elec")= 0.5;
 
-eta("biomass_elec")= 0.5 ;
-eta("hydro_elec")= 0.1;
-eta("wind_elec")= 1.5 ;
-eta("solar_elec")= 1.5 ;
-eta("nuclear_elec")= 1 ;
+eta("biomass")= 0.5 ;
+eta("hydro")= 0.1;
+eta("wind")= 1.5 ;
+eta("solar")= 1.5 ;
+eta("nuclear")= 0.5 ;
 
 
 

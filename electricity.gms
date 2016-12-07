@@ -41,28 +41,26 @@ intelec0(i,sub_elec) =   Eprop(i,sub_elec);
 taxelec0(sub_elec)=      Eprop("tax",sub_elec);
 
 *==to be updata
+parameter theta_elec(sub_elec)     imputed fixed factor share of capital      from Sue Wing 2006
+
+table ff_data(*,*) cost structure from Sue Wing
+                 hydro      nuclear    Wind       Solar      Biomass
+labor            24         13         17         7          19
+capital          56         60         64         73         59
+ff               19         27         20         20         22
+;
+theta_elec(sub_elec) =0;
+theta_elec(sub_elec)$ff_data("ff",sub_elec) = ff_data("ff",sub_elec)/(ff_data("ff",sub_elec)+ff_data("capital",sub_elec));
+
 ffelec0(sub_elec)   =    0;
+
+ffelec0(sub_elec)   = theta_elec(sub_elec)*kelec0(sub_elec);
+kelec0(sub_elec)   =(1-theta_elec(sub_elec))*kelec0(sub_elec);
 
 
 *ffelec_b(sub_elec)   =   ffelec0(sub_elec);
 
-display taxelec0;
-
-emission0("so2","e","process",sub_elec)=Eprop("SO2_emission_process",sub_elec)*emission0("so2","e","process","elec");
-emission0("so2","e","coal",sub_elec)=Eprop("SO2_emission_coal",sub_elec)*emission0("so2","e","coal","elec");
-emission0("so2","e","roil",sub_elec)=Eprop("SO2_emission_oil",sub_elec)*emission0("so2","e","roil","elec");
-
-emission0("so2","g","process",sub_elec)=Eprop("SO2_production_process",sub_elec)*emission0("so2","g","process","elec");
-emission0("so2","g","coal",sub_elec)=Eprop("SO2_production_coal",sub_elec)*emission0("so2","g","coal","elec");
-emission0("so2","g","roil",sub_elec)=Eprop("SO2_production_oil",sub_elec)*emission0("so2","g","roil","elec");
-
-emission0("so2","a","process",sub_elec)=Eprop("SO2_abated_process",sub_elec)*emission0("so2","a","process","elec");
-emission0("so2","a","coal",sub_elec)=Eprop("SO2_abated_coal",sub_elec)*emission0("so2","a","coal","elec");
-emission0("so2","a","roil",sub_elec)=Eprop("SO2_abated_oil",sub_elec)*emission0("so2","a","roil","elec");
-
-emission0("co2","e","gas",sub_elec)=Eprop("cO2_emission_naturegas",sub_elec)*emission0("co2","e","gas","elec");
-emission0("co2","e","coal",sub_elec)=Eprop("cO2_emission_coal",sub_elec)*emission0("co2","e","coal","elec");
-emission0("co2","e","roil",sub_elec)=Eprop("cO2_emission_oil",sub_elec)*emission0("co2","e","roil","elec");
+display taxelec0,ffelec0;
 
 
 parameter enesta   substitution elasticity between different sub_elec    from EPPA 6
@@ -104,6 +102,10 @@ esub("wind","ff")=0.25;
 
 
 display lelec0,kelec0,intelec0,outputelec0,taxelec0,tx0,emission0,p_ff,Toutputelec0,check1,esub;
+
+
+
+
 
 
 
