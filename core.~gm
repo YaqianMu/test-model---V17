@@ -303,6 +303,7 @@ pu.fx=1;
 
 *== policy shock for static model ==============================================
 ur.l(lm)=ur0(lm);
+ur.l0(lm)=ur0(lm);
 
 *== switch for emission cap
 clim_h=0;
@@ -336,5 +337,5 @@ solve China3E using mcp;
 display China3E.modelstat, China3E.solvestat,ur.l,clim;
 
 
- 
+
 

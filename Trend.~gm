@@ -67,4 +67,4 @@ display aeei,PAT,rgdp0,ret0,ret_b;
 
 parameter tlprop(t,lm)   share of each labor in total supply;
 
-tlprop("2010",lm) =tlabor_s0(lm)/tqlabor_s0;
+tlprop("",lm) =tlabor_s0(lm)/tqlabor_s0;

@@ -5,20 +5,22 @@ $include emission data
 
 $include electricity
 $include ist
-$include trend
+
 $include labor market
 
 $include backstop
-
+$include trend
 $include core
 
-*$include core_1205
+*========static policy simulation========
+*$include sim
 
-*$include core_CETlabor
-
+*========dynamic policy simulation========
+$include dynamic
 *$include dynamic-calibration
 *$include dynamic-基准情景
 *$include dynamic-政策情景
-$include sim
+
+
 
 $stop
